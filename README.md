@@ -44,14 +44,14 @@ is also available.
 
 > **12.3 Central Terminal Area**
 >
-* Red or Yellow Zone
+> * Red or Yellow Zone
 >    * No private vehicle shall stop, wait, or park in the red or yellow zone.
 > * White Zone
 >    * No vehicle shall stop, wait, or park in the white zone unless actively
 > engaged in the immediate loading or unloading of passengers
 > and/or baggage. 
 >
-> — Los Angeles International Airport Rules and Regulations, Section 12 Landside Motor Vehicle Operations
+> — Los Angeles International Airport Rules and Regulations, Section 12 - Landside Motor Vehicle Operations
 
 
 
