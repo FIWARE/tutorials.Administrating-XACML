@@ -49,13 +49,11 @@ is also available.
 > * White Zone
 >    * No vehicle shall stop, wait, or park in the white zone unless actively
 > engaged in the immediate loading or unloading of passengers
-> and/or baggage. 
+> and/or baggage.
 >
 > — Los Angeles International Airport Rules and Regulations, Section 12 - Landside Motor Vehicle Operations
 
-
-
-TBD
+Things change.
 
 ## What is XACML
 
@@ -233,23 +231,571 @@ reason to be granted access
 
 
 # XACML Administration
+
 ## Authzforce - Administrating XACML PolicySets
+
+**Authzforce** can act as a Policy Administration Point (PAP), this means that PolicySets can be created and amended using API calls directly to **Authzforce**
 
 ### Creating a new Domain
 
+To create a new domain in **Authzforce**, make a POST request to the
+`/authzforce-ce/domains` endpoint including a unique `external-id` within
+the `<domainProperties>` element
+
+#### :one: Request
+
+```console
+curl -X POST \
+  http://localhost:8080/authzforce-ce/domains \
+  -H 'Content-Type: application/xml' \
+  -d '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<domainProperties xmlns="http://authzforce.github.io/rest-api-model/xmlns/authz/5" externalId="airplane"/>'
+```
+
+#### Response
+
+The response includes a `href` in the `<n2:link>` element  which holds the
+`domain-id` used internally within **Authzforce**.
+
+An empty `PolicySet` will be created for the new domain. By default all
+access will be permitted.
+
+```xml
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ns4:link xmlns="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17" xmlns:ns2="http://authzforce.github.io/pap-dao-flat-file/xmlns/properties/3.6" xmlns:ns3="http://authzforce.github.io/rest-api-model/xmlns/authz/5" xmlns:ns4="http://www.w3.org/2005/Atom" xmlns:ns5="http://authzforce.github.io/core/xmlns/pdp/6.0" rel="item" href="Sv-RRw9vEem6UQJCrBIBDA" title="Sv-RRw9vEem6UQJCrBIBDA"/>
+```
+
+The new `domain-id`  (in this case `Sv-RRw9vEem6UQJCrBIBDA` ) will be used with all subsequent requests.
+
+#### :two: Request
+
+To request a decision from Authzforce, make a POST request to the
+`domains/{domain-id}/pdp` endpoint. In this case the user has the
+is requesting access to `loading` in the `white` zone.
+
+
+```console
+curl -X POST \
+  http://localhost:8080/authzforce-ce/domains/Sv-RRw9vEem6UQJCrBIBDA/pdp \
+  -H 'Content-Type: application/xml' \
+  -d '<?xml version="1.0" encoding="UTF-8"?>
+<Request xmlns="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17" CombinedDecision="false" ReturnPolicyIdList="false">
+   <Attributes Category="urn:oasis:names:tc:xacml:3.0:attribute-category:resource">
+      <Attribute AttributeId="urn:oasis:names:tc:xacml:1.0:resource:resource-id" IncludeInResult="false">
+         <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">airplane!</AttributeValue>
+      </Attribute>
+      <Attribute AttributeId="urn:thales:xacml:2.0:resource:sub-resource-id" IncludeInResult="false">
+         <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">white</AttributeValue>
+      </Attribute>
+   </Attributes>
+   <Attributes Category="urn:oasis:names:tc:xacml:3.0:attribute-category:action">
+      <Attribute AttributeId="urn:oasis:names:tc:xacml:1.0:action:action-id" IncludeInResult="false">
+         <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">loading</AttributeValue>
+      </Attribute>
+   </Attributes>
+   <Attributes Category="urn:oasis:names:tc:xacml:3.0:attribute-category:environment" />
+</Request>'
+```
+
+#### Response
+
+The response for the request includes a `<Decision>` element to `Permit` or `Deny` access to the resource. at this point all requests will be `Permit`
+
+```xml
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Response xmlns="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17" xmlns:ns2="http://authzforce.github.io/pap-dao-flat-file/xmlns/properties/3.6" xmlns:ns3="http://authzforce.github.io/rest-api-model/xmlns/authz/5" xmlns:ns4="http://www.w3.org/2005/Atom" xmlns:ns5="http://authzforce.github.io/core/xmlns/pdp/6.0">
+    <Result>
+        <Decision>Permit</Decision>
+    </Result>
+</Response>
+```
+
 ### Creating an initial PolicySet
+
+To create a `PolicySet` for a given domain information in **Authzforce**, make a
+POST request to the
+`/authzforce-ce/domains/{{domain-id}}/pap/policies` endpoint including the full set
+of XACML rules to upload.
+
+
+#### :three: Request
+
+```console
+curl -X POST \
+  http://localhost:8080/authzforce-ce/domains/Sv-RRw9vEem6UQJCrBIBDA/pap/policies \
+  -H 'Content-Type: application/xml' \
+  -d '<?xml version="1.0" encoding="UTF-8"?>
+<PolicySet xmlns="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17" PolicySetId="f8194af5-8a07-486a-9581-c1f05d05483c" Version="1" PolicyCombiningAlgId="urn:oasis:names:tc:xacml:3.0:policy-combining-algorithm:deny-unless-permit">
+   <Description>Policy Set for Airplane!</Description>
+   <Target />
+   <Policy PolicyId="airplane" Version="1.0" RuleCombiningAlgId="urn:oasis:names:tc:xacml:3.0:rule-combining-algorithm:deny-unless-permit">
+      <Description>Vehicle Roles from the Male announcer in the movie Airplane!</Description>
+      <Target>
+         <AnyOf>
+            <AllOf>
+               <Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+                  <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">airplane!</AttributeValue>
+                  <AttributeDesignator Category="urn:oasis:names:tc:xacml:3.0:attribute-category:resource" AttributeId="urn:oasis:names:tc:xacml:1.0:resource:resource-id" DataType="http://www.w3.org/2001/XMLSchema#string" MustBePresent="true" />
+               </Match>
+            </AllOf>
+         </AnyOf>
+      </Target>
+      <Rule RuleId="white-zone" Effect="Permit">
+         <Description>The white zone is for immediate loading and unloading of passengers only</Description>
+         <Target>
+            <AnyOf>
+               <AllOf>
+                  <Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+                     <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">white</AttributeValue>
+                     <AttributeDesignator Category="urn:oasis:names:tc:xacml:3.0:attribute-category:resource" AttributeId="urn:thales:xacml:2.0:resource:sub-resource-id" DataType="http://www.w3.org/2001/XMLSchema#string" MustBePresent="true" />
+                  </Match>
+               </AllOf>
+            </AnyOf>
+            <AnyOf>
+               <AllOf>
+                  <Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+                     <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">loading</AttributeValue>
+                     <AttributeDesignator Category="urn:oasis:names:tc:xacml:3.0:attribute-category:action" AttributeId="urn:oasis:names:tc:xacml:1.0:action:action-id" DataType="http://www.w3.org/2001/XMLSchema#string" MustBePresent="true" />
+                  </Match>
+               </AllOf>
+            </AnyOf>
+         </Target>
+      </Rule>
+      <Rule RuleId="red-zone" Effect="Deny">
+         <Description>There is no stopping in the red zone</Description>
+         <Target>
+            <AnyOf>
+               <AllOf>
+                  <Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+                     <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">red</AttributeValue>
+                     <AttributeDesignator Category="urn:oasis:names:tc:xacml:3.0:attribute-category:resource" AttributeId="urn:thales:xacml:2.0:resource:sub-resource-id" DataType="http://www.w3.org/2001/XMLSchema#string" MustBePresent="true" />
+                  </Match>
+               </AllOf>
+            </AnyOf>
+            <AnyOf>
+               <AllOf>
+                  <Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+                     <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">stopping</AttributeValue>
+                     <AttributeDesignator Category="urn:oasis:names:tc:xacml:3.0:attribute-category:action" AttributeId="urn:oasis:names:tc:xacml:1.0:action:action-id" DataType="http://www.w3.org/2001/XMLSchema#string" MustBePresent="true" />
+                  </Match>
+               </AllOf>
+            </AnyOf>
+         </Target>
+      </Rule>
+   </Policy>
+</PolicySet>
+'
+```
+
+#### Response
+
+The response contains the internal id of the policy held within **Authzforce** and
+version information about the `PolicySet` versions available.
+The rules of the new `PolicySet` will not be applied until the `PolicySet` is activated.
+
+```xml
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ns4:link xmlns="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17" xmlns:ns2="http://authzforce.github.io/pap-dao-flat-file/xmlns/properties/3.6" xmlns:ns3="http://authzforce.github.io/rest-api-model/xmlns/authz/5" xmlns:ns4="http://www.w3.org/2005/Atom" xmlns:ns5="http://authzforce.github.io/core/xmlns/pdp/6.0" rel="item" href="f8194af5-8a07-486a-9581-c1f05d05483c/1" title="Policy 'f8194af5-8a07-486a-9581-c1f05d05483c' v1"/>
+```
 
 ### Activating the initial PolicySet
 
+To activate a `PolicySet`, make a PUT request to the
+`/authzforce-ce/domains/{domain-id}/pap/pdp.properties` endpoint including the `policy-id`
+to update within the `<rootPolicyRefExpresion>` attribute
+
+#### :four: Request
+
+```console
+curl -X PUT \
+  http://localhost:8080/authzforce-ce/domains/Sv-RRw9vEem6UQJCrBIBDA/pap/pdp.properties \
+  -H 'Content-Type: application/xml' \
+  -d '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><pdpPropertiesUpdate xmlns="http://authzforce.github.io/rest-api-model/xmlns/authz/5"><rootPolicyRefExpression>f8194af5-8a07-486a-9581-c1f05d05483c</rootPolicyRefExpression></pdpPropertiesUpdate>'
+```
+
+#### Response
+
+The response returns information about the `PolicySet` applied.
+
+```xml
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ns3:pdpProperties xmlns="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17" xmlns:ns2="http://authzforce.github.io/pap-dao-flat-file/xmlns/properties/3.6" xmlns:ns3="http://authzforce.github.io/rest-api-model/xmlns/authz/5" xmlns:ns4="http://www.w3.org/2005/Atom" xmlns:ns5="http://authzforce.github.io/core/xmlns/pdp/6.0" lastModifiedTime="2019-01-03T15:54:45.341Z">
+    <ns3:feature type="urn:ow2:authzforce:feature-type:pdp:core" enabled="false">urn:ow2:authzforce:feature:pdp:core:strict-attribute-issuer-match</ns3:feature>
+    <ns3:feature type="urn:ow2:authzforce:feature-type:pdp:core" enabled="false">urn:ow2:authzforce:feature:pdp:core:xpath-eval</ns3:feature>
+    <ns3:feature type="urn:ow2:authzforce:feature-type:pdp:request-preproc" enabled="true">urn:ow2:authzforce:feature:pdp:request-preproc:xacml-xml:default-lax</ns3:feature>
+    <ns3:feature type="urn:ow2:authzforce:feature-type:pdp:request-preproc" enabled="false">urn:ow2:authzforce:feature:pdp:request-preproc:xacml-xml:multiple:repeated-attribute-categories-strict</ns3:feature>
+    <ns3:feature type="urn:ow2:authzforce:feature-type:pdp:request-preproc" enabled="false">urn:ow2:authzforce:feature:pdp:request-preproc:xacml-xml:multiple:repeated-attribute-categories-lax</ns3:feature>
+    <ns3:feature type="urn:ow2:authzforce:feature-type:pdp:request-preproc" enabled="false">urn:ow2:authzforce:feature:pdp:request-preproc:xacml-json:default-strict</ns3:feature>
+    <ns3:feature type="urn:ow2:authzforce:feature-type:pdp:request-preproc" enabled="false">urn:ow2:authzforce:feature:pdp:request-preproc:xacml-xml:default-strict</ns3:feature>
+    <ns3:feature type="urn:ow2:authzforce:feature-type:pdp:request-preproc" enabled="false">urn:ow2:authzforce:feature:pdp:request-preproc:xacml-json:default-lax</ns3:feature>
+    <ns3:feature type="urn:ow2:authzforce:feature-type:pdp:result-postproc" enabled="false">urn:ow2:authzforce:feature:pdp:result-postproc:xacml-json:default</ns3:feature>
+    <ns3:rootPolicyRefExpression>f8194af5-8a07-486a-9581-c1f05d05483c</ns3:rootPolicyRefExpression>
+    <ns3:applicablePolicies>
+        <ns3:rootPolicyRef Version="1">f8194af5-8a07-486a-9581-c1f05d05483c</ns3:rootPolicyRef>
+    </ns3:applicablePolicies>
+</ns3:pdpProperties>
+```
+
+#### :five: Request
+
+At this point, making a request to access to `loading` in the `white` zone will return `Permit`
+
+
+```console
+curl -X POST \
+  http://localhost:8080/authzforce-ce/domains/Sv-RRw9vEem6UQJCrBIBDA/pdp \
+  -H 'Content-Type: application/xml' \
+  -d '<?xml version="1.0" encoding="UTF-8"?>
+<Request xmlns="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17" CombinedDecision="false" ReturnPolicyIdList="false">
+   <Attributes Category="urn:oasis:names:tc:xacml:3.0:attribute-category:resource">
+      <Attribute AttributeId="urn:oasis:names:tc:xacml:1.0:resource:resource-id" IncludeInResult="false">
+         <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">airplane!</AttributeValue>
+      </Attribute>
+      <Attribute AttributeId="urn:thales:xacml:2.0:resource:sub-resource-id" IncludeInResult="false">
+         <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">white</AttributeValue>
+      </Attribute>
+   </Attributes>
+   <Attributes Category="urn:oasis:names:tc:xacml:3.0:attribute-category:action">
+      <Attribute AttributeId="urn:oasis:names:tc:xacml:1.0:action:action-id" IncludeInResult="false">
+         <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">loading</AttributeValue>
+      </Attribute>
+   </Attributes>
+   <Attributes Category="urn:oasis:names:tc:xacml:3.0:attribute-category:environment" />
+</Request>'
+```
+
+#### Response
+
+```xml
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Response xmlns="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17" xmlns:ns2="http://authzforce.github.io/pap-dao-flat-file/xmlns/properties/3.6" xmlns:ns3="http://authzforce.github.io/rest-api-model/xmlns/authz/5" xmlns:ns4="http://www.w3.org/2005/Atom" xmlns:ns5="http://authzforce.github.io/core/xmlns/pdp/6.0">
+    <Result>
+        <Decision>Permit</Decision>
+    </Result>
+</Response>
+```
+
+#### :six: Request
+
+At this point, making a request to access to `loading` in the `red` zone will return `Deny`
+
+
+```console
+curl -X POST \
+  http://localhost:8080/authzforce-ce/domains/Sv-RRw9vEem6UQJCrBIBDA/pdp \
+  -H 'Content-Type: application/xml' \
+  -d '<?xml version="1.0" encoding="UTF-8"?>
+<Request xmlns="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17" CombinedDecision="false" ReturnPolicyIdList="false">
+   <Attributes Category="urn:oasis:names:tc:xacml:3.0:attribute-category:resource">
+      <Attribute AttributeId="urn:oasis:names:tc:xacml:1.0:resource:resource-id" IncludeInResult="false">
+         <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">airplane!</AttributeValue>
+      </Attribute>
+      <Attribute AttributeId="urn:thales:xacml:2.0:resource:sub-resource-id" IncludeInResult="false">
+         <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">red</AttributeValue>
+      </Attribute>
+   </Attributes>
+   <Attributes Category="urn:oasis:names:tc:xacml:3.0:attribute-category:action">
+      <Attribute AttributeId="urn:oasis:names:tc:xacml:1.0:action:action-id" IncludeInResult="false">
+         <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">loading</AttributeValue>
+      </Attribute>
+   </Attributes>
+   <Attributes Category="urn:oasis:names:tc:xacml:3.0:attribute-category:environment" />
+</Request>'
+```
+
+#### Response
+
+```xml
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Response xmlns="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17" xmlns:ns2="http://authzforce.github.io/pap-dao-flat-file/xmlns/properties/3.6" xmlns:ns3="http://authzforce.github.io/rest-api-model/xmlns/authz/5" xmlns:ns4="http://www.w3.org/2005/Atom" xmlns:ns5="http://authzforce.github.io/core/xmlns/pdp/6.0">
+    <Result>
+        <Decision>Deny</Decision>
+    </Result>
+</Response>
+```
+
 ### Updating a PolicySet
+
+To update a `PolicySet` for a given domain information in **Authzforce**, make a
+POST request to the
+`/authzforce-ce/domains/{{domain-id}}/pap/policies` endpoint including the full set
+of XACML rules to upload. Note that the `Version` must be unique.
+
+
+#### :seven: Request
+
+```console
+curl -X POST \
+  http://localhost:8080/authzforce-ce/domains/Sv-RRw9vEem6UQJCrBIBDA/pap/policies \
+  -H 'Content-Type: application/xml' \
+  -d '<?xml version="1.0" encoding="UTF-8"?>
+<PolicySet xmlns="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17" PolicySetId="f8194af5-8a07-486a-9581-c1f05d05483c" Version="2" PolicyCombiningAlgId="urn:oasis:names:tc:xacml:3.0:policy-combining-algorithm:deny-unless-permit">
+   <Description>Policy Set for Airplane!</Description>
+   <Target />
+   <Policy PolicyId="airplane" Version="1.0" RuleCombiningAlgId="urn:oasis:names:tc:xacml:3.0:rule-combining-algorithm:deny-unless-permit">
+      <Description>Vehicle Roles from the Female announcer in the movie Airplane!</Description>
+      <Target>
+         <AnyOf>
+            <AllOf>
+               <Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+                  <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">airplane!</AttributeValue>
+                  <AttributeDesignator Category="urn:oasis:names:tc:xacml:3.0:attribute-category:resource" AttributeId="urn:oasis:names:tc:xacml:1.0:resource:resource-id" DataType="http://www.w3.org/2001/XMLSchema#string" MustBePresent="true" />
+               </Match>
+            </AllOf>
+         </AnyOf>
+      </Target>
+      <Rule RuleId="red-zone" Effect="Permit">
+         <Description>The red zone is for immediate loading and unloading of passengers only</Description>
+         <Target>
+            <AnyOf>
+               <AllOf>
+                  <Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+                     <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">red</AttributeValue>
+                     <AttributeDesignator Category="urn:oasis:names:tc:xacml:3.0:attribute-category:resource" AttributeId="urn:thales:xacml:2.0:resource:sub-resource-id" DataType="http://www.w3.org/2001/XMLSchema#string" MustBePresent="true" />
+                  </Match>
+               </AllOf>
+            </AnyOf>
+            <AnyOf>
+               <AllOf>
+                  <Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+                     <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">loading</AttributeValue>
+                     <AttributeDesignator Category="urn:oasis:names:tc:xacml:3.0:attribute-category:action" AttributeId="urn:oasis:names:tc:xacml:1.0:action:action-id" DataType="http://www.w3.org/2001/XMLSchema#string" MustBePresent="true" />
+                  </Match>
+               </AllOf>
+            </AnyOf>
+         </Target>
+      </Rule>
+      <Rule RuleId="white-zone" Effect="Deny">
+         <Description>There is no stopping in the white zone</Description>
+         <Target>
+            <AnyOf>
+               <AllOf>
+                  <Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+                     <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">white</AttributeValue>
+                     <AttributeDesignator Category="urn:oasis:names:tc:xacml:3.0:attribute-category:resource" AttributeId="urn:thales:xacml:2.0:resource:sub-resource-id" DataType="http://www.w3.org/2001/XMLSchema#string" MustBePresent="true" />
+                  </Match>
+               </AllOf>
+            </AnyOf>
+            <AnyOf>
+               <AllOf>
+                  <Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+                     <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">stopping</AttributeValue>
+                     <AttributeDesignator Category="urn:oasis:names:tc:xacml:3.0:attribute-category:action" AttributeId="urn:oasis:names:tc:xacml:1.0:action:action-id" DataType="http://www.w3.org/2001/XMLSchema#string" MustBePresent="true" />
+                  </Match>
+               </AllOf>
+            </AnyOf>
+         </Target>
+      </Rule>
+   </Policy>
+</PolicySet>
+'
+```
+
+#### Response
+
+The response contains version information about the `PolicySet` versions available.
+The rules of the new `PolicySet` will not be applied until the `PolicySet` is activated.
+
+```xml
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ns4:link xmlns="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17" xmlns:ns2="http://authzforce.github.io/pap-dao-flat-file/xmlns/properties/3.6" xmlns:ns3="http://authzforce.github.io/rest-api-model/xmlns/authz/5" xmlns:ns4="http://www.w3.org/2005/Atom" xmlns:ns5="http://authzforce.github.io/core/xmlns/pdp/6.0" rel="item" href="f8194af5-8a07-486a-9581-c1f05d05483c/2" title="Policy 'f8194af5-8a07-486a-9581-c1f05d05483c' v2"/>
+```
 
 ### Activating an updated PolicySet
 
+#### :eight: Request
+
+```console
+curl -X PUT \
+  http://localhost:8080/authzforce-ce/domains/Sv-RRw9vEem6UQJCrBIBDA/pap/pdp.properties \
+  -H 'Content-Type: application/xml' \
+  -d '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><pdpPropertiesUpdate xmlns="http://authzforce.github.io/rest-api-model/xmlns/authz/5"><rootPolicyRefExpression>f8194af5-8a07-486a-9581-c1f05d05483c</rootPolicyRefExpression></pdpPropertiesUpdate>'
+```
+
+#### Response
+
+```xml
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ns3:pdpProperties xmlns="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17" xmlns:ns2="http://authzforce.github.io/pap-dao-flat-file/xmlns/properties/3.6" xmlns:ns3="http://authzforce.github.io/rest-api-model/xmlns/authz/5" xmlns:ns4="http://www.w3.org/2005/Atom" xmlns:ns5="http://authzforce.github.io/core/xmlns/pdp/6.0" lastModifiedTime="2019-01-03T15:58:29.351Z">
+    <ns3:feature type="urn:ow2:authzforce:feature-type:pdp:core" enabled="false">urn:ow2:authzforce:feature:pdp:core:strict-attribute-issuer-match</ns3:feature>
+    <ns3:feature type="urn:ow2:authzforce:feature-type:pdp:core" enabled="false">urn:ow2:authzforce:feature:pdp:core:xpath-eval</ns3:feature>
+    <ns3:feature type="urn:ow2:authzforce:feature-type:pdp:request-preproc" enabled="true">urn:ow2:authzforce:feature:pdp:request-preproc:xacml-xml:default-lax</ns3:feature>
+    <ns3:feature type="urn:ow2:authzforce:feature-type:pdp:request-preproc" enabled="false">urn:ow2:authzforce:feature:pdp:request-preproc:xacml-xml:multiple:repeated-attribute-categories-strict</ns3:feature>
+    <ns3:feature type="urn:ow2:authzforce:feature-type:pdp:request-preproc" enabled="false">urn:ow2:authzforce:feature:pdp:request-preproc:xacml-xml:multiple:repeated-attribute-categories-lax</ns3:feature>
+    <ns3:feature type="urn:ow2:authzforce:feature-type:pdp:request-preproc" enabled="false">urn:ow2:authzforce:feature:pdp:request-preproc:xacml-json:default-strict</ns3:feature>
+    <ns3:feature type="urn:ow2:authzforce:feature-type:pdp:request-preproc" enabled="false">urn:ow2:authzforce:feature:pdp:request-preproc:xacml-xml:default-strict</ns3:feature>
+    <ns3:feature type="urn:ow2:authzforce:feature-type:pdp:request-preproc" enabled="false">urn:ow2:authzforce:feature:pdp:request-preproc:xacml-json:default-lax</ns3:feature>
+    <ns3:feature type="urn:ow2:authzforce:feature-type:pdp:result-postproc" enabled="false">urn:ow2:authzforce:feature:pdp:result-postproc:xacml-json:default</ns3:feature>
+    <ns3:rootPolicyRefExpression>f8194af5-8a07-486a-9581-c1f05d05483c</ns3:rootPolicyRefExpression>
+    <ns3:applicablePolicies>
+        <ns3:rootPolicyRef Version="2">f8194af5-8a07-486a-9581-c1f05d05483c</ns3:rootPolicyRef>
+    </ns3:applicablePolicies>
+</ns3:pdpProperties>
+```
+
+
+#### :nine: Request
+
+Since the new policy has been activated, at this point, making a request to access to `loading` in the `white` zone will return `Deny`
+
+
+```console
+curl -X POST \
+  http://localhost:8080/authzforce-ce/domains/Sv-RRw9vEem6UQJCrBIBDA/pdp \
+  -H 'Content-Type: application/xml' \
+  -d '<?xml version="1.0" encoding="UTF-8"?>
+<Request xmlns="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17" CombinedDecision="false" ReturnPolicyIdList="false">
+   <Attributes Category="urn:oasis:names:tc:xacml:3.0:attribute-category:resource">
+      <Attribute AttributeId="urn:oasis:names:tc:xacml:1.0:resource:resource-id" IncludeInResult="false">
+         <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">airplane!</AttributeValue>
+      </Attribute>
+      <Attribute AttributeId="urn:thales:xacml:2.0:resource:sub-resource-id" IncludeInResult="false">
+         <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">white</AttributeValue>
+      </Attribute>
+   </Attributes>
+   <Attributes Category="urn:oasis:names:tc:xacml:3.0:attribute-category:action">
+      <Attribute AttributeId="urn:oasis:names:tc:xacml:1.0:action:action-id" IncludeInResult="false">
+         <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">loading</AttributeValue>
+      </Attribute>
+   </Attributes>
+   <Attributes Category="urn:oasis:names:tc:xacml:3.0:attribute-category:environment" />
+</Request>'
+```
+
+#### Response
+
+```xml
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Response xmlns="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17" xmlns:ns2="http://authzforce.github.io/pap-dao-flat-file/xmlns/properties/3.6" xmlns:ns3="http://authzforce.github.io/rest-api-model/xmlns/authz/5" xmlns:ns4="http://www.w3.org/2005/Atom" xmlns:ns5="http://authzforce.github.io/core/xmlns/pdp/6.0">
+    <Result>
+        <Decision>Deny</Decision>
+    </Result>
+</Response>
+```
+
+#### :one::zero: Request
+
+Making a request to access to `loading` in the `red` zone under the current policy will return `Permit`
+
+
+```console
+curl -X POST \
+  http://localhost:8080/authzforce-ce/domains/Sv-RRw9vEem6UQJCrBIBDA/pdp \
+  -H 'Content-Type: application/xml' \
+  -d '<?xml version="1.0" encoding="UTF-8"?>
+<Request xmlns="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17" CombinedDecision="false" ReturnPolicyIdList="false">
+   <Attributes Category="urn:oasis:names:tc:xacml:3.0:attribute-category:resource">
+      <Attribute AttributeId="urn:oasis:names:tc:xacml:1.0:resource:resource-id" IncludeInResult="false">
+         <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">airplane!</AttributeValue>
+      </Attribute>
+      <Attribute AttributeId="urn:thales:xacml:2.0:resource:sub-resource-id" IncludeInResult="false">
+         <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">red</AttributeValue>
+      </Attribute>
+   </Attributes>
+   <Attributes Category="urn:oasis:names:tc:xacml:3.0:attribute-category:action">
+      <Attribute AttributeId="urn:oasis:names:tc:xacml:1.0:action:action-id" IncludeInResult="false">
+         <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">loading</AttributeValue>
+      </Attribute>
+   </Attributes>
+   <Attributes Category="urn:oasis:names:tc:xacml:3.0:attribute-category:environment" />
+</Request>'
+```
+
+#### Response
+
+```xml
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Response xmlns="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17" xmlns:ns2="http://authzforce.github.io/pap-dao-flat-file/xmlns/properties/3.6" xmlns:ns3="http://authzforce.github.io/rest-api-model/xmlns/authz/5" xmlns:ns4="http://www.w3.org/2005/Atom" xmlns:ns5="http://authzforce.github.io/core/xmlns/pdp/6.0">
+    <Result>
+        <Decision>Permit</Decision>
+    </Result>
+</Response>
+```
+
+
+
 ## Keyrock - Administrating XACML Permissions
+
+XXXXXXXXX
+
 
 ### Create Token with Password
 
+#### :one::one: Request
+
+Enter a username and password to enter the application. The default super-user has the values `alice-the-admin@test.com` and `test`.
+
+
+
+```console
+curl -iX POST \
+  http://localhost:3005/v1/auth/tokens \
+  -H 'Accept: application/json' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "name": "alice-the-admin@test.com",
+  "password": "test"
+}'
+```
+
+#### Response
+
+The response header from **Keyrock** returns an `X-Subject-token` which identifies who has logged
+on the application. This token is required in all subsequent requests to gain
+access
+
+```
+HTTP/1.1 201 Created
+X-Subject-Token: d848eb12-889f-433b-9811-6a4fbf0b86ca
+Content-Type: application/json; charset=utf-8
+Content-Length: 138
+ETag: W/"8a-TVwlWNKBsa7cskJw55uE/wZl6L8"
+Date: Mon, 30 Jul 2018 12:07:54 GMT
+Connection: keep-alive
+```
+
+The response body from **Keyrock** indicates that **Authzforce** is in use and XACML Rules can be used to define access policies.
+
+```json
+{
+    "token": {
+        "methods": [
+            "password"
+        ],
+        "expires_at": "2019-01-03T17:04:43.358Z"
+    },
+    "idm_authorization_config": {
+        "level": "advanced",
+        "authzforce": true
+    }
+}
+```
+
+
+
+
+
+#### :one: Request
+
+```console
+```
+
+#### Response
+
+```xml
+```
+
 ### Update an XACML Permission
+
+#### :one: Request
+
+```console
+```
+
+#### Response
+
+```xml
+```
 
 
 # PEP Proxy - Extending Advanced Authorization
@@ -257,6 +803,12 @@ reason to be granted access
 ## PEP Proxy - Sample Code
 
 ## PEP Proxy - Running the Example
+
+# Next Steps
+
+Want to learn how to add more complexity to your application by adding advanced
+features? You can find out by reading the other
+[tutorials in this series](https://fiware-tutorials.rtfd.io)
 
 ---
 
