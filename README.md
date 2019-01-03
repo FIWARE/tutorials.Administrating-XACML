@@ -270,7 +270,7 @@ The new `domain-id`  (in this case `Sv-RRw9vEem6UQJCrBIBDA` ) will be used with 
 #### :two: Request
 
 To request a decision from Authzforce, make a POST request to the
-`domains/{domain-id}/pdp` endpoint. In this case the user has the
+`domains/{domain-id}/pdp` endpoint. In this case the user
 is requesting access to `loading` in the `white` zone.
 
 
@@ -316,6 +316,11 @@ To create a `PolicySet` for a given domain information in **Authzforce**, make a
 POST request to the
 `/authzforce-ce/domains/{{domain-id}}/pap/policies` endpoint including the full set
 of XACML rules to upload.
+
+For this initial Policy, the following rules will be enforced
+
+* The **white** zone is for immediate loading and unloading of passengers only
+* There is no stopping in the **red** zone
 
 
 #### :three: Request
@@ -521,6 +526,11 @@ POST request to the
 `/authzforce-ce/domains/{{domain-id}}/pap/policies` endpoint including the full set
 of XACML rules to upload. Note that the `Version` must be unique.
 
+For the updated Policy, the previous rules will be reversed
+
+* The **red** zone is for immediate loading and unloading of passengers only
+* There is no stopping in the **white** zone
+
 
 #### :seven: Request
 
@@ -603,6 +613,11 @@ The rules of the new `PolicySet` will not be applied until the `PolicySet` is ac
 
 ### Activating an updated PolicySet
 
+To update an active a `PolicySet`, make another PUT request to the
+`/authzforce-ce/domains/{domain-id}/pap/pdp.properties` endpoint including the `policy-id`
+to update within the `<rootPolicyRefExpresion>` attribute. The ruleset will be updated to
+apply the latest uploaded version.
+
 #### :eight: Request
 
 ```console
@@ -613,6 +628,8 @@ curl -X PUT \
 ```
 
 #### Response
+
+The response returns information about the `PolicySet` applied.
 
 ```xml
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
@@ -716,7 +733,7 @@ curl -X POST \
 
 ## Keyrock - Administrating XACML Permissions
 
-XXXXXXXXX
+As can be seen .... XXXXX
 
 
 ### Create Token with Password

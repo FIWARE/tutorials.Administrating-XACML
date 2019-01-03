@@ -46,8 +46,8 @@
 						"header": [
 							{
 								"key": "Content-Type",
-								"value": "application/xml",
-								"type": "text"
+								"type": "text",
+								"value": "application/xml"
 							}
 						],
 						"body": {
@@ -68,7 +68,7 @@
 								"policies"
 							]
 						},
-						"description": "To create a `PolicySet` for a given domain information in **Authzforce**, make a\nPOST request to the\n`/authzforce-ce/domains/{{domain-id}}/pap/policies` endpoint including the full set\nof XACML rules to upload.\n\nThe response contains the internal id of the policy held within **Authzforce** and \nversion information about the `PolicySet` versions available.\nThe rules of the new `PolicySet` will not be applied until the `PolicySet` is activated."
+						"description": "To create a `PolicySet` for a given domain information in **Authzforce**, make a\nPOST request to the\n`/authzforce-ce/domains/{{domain-id}}/pap/policies` endpoint including the full set\nof XACML rules to upload.\n\nFor this initial Policy, the following rules will be enforced\n\n* The **white** zone is for immediate loading and unloading of passengers only\n* There is no stopping in the **red** zone\n\nThe response contains the internal id of the policy held within **Authzforce** and \nversion information about the `PolicySet` versions available.\nThe rules of the new `PolicySet` will not be applied until the `PolicySet` is activated."
 					},
 					"response": []
 				},
@@ -112,8 +112,8 @@
 						"header": [
 							{
 								"key": "Content-Type",
-								"value": "application/xml",
-								"type": "text"
+								"type": "text",
+								"value": "application/xml"
 							}
 						],
 						"body": {
@@ -134,7 +134,7 @@
 								"policies"
 							]
 						},
-						"description": "To update a `PolicySet` for a given domain information in **Authzforce**, make a\nPOST request to the\n`/authzforce-ce/domains/{{domain-id}}/pap/policies` endpoint including the full set\nof XACML rules to upload. Note that the `Version` must be unique.\n\nThe response contains version information about the `PolicySet` versions available.\nThe rules of the new `PolicySet` will not be applied until the `PolicySet` is activated."
+						"description": "To update a `PolicySet` for a given domain information in **Authzforce**, make a\nPOST request to the\n`/authzforce-ce/domains/{{domain-id}}/pap/policies` endpoint including the full set\nof XACML rules to upload. Note that the `Version` must be unique.\n\nFor the updated Policy, the previous rules will be reversed\n\n* The **red** zone is for immediate loading and unloading of passengers only\n* There is no stopping in the **white** zone\n\nThe response contains version information about the `PolicySet` versions available.\nThe rules of the new `PolicySet` will not be applied until the `PolicySet` is activated."
 					},
 					"response": []
 				},
@@ -416,49 +416,49 @@
 	],
 	"variable": [
 		{
-			"id": "59f5c604-1957-4999-a209-4d06be220808",
+			"id": "796e6616-3927-4b3f-a206-90bbff5bfed4",
 			"key": "authzforce",
 			"value": "localhost:8080",
 			"type": "string"
 		},
 		{
-			"id": "a7c31e69-46b7-4c19-b6d1-014b5ed35a0c",
+			"id": "701e82e0-b6c6-44d2-8866-6112965fab53",
 			"key": "keyrock",
 			"value": "localhost:3005",
 			"type": "string"
 		},
 		{
-			"id": "c7c5d770-9bd0-4fc4-9f4b-d1dc80cb7730",
+			"id": "107aa9a9-7624-4598-874f-41507d5f9019",
 			"key": "domain-id",
 			"value": "gQqnLOnIEeiBFQJCrBIBDA",
 			"type": "string"
 		},
 		{
-			"id": "c3b3f14c-b457-48e3-be8f-56cf3c7874d3",
+			"id": "89c8e348-a327-48b1-ba2a-d611887e298d",
 			"key": "policy-id",
 			"value": "f8194af5-8a07-486a-9581-c1f05d05483c",
 			"type": "string"
 		},
 		{
-			"id": "9a130055-6874-4ced-95f7-1fe7d9683d31",
+			"id": "9add5821-e200-44eb-b389-0ff4310712d3",
 			"key": "Authorization",
 			"value": "dHV0b3JpYWwtZGNrci1zaXRlLTAwMDAteHByZXNzd2ViYXBwOnR1dG9yaWFsLWRja3Itc2l0ZS0wMDAwLWNsaWVudHNlY3JldA==",
 			"type": "string"
 		},
 		{
-			"id": "668e682e-ba1a-44c3-a3e4-b2e92306bcee",
+			"id": "f298603b-6f03-4f81-95ea-a5e9b06962f4",
 			"key": "access-token-bob",
 			"value": "1b88827586409b3b4dc67378e6b945c99b94c6cf",
 			"type": "string"
 		},
 		{
-			"id": "90ef1a53-153c-453e-8e22-271cd10cbfdd",
+			"id": "ea09f614-443f-4c2b-96be-71033c21a9b3",
 			"key": "app-id",
 			"value": "tutorial-dckr-site-0000-xpresswebapp",
 			"type": "string"
 		},
 		{
-			"id": "3da9d6c1-f381-4fcf-acfb-0cd08839c84d",
+			"id": "33d4b213-cbfd-4d83-8c75-0045af6f592a",
 			"key": "new-domain-id",
 			"value": "Sv-RRw9vEem6UQJCrBIBDA",
 			"type": "string"
