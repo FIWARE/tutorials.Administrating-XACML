@@ -58,9 +58,9 @@ is also available.
 >
 > — Los Angeles International Airport Rules and Regulations, Section 12 - Landside Motor Vehicle Operations
 
-Business rules change over time, and it is necessary to be able to amend access controls accordingly. The [previous tutorial](https://github.com/Fiware/tutorials.XACML-Access-Rules) included a static XACML `<PolicySet>` loaded into **Authzforce**. This component offers advanced authorization (level 3) access control every policy decision is calculated on the fly and new rules can be applied under new circumstances.
-The details of the [Authzforce](https://authzforce-ce-fiware.readthedocs.io/) Policy Decision Point (PDP) were discussed in the [previous tutorial](https://github.com/Fiware/tutorials.XACML-Access-Rules), suffice to say, the PDP interprets rules according to the
-[XACML standard](https://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml), this offers a means to adjudicate on any access request provided that sufficient information can be supplied.
+Business rules change over time, and it is necessary to be able to amend access controls accordingly. The [previous tutorial](https://github.com/Fiware/tutorials.XACML-Access-Rules) included a static XACML `<PolicySet>` loaded into **Authzforce**. This component offers advanced authorization (level 3) access control where every policy decision is calculated on the fly and new rules can be applied under new circumstances.
+The details of the [Authzforce](https://authzforce-ce-fiware.readthedocs.io/) Policy Decision Point (PDP) were discussed in the [previous tutorial](https://github.com/Fiware/tutorials.XACML-Access-Rules), suffice to say, the **Authzforce** PDP interprets rules according to the
+[XACML standard](https://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml) and offers a means to adjudicate on any access request provided that sufficient information can be supplied.
 
 For full flexibility, it must be possible to load, update and activate a new access control XACML `<PolicySet>` whenever necessary. In order to do, this **Authzforce** offers a simple REST Policy Adminstration Point (PAP), an alternative role-based PAP is available within **Keyrock**
 
@@ -86,19 +86,19 @@ Further information can be found within the [XACML standard](https://www.oasis-o
 
 ## PAP - Policy Administration Point
 
-For the first half of the tutorial, a simple two rule `<PolicySet>` will be administered using the **Authzforce** PAP API. Thereafter **Keyrock** will be used with the existing tutorial application to administer XACML rules on an individual `<Rule>` level. Code within the **PEP-Proxy** will be customized to enable the enforcement of complex XACML rules.
+For the first half of the tutorial, a simple two rule `<PolicySet>` will be administered using the **Authzforce** PAP. Thereafter the **Keyrock** GUI will be used to administer XACML rules within the existing tutorial application  on an individual XACML `<Rule>` level. The policy decision request code within the **PEP-Proxy** may also need to be customized to enable the enforcement of complex XACML rules.
 
 ### Authzforce PAP
 
-Within the **Authzforce** PAP all CRUD actions occur on the `<PolicySet>` level. It is therefore necessary to create a complete valid XACML file before uploading it to the service. There is no GUI available to ensure the validity of the  `<PolicySet>` prior to uploading the XACML.
+Within the **Authzforce** PAP all CRUD actions occur on the `<PolicySet>` level. It is therefore necessary to create a complete, valid XACML file before uploading it to the service. There is no GUI available to ensure the validity of the  `<PolicySet>` prior to uploading the XACML.
 
 ### Keyrock PAP
 
-**Keyrock** can create a valid XACML file based on available roles and permissions and pass this to **Authzforce**. Indeed **Keyrock** already does this when combined with **Authzforce** to translate its own basic authorization (level 2) permissions into advanced authorization (level 3) permissions which can be adjudicated by **Authzforce**.
+**Keyrock** can create a valid XACML file based on available roles and permissions and pass this to **Authzforce**. Indeed **Keyrock** already does this whenever it combines with **Authzforce** as all its own basic authorization (level 2) permissions must be translated into advanced authorization (level 3) permissions before they can be adjudicated by **Authzforce**.
 
-Each role corresponds to a `<Policy>`, each permission within a role corresponds to a `<Rule>`. There is a GUI available for uploading and amending the XACML for each `<Rule>` and all CRUD actions occur on the `<Rule>` level.
+Within **Keyrock**, each role corresponds to an XACML `<Policy>`, each permission within that role corresponds to an XACML `<Rule>`. There is a GUI available for uploading and amending the XACML for each `<Rule>` and all CRUD actions occur on the `<Rule>` level.
 
-Provided care is taken when creating `<Rule>` you can use **Keyrock** to simplify the administration of XACML and create a valid `<PolicySet>`.
+Provided care is taken when creating `<Rule>` you can use **Keyrock** to simplify the administration of XACML and create a valid `<PolicySet>` for **Authzforce**.
 
 ## PEP - Policy Execution Point
 
