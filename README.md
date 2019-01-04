@@ -1,12 +1,12 @@
-[![FIWARE Banner](https://fiware.github.io/tutorials.Adminstrating-XACML/img/fiware.png)](https://www.fiware.org/developers)
+[![FIWARE Banner](https://fiware.github.io/tutorials.Administrating-XACML/img/fiware.png)](https://www.fiware.org/developers)
 
 [![FIWARE Security](https://nexus.lab.fiware.org/repository/raw/public/badges/chapters/security.svg)](https://www.fiware.org/developers/catalogue/)
-[![License: MIT](https://img.shields.io/github/license/fiware/tutorials.Adminstrating-XACML.svg)](https://opensource.org/licenses/MIT)
+[![License: MIT](https://img.shields.io/github/license/fiware/tutorials.Administrating-XACML.svg)](https://opensource.org/licenses/MIT)
 [![Support badge](https://nexus.lab.fiware.org/repository/raw/public/badges/stackoverflow/fiware.svg)](https://stackoverflow.com/questions/tagged/fiware)
 <br/>
 [![Documentation](https://img.shields.io/readthedocs/fiware-tutorials.svg)](https://fiware-tutorials.rtfd.io)
 
-This tutorial introduces the adminstration of level 3 advanced authorization rules into **Keyrock**. The simple verb-resource based permissions are amended to use XACML and new XACML permissions added to the existing roles. The updated ruleset is automatically uploaded to **Authzforce** PDP, so that policy execution points such as the **PEP proxy** are able to apply the latest ruleset.
+This tutorial introduces the administration of level 3 advanced authorization rules into **Keyrock**. The simple verb-resource based permissions are amended to use XACML and new XACML permissions added to the existing roles. The updated ruleset is automatically uploaded to **Authzforce** PDP, so that policy execution points such as the **PEP proxy** are able to apply the latest ruleset.
 
 The tutorial demonstrates examples of interactions using the **Keyrock** GUI, as
 well [cUrl](https://ec.haxx.se/) commands used to access the REST
@@ -154,7 +154,7 @@ Therefore the overall architecture will consist of the following elements:
 Since all interactions between the elements are initiated by HTTP requests, the
 entities can be containerized and run from exposed ports.
 
-![](https://fiware.github.io/tutorials.Adminstrating-XACML/img/architecture.png)
+![](https://fiware.github.io/tutorials.Administrating-XACML/img/architecture.png)
 
 
 The all container configuration values described in the YAML file
@@ -167,8 +167,8 @@ have been described in previous tutorials
 To start the installation, do the following:
 
 ```console
-git clone git@github.com:Fiware/tutorials.Adminstrating-XACML.git
-cd tutorials.Adminstrating-XACML
+git clone git@github.com:Fiware/tutorials.Administrating-XACML.git
+cd tutorials.Administrating-XACML
 
 ./services create
 ```
@@ -176,7 +176,7 @@ cd tutorials.Adminstrating-XACML
 > **Note** The initial creation of Docker images can take up to three minutes
 
 Thereafter, all services can be initialized from the command-line by running the
-[services](https://github.com/Fiware/tutorials.Adminstrating-XACML/blob/master/services)
+[services](https://github.com/Fiware/tutorials.Administrating-XACML/blob/master/services)
 Bash script provided within the repository:
 
 ```console
@@ -337,7 +337,7 @@ curl -X POST \
   -d '<PolicySet>...etc</PolicySet>'
 ```
 
-(Click to expand)
+**(Click to expand)**
   </summary>
 
 ```console
@@ -433,7 +433,10 @@ to update within the `<rootPolicyRefExpresion>` attribute
 curl -X PUT \
   http://localhost:8080/authzforce-ce/domains/Sv-RRw9vEem6UQJCrBIBDA/pap/pdp.properties \
   -H 'Content-Type: application/xml' \
-  -d '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><pdpPropertiesUpdate xmlns="http://authzforce.github.io/rest-api-model/xmlns/authz/5"><rootPolicyRefExpression>f8194af5-8a07-486a-9581-c1f05d05483c</rootPolicyRefExpression></pdpPropertiesUpdate>'
+  -d '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+  <pdpPropertiesUpdate xmlns="http://authzforce.github.io/rest-api-model/xmlns/authz/5">
+    <rootPolicyRefExpression>f8194af5-8a07-486a-9581-c1f05d05483c</rootPolicyRefExpression>
+  </pdpPropertiesUpdate>'
 ```
 
 #### Response
@@ -558,7 +561,7 @@ curl -X POST \
   -d '<PolicySet>...etc</PolicySet>'
 ```
 
-(Click to expand)
+**(Click to expand)**
   </summary>
 
 ```console
@@ -653,7 +656,10 @@ apply the latest uploaded version.
 curl -X PUT \
   http://localhost:8080/authzforce-ce/domains/Sv-RRw9vEem6UQJCrBIBDA/pap/pdp.properties \
   -H 'Content-Type: application/xml' \
-  -d '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><pdpPropertiesUpdate xmlns="http://authzforce.github.io/rest-api-model/xmlns/authz/5"><rootPolicyRefExpression>f8194af5-8a07-486a-9581-c1f05d05483c</rootPolicyRefExpression></pdpPropertiesUpdate>'
+  -d '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+  <pdpPropertiesUpdate xmlns="http://authzforce.github.io/rest-api-model/xmlns/authz/5">
+    <rootPolicyRefExpression>f8194af5-8a07-486a-9581-c1f05d05483c</rootPolicyRefExpression>
+  </pdpPropertiesUpdate>'
 ```
 
 #### Response
