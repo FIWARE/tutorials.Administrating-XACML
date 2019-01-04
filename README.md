@@ -58,11 +58,11 @@ is also available.
 >
 > — Los Angeles International Airport Rules and Regulations, Section 12 - Landside Motor Vehicle Operations
 
-Business rules change over time, and it is necessary to be able to amend access controls accordingly. The [previous tutorial](https://github.com/Fiware/tutorials.XACML-Access-Rules) included a previously generated XACML `<PolicySet>` loaded into **Authzforce**. **Authzforce**. offers advanced authorization (level 3) access control - this means that every policy decision is calculated on the fly so new rules can be applied under new circumstances.
-The [Authzforce](https://authzforce-ce-fiware.readthedocs.io/) Policy Decision Point (PDP) was discussed in the [previous tutorial](https://github.com/Fiware/tutorials.XACML-Access-Rules) - it interprets rules according to the
+Business rules change over time, and it is necessary to be able to amend access controls accordingly. The [previous tutorial](https://github.com/Fiware/tutorials.XACML-Access-Rules) included a static XACML `<PolicySet>` loaded into **Authzforce**. This component offers advanced authorization (level 3) access control every policy decision is calculated on the fly and new rules can be applied under new circumstances.
+The details of the [Authzforce](https://authzforce-ce-fiware.readthedocs.io/) Policy Decision Point (PDP) were discussed in the [previous tutorial](https://github.com/Fiware/tutorials.XACML-Access-Rules), suffice to say, the PDP interprets rules according to the
 [XACML standard](https://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml), this offers a means to adjudicate on any access request provided that sufficient information can be supplied.
 
-For full flexibility, it must be possible to load, update and activate a new access control `<PolicySet>` whenever necessary. In order to do, this **Authzforce** offers a simple REST Policy Adminstration Point (PAP), an alternative role-based PAP is available within **Keyrock**
+For full flexibility, it must be possible to load, update and activate a new access control XACML `<PolicySet>` whenever necessary. In order to do, this **Authzforce** offers a simple REST Policy Adminstration Point (PAP), an alternative role-based PAP is available within **Keyrock**
 
 ## What is XACML
 
