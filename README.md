@@ -6,7 +6,8 @@
 <br/>
 [![Documentation](https://img.shields.io/readthedocs/fiware-tutorials.svg)](https://fiware-tutorials.rtfd.io)
 
-This tutorial introduces the administration of level 3 advanced authorization rules into **Keyrock**. The simple verb-resource based permissions are amended to use XACML and new XACML permissions added to the existing roles. The updated ruleset is automatically uploaded to **Authzforce** PDP, so that policy execution points such as the **PEP proxy** are able to apply the latest ruleset.
+This tutorial describes the administration of level 3 advanced authorization rules into **Authzforce**, either directly, or with the help of the **Keyrock**
+GUI. The simple verb-resource based permissions are amended to use XACML and new XACML permissions added to the existing roles. The updated ruleset is automatically uploaded to **Authzforce** PDP, so that policy execution points such as the **PEP proxy** are able to apply the latest ruleset.
 
 The tutorial demonstrates examples of interactions using the **Keyrock** GUI, as
 well [cUrl](https://ec.haxx.se/) commands used to access the REST
@@ -20,6 +21,9 @@ is also available.
 
 - [Administrating XACML Rules](#administrating-xacml-rules)
   * [What is XACML](#what-is-xacml)
+  * [PAP - Policy Administration Point](#pap---policy-administration-point)
+    + [Authzforce PAP](#authzforce-pap)
+    + [Keyrock PAP](#keyrock-pap)
 - [Prerequisites](#prerequisites)
   * [Docker](#docker)
   * [Cygwin](#cygwin)
@@ -53,19 +57,58 @@ is also available.
 >
 > — Los Angeles International Airport Rules and Regulations, Section 12 - Landside Motor Vehicle Operations
 
-Business rules change over time, and it is necessary to be able to amend access controls accordingly. The [previous tutorial](https://github.com/Fiware/tutorials.XACML-Access-Rules) included a previously generated XACML `<PolicySet>` loaded into **Authzforce**. Advanced authorization (level 3) access control offers great flexibility in that every policy decision is calculated on the fly so new rules can be applied under new circumstances. In order to do this it must be possible to load, update and activate a new  `<PolicySet>` whenever necessary. In order to do, this **Authzforce** offers a simple REST Policy Adminstration Point (PAP).
-
+Business rules change over time, and it is necessary to be able to amend access controls accordingly. The [previous tutorial](https://github.com/Fiware/tutorials.XACML-Access-Rules) included a previously generated XACML `<PolicySet>` loaded into **Authzforce**. Advanced authorization (level 3) access control offers great flexibility in that every policy decision is calculated on the fly so new rules can be applied under new circumstances.
 The [Authzforce](https://authzforce-ce-fiware.readthedocs.io/) Policy Decision Point (PDP) was discussed in the [previous tutorial](https://github.com/Fiware/tutorials.XACML-Access-Rules) - it interprets rules according to the
 [XACML standard](https://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml), this offers a means to adjudicate on any access request provided that sufficient information can be supplied.
 
-
+For full flexibility, it must be possible to load, update and activate a new access control `<PolicySet>` whenever necessary. In order to do, this **Authzforce** offers a simple REST Policy Adminstration Point (PAP), an alternative role-based PAP is available within **Keyrock**
 
 ## What is XACML
 
+eXtensible Access Control Markup Language (XACML) is a vendor neutral
+declarative access control policy language. It was created to promote common
+access control terminology and interoperability. The architectural naming
+conventions for elements such as Policy Execution Point (PEP) and Policy
+Decision Point (PDP) come from the XACML specifications.
 
-The PEP
+XACML policies are split into a hierarchy of three levels - `<PolicySet>`,
+`<Policy>` and `<Rule>`, the `<PolicySet>` is a collection of `<Policy>`
+elements each of which contain one or more `<Rule>` elements.
 
+Each `<Rule>` within a `<Policy>` is evaluated as to whether it should grant
+access to a resource - the overall `<Policy>` result is defined by the overall
+result of all `<Rule>` elements processed in turn. Separate `<Policy>` results
+are then evaluated against each other using combining alogorthms define which
+`<Policy>` wins in case of conflict.
 
+## PAP - Policy Administration Point
+
+For the first half of the tutorial, a simple two rule `<PolicySet>` will be administered using the **Authzforce** PAP API. Thereafter **Keyrock** will be used with the existing tutorial application to administer XACML rules on an individual `<Rule>` level. Code within the **PEP-Proxy** will be customized to enable the enforcement of complex XACML rules.
+
+### Authzforce PAP
+
+Within the **Authzforce** PAP all CRUD actions occur on the `<PolicySet>` level. It is therefore necessary to create a complete valid XACML file before uploading it to the service. There is no GUI available to ensure the validity of the  `<PolicySet>` prior to uploading the XACML.
+
+### Keyrock PAP
+
+**Keyrock** can create a valid XACML file based on available roles and permissions and pass this to **Authzforce**. Indeed **Keyrock** already does this when combined with **Authzforce** to translate its own basic authorization (level 2) permissions into advanced authorization (level 3) permissions which can be adjudicated by **Authzforce**.
+
+Each role corresponds to a `<Policy>`, each permission within a role corresponds to a `<Rule>`. There is a GUI available for uploading and amending the XACML for each `<Rule>` and all CRUD actions occur on the `<Rule>` level.
+
+Provided care is taken when creating `<Rule>` you can use **Keyrock** to simplify the administration of XACML and create a valid `<PolicySet>`.
+
+## PEP - Policy Execution Point
+
+When using advanced authorization (level 3),  a policy execution point sends the an authorization request to he relevant domain endpoint within Authzforce,
+providing all of the information necessary for Authzforce to provide a
+judgement. Details of the interaction can be found in the [previous tutorial](https://github.com/Fiware/tutorials.XACML-Access-Rules).
+
+The full code to supply each request to Authzforce can be found within the
+tutorials'
+[Git Repository](https://github.com/Fiware/tutorials.Step-by-Step/blob/master/context-provider/lib/azf.js)
+
+Obviously the definition of _"all of the information necessary"_ may change
+over time, applications must therefore be flexible enough to be able to modify the requests sent to ensure that sufficient information is passed.
 
 # Prerequisites
 
@@ -99,18 +142,19 @@ functionality similar to a Linux distribution on Windows.
 
 # Architecture
 
-This application adds OAuth2-driven security into the existing Stock Management
-and Sensors-based application created in
-[previous tutorials](https://github.com/Fiware/tutorials.IoT-Agent/) by using
-the data created in the first
-[security tutorial](https://github.com/Fiware/tutorials.Identity-Management/)
-and reading it programmatically. It will make use of three FIWARE components -
-the [Orion Context Broker](https://fiware-orion.readthedocs.io/en/latest/),the
-[IoT Agent for UltraLight 2.0](https://fiware-iotagent-ul.readthedocs.io/en/latest/)
-and integrates the use of the
-[Keyrock](https://fiware-idm.readthedocs.io/en/latest/) Generic enabler. Usage
-of the Orion Context Broker is sufficient for an application to qualify as
-_“Powered by FIWARE”_.
+This application demonstrates the admininistration of level 3 Advanced Authorization security into the existing
+Stock Management and Sensors-based application created in
+[previous tutorials](https://github.com/Fiware/tutorials.XACML-Access-Rules/) and
+secures access to the context broker behind a
+[PEP Proxy](https://github.com/Fiware/tutorials.PEP-Proxy/). It will make use of
+five FIWARE components - the
+[Orion Context Broker](https://fiware-orion.readthedocs.io/en/latest/),the
+[IoT Agent for UltraLight 2.0](https://fiware-iotagent-ul.readthedocs.io/en/latest/),
+the [Keyrock](https://fiware-idm.readthedocs.io/en/latest/) Identity Manager,
+the [Wilma]() PEP Proxy and the
+[Authzforce](https://authzforce-ce-fiware.readthedocs.io) XACML Server. All
+access control decisions will be delegated to **Authzforce** which will read the
+ruleset from a previously uploaded policy domain.
 
 Both the Orion Context Broker and the IoT Agent rely on open source
 [MongoDB](https://www.mongodb.com/) technology to keep persistence of the
@@ -136,11 +180,12 @@ Therefore the overall architecture will consist of the following elements:
     -   An OAuth2 authentication system for Applications and Users
     -   A site graphical frontend for Identity Management Administration
     -   An equivalent REST API for Identity Management via HTTP requests
-
--   FIWARE [Authzforce](https://fiware-pep-proxy.rtfd.io/) is a XACML Server providing an interpretive Policy Decision Point (PDP)
-    access to the **Orion** and/or **IoT Agent** microservices
+-   FIWARE [Authzforce](https://authzforce-ce-fiware.readthedocs.io/) is a XACML
+    Server providing an interpretive Policy Decision Point (PDP) protecting access to resources
+    such as **Orion** and the tutorial application.
 -   FIWARE [Wilma](https://fiware-pep-proxy.rtfd.io/) is a PEP Proxy securing
-    access to the **Orion** microservices, it requests authorisation decisions from **Authzforce**
+    access to the **Orion** microservices, it delegates the passing of
+    authorisation decisions to **Authzforce** PDP
 -   The underlying [MongoDB](https://www.mongodb.com/) database :
     -   Used by the **Orion Context Broker** to hold context data information
         such as data entities, subscriptions and registrations
@@ -152,7 +197,8 @@ Therefore the overall architecture will consist of the following elements:
     -   Displays store information
     -   Shows which products can be bought at each store
     -   Allows users to "buy" products and reduce the stock count.
-    -   Allows authorized users into restricted areas, it requests authoriation decisions from **Authzforce**
+    -   Allows authorized users into restricted areas, it also delegates
+        authoriation decisions to the **Authzforce** PDP
 -   A webserver acting as set of
     [dummy IoT devices](https://github.com/Fiware/tutorials.IoT-Sensors) using
     the
@@ -164,11 +210,8 @@ entities can be containerized and run from exposed ports.
 
 ![](https://fiware.github.io/tutorials.Administrating-XACML/img/architecture.png)
 
-
-The all container configuration values described in the YAML file
-have been described in previous tutorials
-
-
+The all container configuration values found in the YAML file
+have been described in previous tutorials.
 
 # Start Up
 
@@ -213,7 +256,7 @@ Application
     store detectives under him:
     -   Detective1
     -   Detective2
-    
+
 The following people at `example.com` have signed up for accounts, but have no
 reason to be granted access
 
@@ -221,7 +264,7 @@ reason to be granted access
 -   Mallory - Mallory the malicious attacker
 -   Rob - Rob the Robber
 
-    
+
 <details>
   <summary>
    For more details <b>(Click to expand)</b>
@@ -250,18 +293,20 @@ reason to be granted access
 
 To apply an access control policy, it is necessary to be able to do the following:
 
-a) Create a consistent `<PolicySet>`
-b) Supply a Policy Execution Point (PEP) which provides necessary data
+1. Create a consistent `<PolicySet>`
+2. Supply a Policy Execution Point (PEP) which provides necessary data
 
 As will be seen, **Keyrock** is able help with the first point, and custom code within the **PEP Proxy** can help with the second. **Authzforce** itself does not offer a UI, and is not concerned with generation and management of XACML policies - it assumes that each `<PolicySet>` it receives has already been generated by another component.
 
 Full-blown XACML editors are available, but the limited editor within **Keyrock** is usually sufficient for most access control scenarios.
 
-## Authzforce - Administrating XACML PolicySets
+## Authzforce PAP
 
 **Authzforce** can act as a Policy Administration Point (PAP), this means that PolicySets can be created and amended using API calls directly to **Authzforce**
 
-However there is no GUI for creating or amending a `<PolicySet>`, and no generation tool. All CRUD actions occur on the `<PolicySet.` level.
+However there is no GUI for creating or amending a `<PolicySet>`, and no generation tool. All CRUD actions occur on the `<PolicySet>` level.
+
+A full XACML `<PolicySet>` for any non-trivial application is very verbose. For simplicity, for this part of the tutorial, we will work on a completely new set of access rules designed for airport parking enforcement. **Authzforce** is implicitly multi-tenant - a single XACML server can be used to administrate access control policies for multiple applications. Security policies for each application are held in a separate **domain** where they can access their own `<PolicySets>` - therefore administrating the airport application will not interfere with the existing rules for the tutorial supermarket application.
 
 ### Creating a new Domain
 
@@ -806,7 +851,7 @@ curl -X POST \
 
 
 
-## Keyrock - Administrating XACML Permissions
+## Keyrock PAP
 
 **Keyrock** offers a role based access control identity management system. Therefore every permission is only accessible to  users within a given role. We have already seen how Verb-Resource rules can be [set-up](https://github.com/Fiware/tutorials.Roles-Permissions/)) and [enforced](https://github.com/Fiware/tutorials.Securing-Access/)) using the basic authorization (level 2) access control mechanism found within Keyrock, the data for defining an advanced permission can also be administed using the **Keyrock** GUI or via **Keyrock** REST API requests.
 
