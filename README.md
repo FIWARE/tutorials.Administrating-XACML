@@ -24,6 +24,7 @@ is also available.
   * [PAP - Policy Administration Point](#pap---policy-administration-point)
     + [Authzforce PAP](#authzforce-pap)
     + [Keyrock PAP](#keyrock-pap)
+  * [PEP - Policy Execution Point](#pep---policy-execution-point)
 - [Prerequisites](#prerequisites)
   * [Docker](#docker)
   * [Cygwin](#cygwin)
@@ -57,7 +58,7 @@ is also available.
 >
 > — Los Angeles International Airport Rules and Regulations, Section 12 - Landside Motor Vehicle Operations
 
-Business rules change over time, and it is necessary to be able to amend access controls accordingly. The [previous tutorial](https://github.com/Fiware/tutorials.XACML-Access-Rules) included a previously generated XACML `<PolicySet>` loaded into **Authzforce**. Advanced authorization (level 3) access control offers great flexibility in that every policy decision is calculated on the fly so new rules can be applied under new circumstances.
+Business rules change over time, and it is necessary to be able to amend access controls accordingly. The [previous tutorial](https://github.com/Fiware/tutorials.XACML-Access-Rules) included a previously generated XACML `<PolicySet>` loaded into **Authzforce**. **Authzforce**. offers advanced authorization (level 3) access control - this means that every policy decision is calculated on the fly so new rules can be applied under new circumstances.
 The [Authzforce](https://authzforce-ce-fiware.readthedocs.io/) Policy Decision Point (PDP) was discussed in the [previous tutorial](https://github.com/Fiware/tutorials.XACML-Access-Rules) - it interprets rules according to the
 [XACML standard](https://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml), this offers a means to adjudicate on any access request provided that sufficient information can be supplied.
 
@@ -81,6 +82,8 @@ result of all `<Rule>` elements processed in turn. Separate `<Policy>` results
 are then evaluated against each other using combining alogorthms define which
 `<Policy>` wins in case of conflict.
 
+Further information can be found within the [XACML standard](https://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml)
+
 ## PAP - Policy Administration Point
 
 For the first half of the tutorial, a simple two rule `<PolicySet>` will be administered using the **Authzforce** PAP API. Thereafter **Keyrock** will be used with the existing tutorial application to administer XACML rules on an individual `<Rule>` level. Code within the **PEP-Proxy** will be customized to enable the enforcement of complex XACML rules.
@@ -99,11 +102,11 @@ Provided care is taken when creating `<Rule>` you can use **Keyrock** to simplif
 
 ## PEP - Policy Execution Point
 
-When using advanced authorization (level 3),  a policy execution point sends the an authorization request to he relevant domain endpoint within Authzforce,
-providing all of the information necessary for Authzforce to provide a
+When using advanced authorization (level 3),  a policy execution point sends the an authorization request to he relevant domain endpoint within **Authzforce**,
+providing all of the information necessary for **Authzforce** to provide a
 judgement. Details of the interaction can be found in the [previous tutorial](https://github.com/Fiware/tutorials.XACML-Access-Rules).
 
-The full code to supply each request to Authzforce can be found within the
+The full code to supply each request to **Authzforce** can be found within the
 tutorials'
 [Git Repository](https://github.com/Fiware/tutorials.Step-by-Step/blob/master/context-provider/lib/azf.js)
 
