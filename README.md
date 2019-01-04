@@ -325,6 +325,20 @@ For this initial Policy, the following rules will be enforced
 
 #### :three: Request
 
+
+<details>
+  <summary>
+
+```console
+curl -X POST \
+  http://localhost:8080/authzforce-ce/domains/Sv-RRw9vEem6UQJCrBIBDA/pap/policies \
+  -H 'Content-Type: application/xml' \
+  -d '..etc'
+```
+
+the full data for an XACML request is very verbose (Click to expand)
+  </summary>
+
 ```console
 curl -X POST \
   http://localhost:8080/authzforce-ce/domains/Sv-RRw9vEem6UQJCrBIBDA/pap/policies \
@@ -392,6 +406,9 @@ curl -X POST \
 '
 ```
 
+</details>
+
+
 #### Response
 
 The response contains the internal id of the policy held within **Authzforce** and
@@ -427,13 +444,7 @@ The response returns information about the `PolicySet` applied.
 <ns3:pdpProperties xmlns="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17" xmlns:ns2="http://authzforce.github.io/pap-dao-flat-file/xmlns/properties/3.6" xmlns:ns3="http://authzforce.github.io/rest-api-model/xmlns/authz/5" xmlns:ns4="http://www.w3.org/2005/Atom" xmlns:ns5="http://authzforce.github.io/core/xmlns/pdp/6.0" lastModifiedTime="2019-01-03T15:54:45.341Z">
     <ns3:feature type="urn:ow2:authzforce:feature-type:pdp:core" enabled="false">urn:ow2:authzforce:feature:pdp:core:strict-attribute-issuer-match</ns3:feature>
     <ns3:feature type="urn:ow2:authzforce:feature-type:pdp:core" enabled="false">urn:ow2:authzforce:feature:pdp:core:xpath-eval</ns3:feature>
-    <ns3:feature type="urn:ow2:authzforce:feature-type:pdp:request-preproc" enabled="true">urn:ow2:authzforce:feature:pdp:request-preproc:xacml-xml:default-lax</ns3:feature>
-    <ns3:feature type="urn:ow2:authzforce:feature-type:pdp:request-preproc" enabled="false">urn:ow2:authzforce:feature:pdp:request-preproc:xacml-xml:multiple:repeated-attribute-categories-strict</ns3:feature>
-    <ns3:feature type="urn:ow2:authzforce:feature-type:pdp:request-preproc" enabled="false">urn:ow2:authzforce:feature:pdp:request-preproc:xacml-xml:multiple:repeated-attribute-categories-lax</ns3:feature>
-    <ns3:feature type="urn:ow2:authzforce:feature-type:pdp:request-preproc" enabled="false">urn:ow2:authzforce:feature:pdp:request-preproc:xacml-json:default-strict</ns3:feature>
-    <ns3:feature type="urn:ow2:authzforce:feature-type:pdp:request-preproc" enabled="false">urn:ow2:authzforce:feature:pdp:request-preproc:xacml-xml:default-strict</ns3:feature>
-    <ns3:feature type="urn:ow2:authzforce:feature-type:pdp:request-preproc" enabled="false">urn:ow2:authzforce:feature:pdp:request-preproc:xacml-json:default-lax</ns3:feature>
-    <ns3:feature type="urn:ow2:authzforce:feature-type:pdp:result-postproc" enabled="false">urn:ow2:authzforce:feature:pdp:result-postproc:xacml-json:default</ns3:feature>
+... ETC
     <ns3:rootPolicyRefExpression>f8194af5-8a07-486a-9581-c1f05d05483c</ns3:rootPolicyRefExpression>
     <ns3:applicablePolicies>
         <ns3:rootPolicyRef Version="1">f8194af5-8a07-486a-9581-c1f05d05483c</ns3:rootPolicyRef>
@@ -534,6 +545,19 @@ For the updated Policy, the previous rules will be reversed
 
 #### :seven: Request
 
+<details>
+  <summary>
+
+```console
+curl -X POST \
+  http://localhost:8080/authzforce-ce/domains/Sv-RRw9vEem6UQJCrBIBDA/pap/policies \
+  -H 'Content-Type: application/xml' \
+  -d '..etc'
+```
+
+the full data for an XACML request is very verbose (Click to expand)
+  </summary>
+
 ```console
 curl -X POST \
   http://localhost:8080/authzforce-ce/domains/Sv-RRw9vEem6UQJCrBIBDA/pap/policies \
@@ -601,6 +625,8 @@ curl -X POST \
 '
 ```
 
+</details>
+
 #### Response
 
 The response contains version information about the `PolicySet` versions available.
@@ -636,13 +662,7 @@ The response returns information about the `PolicySet` applied.
 <ns3:pdpProperties xmlns="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17" xmlns:ns2="http://authzforce.github.io/pap-dao-flat-file/xmlns/properties/3.6" xmlns:ns3="http://authzforce.github.io/rest-api-model/xmlns/authz/5" xmlns:ns4="http://www.w3.org/2005/Atom" xmlns:ns5="http://authzforce.github.io/core/xmlns/pdp/6.0" lastModifiedTime="2019-01-03T15:58:29.351Z">
     <ns3:feature type="urn:ow2:authzforce:feature-type:pdp:core" enabled="false">urn:ow2:authzforce:feature:pdp:core:strict-attribute-issuer-match</ns3:feature>
     <ns3:feature type="urn:ow2:authzforce:feature-type:pdp:core" enabled="false">urn:ow2:authzforce:feature:pdp:core:xpath-eval</ns3:feature>
-    <ns3:feature type="urn:ow2:authzforce:feature-type:pdp:request-preproc" enabled="true">urn:ow2:authzforce:feature:pdp:request-preproc:xacml-xml:default-lax</ns3:feature>
-    <ns3:feature type="urn:ow2:authzforce:feature-type:pdp:request-preproc" enabled="false">urn:ow2:authzforce:feature:pdp:request-preproc:xacml-xml:multiple:repeated-attribute-categories-strict</ns3:feature>
-    <ns3:feature type="urn:ow2:authzforce:feature-type:pdp:request-preproc" enabled="false">urn:ow2:authzforce:feature:pdp:request-preproc:xacml-xml:multiple:repeated-attribute-categories-lax</ns3:feature>
-    <ns3:feature type="urn:ow2:authzforce:feature-type:pdp:request-preproc" enabled="false">urn:ow2:authzforce:feature:pdp:request-preproc:xacml-json:default-strict</ns3:feature>
-    <ns3:feature type="urn:ow2:authzforce:feature-type:pdp:request-preproc" enabled="false">urn:ow2:authzforce:feature:pdp:request-preproc:xacml-xml:default-strict</ns3:feature>
-    <ns3:feature type="urn:ow2:authzforce:feature-type:pdp:request-preproc" enabled="false">urn:ow2:authzforce:feature:pdp:request-preproc:xacml-json:default-lax</ns3:feature>
-    <ns3:feature type="urn:ow2:authzforce:feature-type:pdp:result-postproc" enabled="false">urn:ow2:authzforce:feature:pdp:result-postproc:xacml-json:default</ns3:feature>
+... ETC
     <ns3:rootPolicyRefExpression>f8194af5-8a07-486a-9581-c1f05d05483c</ns3:rootPolicyRefExpression>
     <ns3:applicablePolicies>
         <ns3:rootPolicyRef Version="2">f8194af5-8a07-486a-9581-c1f05d05483c</ns3:rootPolicyRef>
