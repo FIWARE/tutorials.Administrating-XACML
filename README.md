@@ -325,6 +325,7 @@ For this initial Policy, the following rules will be enforced
 
 #### :three: Request
 
+The full data for an XACML `<PolicySet>` is very verbose and has been omitted from the request below:
 
 <details>
   <summary>
@@ -333,10 +334,10 @@ For this initial Policy, the following rules will be enforced
 curl -X POST \
   http://localhost:8080/authzforce-ce/domains/Sv-RRw9vEem6UQJCrBIBDA/pap/policies \
   -H 'Content-Type: application/xml' \
-  -d '..etc'
+  -d '<PolicySet>...etc</PolicySet>'
 ```
 
-the full data for an XACML request is very verbose (Click to expand)
+(Click to expand)
   </summary>
 
 ```console
@@ -545,6 +546,8 @@ For the updated Policy, the previous rules will be reversed
 
 #### :seven: Request
 
+The full data for an XACML `<PolicySet>` is very verbose and has been omitted from the request below:
+
 <details>
   <summary>
 
@@ -552,10 +555,10 @@ For the updated Policy, the previous rules will be reversed
 curl -X POST \
   http://localhost:8080/authzforce-ce/domains/Sv-RRw9vEem6UQJCrBIBDA/pap/policies \
   -H 'Content-Type: application/xml' \
-  -d '..etc'
+  -d '<PolicySet>...etc</PolicySet>'
 ```
 
-the full data for an XACML request is very verbose (Click to expand)
+(Click to expand)
   </summary>
 
 ```console
