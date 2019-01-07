@@ -33,14 +33,15 @@
                   </Match>
                </AllOf>
             </AnyOf>
+            <AnyOf>
+               <AllOf>
+                  <Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+                     <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">security-role-0000-0000-000000000000</AttributeValue>
+                     <AttributeDesignator Category="urn:oasis:names:tc:xacml:1.0:subject-category:access-subject" AttributeId="urn:oasis:names:tc:xacml:2.0:subject:role" DataType="http://www.w3.org/2001/XMLSchema#string" MustBePresent="true" />
+                  </Match>
+               </AllOf>
+            </AnyOf>
          </Target>
-         <Condition>
-            <Apply FunctionId="urn:oasis:names:tc:xacml:3.0:function:any-of">
-               <Function FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-equal" />
-               <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">security-role-0000-0000-000000000000</AttributeValue>
-               <AttributeDesignator Category="urn:oasis:names:tc:xacml:1.0:subject-category:access-subject" AttributeId="urn:oasis:names:tc:xacml:2.0:subject:role" DataType="http://www.w3.org/2001/XMLSchema#string" MustBePresent="false" />
-            </Apply>
-         </Condition>
       </Rule>
       <Rule RuleId="entrance-open-0000-0000-000000000000" Effect="Permit">
          <Description>Unlock</Description>
@@ -61,14 +62,15 @@
                   </Match>
                </AllOf>
             </AnyOf>
+            <AnyOf>
+               <AllOf>
+                  <Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+                     <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">security-role-0000-0000-000000000000</AttributeValue>
+                     <AttributeDesignator Category="urn:oasis:names:tc:xacml:1.0:subject-category:access-subject" AttributeId="urn:oasis:names:tc:xacml:2.0:subject:role" DataType="http://www.w3.org/2001/XMLSchema#string" MustBePresent="true" />
+                  </Match>
+               </AllOf>
+            </AnyOf>
          </Target>
-         <Condition>
-            <Apply FunctionId="urn:oasis:names:tc:xacml:3.0:function:any-of">
-               <Function FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-equal" />
-               <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">security-role-0000-0000-000000000000</AttributeValue>
-               <AttributeDesignator Category="urn:oasis:names:tc:xacml:1.0:subject-category:access-subject" AttributeId="urn:oasis:names:tc:xacml:2.0:subject:role" DataType="http://www.w3.org/2001/XMLSchema#string" MustBePresent="false" />
-            </Apply>
-         </Condition>
       </Rule>
 
       
@@ -83,18 +85,16 @@
                   </Match>
                </AllOf>
             </AnyOf>
+            <AnyOf>
+               <AllOf>
+                  <Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+                     <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">security-role-0000-0000-000000000000</AttributeValue>
+                     <AttributeDesignator Category="urn:oasis:names:tc:xacml:1.0:subject-category:access-subject" AttributeId="urn:oasis:names:tc:xacml:2.0:subject:role" DataType="http://www.w3.org/2001/XMLSchema#string" MustBePresent="true" />
+                  </Match>
+               </AllOf>
+            </AnyOf>
          </Target>
-         <Condition>
-            <Apply FunctionId="urn:oasis:names:tc:xacml:3.0:function:any-of">
-               <Function FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-equal" />
-               <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">security-role-0000-0000-000000000000</AttributeValue>
-               <AttributeDesignator Category="urn:oasis:names:tc:xacml:1.0:subject-category:access-subject" AttributeId="urn:oasis:names:tc:xacml:2.0:subject:role" DataType="http://www.w3.org/2001/XMLSchema#string" MustBePresent="false" />
-            </Apply>
-         </Condition>
       </Rule>
-
-
-
    </Policy>
    <Policy PolicyId="managers-role-0000-0000-000000000000" Version="1.0" RuleCombiningAlgId="urn:oasis:names:tc:xacml:3.0:rule-combining-algorithm:deny-unless-permit">
       <Description>Role managers-role-0000-0000-000000000000 from application tutorial-dckr-site-0000-xpresswebapp</Description>
@@ -108,8 +108,8 @@
             </AllOf>
          </AnyOf>
       </Target>
-      <Rule RuleId="alrmbell-ring-0000-0000-000000000000" Effect="Permit">
-         <Description>Ring Alarm Bell</Description>
+      <Rule RuleId="alrmbell-ring-core-hours-000000000000" Effect="Permit">
+         <Description>Ring Alarm Bell (8 a.m. to 5 p.m.)</Description>
          <Target>
             <AnyOf>
                <AllOf>
@@ -127,12 +127,32 @@
                   </Match>
                </AllOf>
             </AnyOf>
+            <AnyOf>
+               <AllOf>
+                  <Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+                     <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">managers-role-0000-0000-000000000000</AttributeValue>
+                     <AttributeDesignator Category="urn:oasis:names:tc:xacml:1.0:subject-category:access-subject" AttributeId="urn:oasis:names:tc:xacml:2.0:subject:role" DataType="http://www.w3.org/2001/XMLSchema#string" MustBePresent="true" />
+                  </Match>
+               </AllOf>
+            </AnyOf>
          </Target>
          <Condition>
-            <Apply FunctionId="urn:oasis:names:tc:xacml:3.0:function:any-of">
-               <Function FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-equal" />
-               <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">managers-role-0000-0000-000000000000</AttributeValue>
-               <AttributeDesignator Category="urn:oasis:names:tc:xacml:1.0:subject-category:access-subject" AttributeId="urn:oasis:names:tc:xacml:2.0:subject:role" DataType="http://www.w3.org/2001/XMLSchema#string" MustBePresent="false" />
+            <Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:and">
+               <Apply FunctionId="urn:oasis:names:tc:xacml:2.0:function:time-in-range">
+                  <Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:time-one-and-only">
+                     <AttributeDesignator AttributeId="urn:oasis:names:tc:xacml:1.0:environment:current-time" DataType="http://www.w3.org/2001/XMLSchema#time" Category="urn:oasis:names:tc:xacml:3.0:attribute-category:environment" MustBePresent="false"></AttributeDesignator>
+                  </Apply>
+                  <Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:time-one-and-only">
+                     <Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:time-bag">
+                        <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#time">08:00:00</AttributeValue>
+                     </Apply>
+                  </Apply>
+                  <Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:time-one-and-only">
+                     <Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:time-bag">
+                        <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#time">17:00:00</AttributeValue>
+                     </Apply>
+                  </Apply>
+               </Apply>
             </Apply>
          </Condition>
       </Rule>
@@ -155,14 +175,15 @@
                   </Match>
                </AllOf>
             </AnyOf>
+            <AnyOf>
+               <AllOf>
+                  <Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+                     <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">managers-role-0000-0000-000000000000</AttributeValue>
+                     <AttributeDesignator Category="urn:oasis:names:tc:xacml:1.0:subject-category:access-subject" AttributeId="urn:oasis:names:tc:xacml:2.0:subject:role" DataType="http://www.w3.org/2001/XMLSchema#string" MustBePresent="true" />
+                  </Match>
+               </AllOf>
+            </AnyOf>
          </Target>
-         <Condition>
-            <Apply FunctionId="urn:oasis:names:tc:xacml:3.0:function:any-of">
-               <Function FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-equal" />
-               <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">managers-role-0000-0000-000000000000</AttributeValue>
-               <AttributeDesignator Category="urn:oasis:names:tc:xacml:1.0:subject-category:access-subject" AttributeId="urn:oasis:names:tc:xacml:2.0:subject:role" DataType="http://www.w3.org/2001/XMLSchema#string" MustBePresent="false" />
-            </Apply>
-         </Condition>
       </Rule>
       <Rule RuleId="pricechg-stck-0000-0000-000000000000" Effect="Permit">
          <Description>Access Price Changes</Description>
@@ -183,18 +204,19 @@
                   </Match>
                </AllOf>
             </AnyOf>
+            <AnyOf>
+               <AllOf>
+                  <Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+                     <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">managers-role-0000-0000-000000000000</AttributeValue>
+                     <AttributeDesignator Category="urn:oasis:names:tc:xacml:1.0:subject-category:access-subject" AttributeId="urn:oasis:names:tc:xacml:2.0:subject:role" DataType="http://www.w3.org/2001/XMLSchema#string" MustBePresent="true" />
+                  </Match>
+               </AllOf>
+            </AnyOf>
          </Target>
-         <Condition>
-            <Apply FunctionId="urn:oasis:names:tc:xacml:3.0:function:any-of">
-               <Function FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-equal" />
-               <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">managers-role-0000-0000-000000000000</AttributeValue>
-               <AttributeDesignator Category="urn:oasis:names:tc:xacml:1.0:subject-category:access-subject" AttributeId="urn:oasis:names:tc:xacml:2.0:subject:role" DataType="http://www.w3.org/2001/XMLSchema#string" MustBePresent="false" />
-            </Apply>
-         </Condition>
       </Rule>
 
-       <Rule RuleId="orion-access-0000-0000-000000000000" Effect="Permit">
-         <Description>Context Broker Access</Description>
+       <Rule RuleId="orion-access-core-hours-000000000000" Effect="Permit">
+         <Description>Context Broker Access (8 a.m. to 5 p.m.)</Description>
          <Target>
             <AnyOf>
                <AllOf>
@@ -204,12 +226,32 @@
                   </Match>
                </AllOf>
             </AnyOf>
+            <AnyOf>
+               <AllOf>
+                  <Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+                     <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">managers-role-0000-0000-000000000000</AttributeValue>
+                     <AttributeDesignator Category="urn:oasis:names:tc:xacml:1.0:subject-category:access-subject" AttributeId="urn:oasis:names:tc:xacml:2.0:subject:role" DataType="http://www.w3.org/2001/XMLSchema#string" MustBePresent="true" />
+                  </Match>
+               </AllOf>
+            </AnyOf>
          </Target>
          <Condition>
-            <Apply FunctionId="urn:oasis:names:tc:xacml:3.0:function:any-of">
-               <Function FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-equal" />
-               <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">managers-role-0000-0000-000000000000</AttributeValue>
-               <AttributeDesignator Category="urn:oasis:names:tc:xacml:1.0:subject-category:access-subject" AttributeId="urn:oasis:names:tc:xacml:2.0:subject:role" DataType="http://www.w3.org/2001/XMLSchema#string" MustBePresent="false" />
+            <Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:and">
+               <Apply FunctionId="urn:oasis:names:tc:xacml:2.0:function:time-in-range">
+                  <Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:time-one-and-only">
+                     <AttributeDesignator AttributeId="urn:oasis:names:tc:xacml:1.0:environment:current-time" DataType="http://www.w3.org/2001/XMLSchema#time" Category="urn:oasis:names:tc:xacml:3.0:attribute-category:environment" MustBePresent="false"></AttributeDesignator>
+                  </Apply>
+                  <Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:time-one-and-only">
+                     <Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:time-bag">
+                        <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#time">08:00:00</AttributeValue>
+                     </Apply>
+                  </Apply>
+                  <Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:time-one-and-only">
+                     <Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:time-bag">
+                        <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#time">17:00:00</AttributeValue>
+                     </Apply>
+                  </Apply>
+               </Apply>
             </Apply>
          </Condition>
       </Rule>
