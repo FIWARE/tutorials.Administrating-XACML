@@ -52,7 +52,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<PolicySet xmlns=\"urn:oasis:names:tc:xacml:3.0:core:schema:wd-17\" PolicySetId=\"f8194af5-8a07-486a-9581-c1f05d05483c\" Version=\"1\" PolicyCombiningAlgId=\"urn:oasis:names:tc:xacml:3.0:policy-combining-algorithm:deny-unless-permit\">\n   <Description>Policy Set for Airplane!</Description>\n   <Target />\n   <Policy PolicyId=\"airplane\" Version=\"1.0\" RuleCombiningAlgId=\"urn:oasis:names:tc:xacml:3.0:rule-combining-algorithm:deny-unless-permit\">\n      <Description>Vehicle Roles from the Male announcer in the movie Airplane!</Description>\n      <Target>\n         <AnyOf>\n            <AllOf>\n               <Match MatchId=\"urn:oasis:names:tc:xacml:1.0:function:string-equal\">\n                  <AttributeValue DataType=\"http://www.w3.org/2001/XMLSchema#string\">airplane!</AttributeValue>\n                  <AttributeDesignator Category=\"urn:oasis:names:tc:xacml:3.0:attribute-category:resource\" AttributeId=\"urn:oasis:names:tc:xacml:1.0:resource:resource-id\" DataType=\"http://www.w3.org/2001/XMLSchema#string\" MustBePresent=\"true\" />\n               </Match>\n            </AllOf>\n         </AnyOf>\n      </Target>\n      <Rule RuleId=\"white-zone\" Effect=\"Permit\">\n         <Description>The white zone is for immediate loading and unloading of passengers only</Description>\n         <Target>\n            <AnyOf>\n               <AllOf>\n                  <Match MatchId=\"urn:oasis:names:tc:xacml:1.0:function:string-equal\">\n                     <AttributeValue DataType=\"http://www.w3.org/2001/XMLSchema#string\">white</AttributeValue>\n                     <AttributeDesignator Category=\"urn:oasis:names:tc:xacml:3.0:attribute-category:resource\" AttributeId=\"urn:thales:xacml:2.0:resource:sub-resource-id\" DataType=\"http://www.w3.org/2001/XMLSchema#string\" MustBePresent=\"true\" />\n                  </Match>\n               </AllOf>\n            </AnyOf>\n            <AnyOf>\n               <AllOf>\n                  <Match MatchId=\"urn:oasis:names:tc:xacml:1.0:function:string-equal\">\n                     <AttributeValue DataType=\"http://www.w3.org/2001/XMLSchema#string\">loading</AttributeValue>\n                     <AttributeDesignator Category=\"urn:oasis:names:tc:xacml:3.0:attribute-category:action\" AttributeId=\"urn:oasis:names:tc:xacml:1.0:action:action-id\" DataType=\"http://www.w3.org/2001/XMLSchema#string\" MustBePresent=\"true\" />\n                  </Match>\n               </AllOf>\n            </AnyOf>\n         </Target>\n      </Rule>\n      <Rule RuleId=\"red-zone\" Effect=\"Deny\">\n         <Description>There is no stopping in the red zone</Description>\n         <Target>\n            <AnyOf>\n               <AllOf>\n                  <Match MatchId=\"urn:oasis:names:tc:xacml:1.0:function:string-equal\">\n                     <AttributeValue DataType=\"http://www.w3.org/2001/XMLSchema#string\">red</AttributeValue>\n                     <AttributeDesignator Category=\"urn:oasis:names:tc:xacml:3.0:attribute-category:resource\" AttributeId=\"urn:thales:xacml:2.0:resource:sub-resource-id\" DataType=\"http://www.w3.org/2001/XMLSchema#string\" MustBePresent=\"true\" />\n                  </Match>\n               </AllOf>\n            </AnyOf>\n            <AnyOf>\n               <AllOf>\n                  <Match MatchId=\"urn:oasis:names:tc:xacml:1.0:function:string-equal\">\n                     <AttributeValue DataType=\"http://www.w3.org/2001/XMLSchema#string\">stopping</AttributeValue>\n                     <AttributeDesignator Category=\"urn:oasis:names:tc:xacml:3.0:attribute-category:action\" AttributeId=\"urn:oasis:names:tc:xacml:1.0:action:action-id\" DataType=\"http://www.w3.org/2001/XMLSchema#string\" MustBePresent=\"true\" />\n                  </Match>\n               </AllOf>\n            </AnyOf>\n         </Target>\n      </Rule>\n   </Policy>\n</PolicySet>\n"
+							"raw": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<PolicySet xmlns=\"urn:oasis:names:tc:xacml:3.0:core:schema:wd-17\" PolicySetId=\"f8194af5-8a07-486a-9581-c1f05d05483c\" Version=\"9\" PolicyCombiningAlgId=\"urn:oasis:names:tc:xacml:3.0:policy-combining-algorithm:deny-unless-permit\">\n   <Description>Policy Set for Airplane!</Description>\n   <Target />\n   <Policy PolicyId=\"airplane\" Version=\"1.0\" RuleCombiningAlgId=\"urn:oasis:names:tc:xacml:3.0:rule-combining-algorithm:deny-unless-permit\">\n      <Description>Vehicle Roles from the Male announcer in the movie Airplane!</Description>\n      <Target>\n         <AnyOf>\n            <AllOf>\n               <Match MatchId=\"urn:oasis:names:tc:xacml:1.0:function:string-equal\">\n                  <AttributeValue DataType=\"http://www.w3.org/2001/XMLSchema#string\">airplane!</AttributeValue>\n                  <AttributeDesignator Category=\"urn:oasis:names:tc:xacml:3.0:attribute-category:resource\" AttributeId=\"urn:oasis:names:tc:xacml:1.0:resource:resource-id\" DataType=\"http://www.w3.org/2001/XMLSchema#string\" MustBePresent=\"true\" />\n               </Match>\n            </AllOf>\n         </AnyOf>\n      </Target>\n      <Rule RuleId=\"white-zone\" Effect=\"Permit\">\n         <Description>The white zone is for immediate loading and unloading of passengers only</Description>\n         <Target>\n            <AnyOf>\n               <AllOf>\n                  <Match MatchId=\"urn:oasis:names:tc:xacml:1.0:function:string-equal\">\n                     <AttributeValue DataType=\"http://www.w3.org/2001/XMLSchema#string\">white</AttributeValue>\n                     <AttributeDesignator Category=\"urn:oasis:names:tc:xacml:3.0:attribute-category:resource\" AttributeId=\"urn:thales:xacml:2.0:resource:sub-resource-id\" DataType=\"http://www.w3.org/2001/XMLSchema#string\" MustBePresent=\"true\" />\n                  </Match>\n               </AllOf>\n            </AnyOf>\n            <AnyOf>\n               <AllOf>\n                  <Match MatchId=\"urn:oasis:names:tc:xacml:1.0:function:string-equal\">\n                     <AttributeValue DataType=\"http://www.w3.org/2001/XMLSchema#string\">loading</AttributeValue>\n                     <AttributeDesignator Category=\"urn:oasis:names:tc:xacml:3.0:attribute-category:action\" AttributeId=\"urn:oasis:names:tc:xacml:1.0:action:action-id\" DataType=\"http://www.w3.org/2001/XMLSchema#string\" MustBePresent=\"true\" />\n                  </Match>\n               </AllOf>\n            </AnyOf>\n         </Target>\n         \n         \n         \n          <Condition>\n\n\n             <Apply FunctionId=\"urn:oasis:names:tc:xacml:1.0:function:not\">\n                                 <Apply FunctionId=\"urn:oasis:names:tc:xacml:2.0:function:time-in-range\">\n                                    <Apply FunctionId=\"urn:oasis:names:tc:xacml:1.0:function:time-one-and-only\">\n                                       <AttributeDesignator AttributeId=\"urn:oasis:names:tc:xacml:1.0:environment:current-time\" DataType=\"http://www.w3.org/2001/XMLSchema#time\" Category=\"urn:oasis:names:tc:xacml:3.0:attribute-category:environment\" MustBePresent=\"false\"></AttributeDesignator>\n                                    </Apply>\n                                    <Apply FunctionId=\"urn:oasis:names:tc:xacml:1.0:function:time-one-and-only\">\n                                       <Apply FunctionId=\"urn:oasis:names:tc:xacml:1.0:function:time-bag\">\n                                          <AttributeValue DataType=\"http://www.w3.org/2001/XMLSchema#time\">00:00:00-08:00</AttributeValue>\n                                       </Apply>\n                                    </Apply>\n                                    <Apply FunctionId=\"urn:oasis:names:tc:xacml:1.0:function:time-one-and-only\">\n                                       <Apply FunctionId=\"urn:oasis:names:tc:xacml:1.0:function:time-bag\">\n                                          <AttributeValue DataType=\"http://www.w3.org/2001/XMLSchema#time\">18:00:00-23:59</AttributeValue>\n                                       </Apply>\n                                    </Apply>\n                                 </Apply>\n                              </Apply>\n                              \n                              \n               <!--Apply FunctionId=\"urn:oasis:names:tc:xacml:3.0:function:any-of\">\n                  <Function FunctionId=\"urn:oasis:names:tc:xacml:1.0:function:string-equal\" />\n                  <AttributeValue DataType=\"http://www.w3.org/2001/XMLSchema#string\">managers-role-0000-0000-000000000000</AttributeValue>\n                  <AttributeDesignator Category=\"urn:oasis:names:tc:xacml:1.0:subject-category:access-subject\" AttributeId=\"urn:oasis:names:tc:xacml:2.0:subject:role\" DataType=\"http://www.w3.org/2001/XMLSchema#string\" MustBePresent=\"false\" />\n               </Apply-->\n         </Condition>\n         \n         \n         \n         \n         \n      </Rule>\n     \n   </Policy>\n</PolicySet>\n"
 						},
 						"url": {
 							"raw": "http://{{authzforce}}/authzforce-ce/domains/{{new-domain-id}}/pap/policies",
@@ -326,6 +326,94 @@
 					"response": []
 				},
 				{
+					"name": "Read a Verb-Resource Permission",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"disabled": true
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "X-Auth-token",
+								"value": "{{X-Auth-token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://{{keyrock}}/v1/applications/{{app-id}}/permissions/entrance-open-0000-0000-000000000000",
+							"protocol": "http",
+							"host": [
+								"{{keyrock}}"
+							],
+							"path": [
+								"v1",
+								"applications",
+								"{{app-id}}",
+								"permissions",
+								"entrance-open-0000-0000-000000000000"
+							]
+						},
+						"description": "The `/applications/{{app-id}}/permissions/{permission-id}}` endpoint will return the permission\nlisted under that id. The `X-Auth-token` must be supplied in the headers.\n\nThe response returns the details of the requested permission, for a verb-resource permission, the `xml` element is `null`. This permission indicates that a user is permittted to make a POST request\nto the `/door/unlock` endpoint to unlock the main entrance."
+					},
+					"response": []
+				},
+				{
+					"name": "Read an XACML Rule Permission",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"disabled": true
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "X-Auth-token",
+								"value": "{{X-Auth-token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://{{keyrock}}/v1/applications/{{app-id}}/permissions/alrmbell-ring-24hr-xaml-000000000000",
+							"protocol": "http",
+							"host": [
+								"{{keyrock}}"
+							],
+							"path": [
+								"v1",
+								"applications",
+								"{{app-id}}",
+								"permissions",
+								"alrmbell-ring-24hr-xaml-000000000000"
+							]
+						},
+						"description": "The `/applications/{{app-id}}/permissions/{permission-id}}` endpoint will return the permission\nlisted under that id. The `X-Auth-token` must be supplied in the headers.\n\nThe response returns the details of the requested permission, for a XACML Rule permission, the `xml` element holds the details of the associated XACML `<Rule>`\nthe `action` and `resource` fields are  `null`."
+					},
+					"response": []
+				},
+				{
 					"name": "Update an XACML Permission",
 					"request": {
 						"method": "PATCH",
@@ -346,10 +434,10 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"permission\": {\n    \"name\": \"Ring Alarm Bell\",\n    \"action\": \"POST\",\n    \"resource\": \"/ring\"\n  }\n}"
+							"raw": "{\n\t\"permission\": {\n        \"action\": \"\",\n        \"resource\": \"\",\n        \"xml\": \"<Rule RuleId=\\\"alrmbell-ring-only-000000000000\\\" Effect=\\\"Permit\\\">\\n<Description>Allow Full Access to Charlie the Security Manager</Description>\\n<Target>\\n<AnyOf>\\n<AllOf>\\n<Match MatchId=\\\"urn:oasis:names:tc:xacml:1.0:function:string-equal\\\">\\n<AttributeValue DataType=\\\"http://www.w3.org/2001/XMLSchema#string\\\">/bell/ring</AttributeValue>\\n<AttributeDesignator Category=\\\"urn:oasis:names:tc:xacml:3.0:attribute-category:resource\\\" AttributeId=\\\"urn:thales:xacml:2.0:resource:sub-resource-id\\\" DataType=\\\"http://www.w3.org/2001/XMLSchema#string\\\" MustBePresent=\\\"true\\\" />\\n</Match>\\n</AllOf>\\n</AnyOf>\\n<AnyOf>\\n<AllOf>\\n<Match MatchId=\\\"urn:oasis:names:tc:xacml:1.0:function:string-equal\\\">\\n<AttributeValue DataType=\\\"http://www.w3.org/2001/XMLSchema#string\\\">POST</AttributeValue>\\n<AttributeDesignator Category=\\\"urn:oasis:names:tc:xacml:3.0:attribute-category:action\\\" AttributeId=\\\"urn:oasis:names:tc:xacml:1.0:action:action-id\\\" DataType=\\\"http://www.w3.org/2001/XMLSchema#string\\\" MustBePresent=\\\"true\\\" />\\n</Match>\\n</AllOf>\\n</AnyOf>\\n<AnyOf>\\n<AllOf>\\n<Match MatchId=\\\"urn:oasis:names:tc:xacml:1.0:function:string-equal\\\">\\n<AttributeValue DataType=\\\"http://www.w3.org/2001/XMLSchema#string\\\">charlie</AttributeValue>\\n<AttributeDesignator Category=\\\"urn:oasis:names:tc:xacml:1.0:subject-category:access-subject\\\" AttributeId=\\\"urn:oasis:names:tc:xacml:1.0:subject:subject-id\\\" DataType=\\\"http://www.w3.org/2001/XMLSchema#string\\\" MustBePresent=\\\"true\\\" />\\n</Match>\\n</AllOf>\\n</AnyOf>\\n</Target>\\n</Rule>\\n<Rule RuleId=\\\"alrmbell-ring-24hr-hours-000000000000\\\" Effect=\\\"Permit\\\">\\n<Description>Ring Alarm Bell (Outside Core Hours)</Description>\\n<Target>\\n<AnyOf>\\n<AllOf>\\n<Match MatchId=\\\"urn:oasis:names:tc:xacml:1.0:function:string-equal\\\">\\n<AttributeValue DataType=\\\"http://www.w3.org/2001/XMLSchema#string\\\">/bell/ring</AttributeValue>\\n<AttributeDesignator Category=\\\"urn:oasis:names:tc:xacml:3.0:attribute-category:resource\\\" AttributeId=\\\"urn:thales:xacml:2.0:resource:sub-resource-id\\\" DataType=\\\"http://www.w3.org/2001/XMLSchema#string\\\" MustBePresent=\\\"true\\\" />\\n</Match>\\n</AllOf>\\n</AnyOf>\\n<AnyOf>\\n<AllOf>\\n<Match MatchId=\\\"urn:oasis:names:tc:xacml:1.0:function:string-equal\\\">\\n<AttributeValue DataType=\\\"http://www.w3.org/2001/XMLSchema#string\\\">POST</AttributeValue>\\n<AttributeDesignator Category=\\\"urn:oasis:names:tc:xacml:3.0:attribute-category:action\\\" AttributeId=\\\"urn:oasis:names:tc:xacml:1.0:action:action-id\\\" DataType=\\\"http://www.w3.org/2001/XMLSchema#string\\\" MustBePresent=\\\"true\\\" />\\n</Match>\\n</AllOf>\\n</AnyOf>\\n<AnyOf>\\n<AllOf>\\n<Match MatchId=\\\"urn:oasis:names:tc:xacml:1.0:function:string-equal\\\">\\n<AttributeValue DataType=\\\"http://www.w3.org/2001/XMLSchema#string\\\">security-role-0000-0000-000000000000</AttributeValue>\\n<AttributeDesignator Category=\\\"urn:oasis:names:tc:xacml:1.0:subject-category:access-subject\\\" AttributeId=\\\"urn:oasis:names:tc:xacml:2.0:subject:role\\\" DataType=\\\"http://www.w3.org/2001/XMLSchema#string\\\" MustBePresent=\\\"true\\\" />\\n</Match>\\n</AllOf>\\n</AnyOf>\\n</Target>\\n<Condition>\\n<Apply FunctionId=\\\"urn:oasis:names:tc:xacml:1.0:function:not\\\">\\n<Apply FunctionId=\\\"urn:oasis:names:tc:xacml:2.0:function:time-in-range\\\">\\n<Apply FunctionId=\\\"urn:oasis:names:tc:xacml:1.0:function:time-one-and-only\\\">\\n<AttributeDesignator AttributeId=\\\"urn:oasis:names:tc:xacml:1.0:environment:current-time\\\" DataType=\\\"http://www.w3.org/2001/XMLSchema#time\\\" Category=\\\"urn:oasis:names:tc:xacml:3.0:attribute-category:environment\\\" MustBePresent=\\\"false\\\"></AttributeDesignator>\\n</Apply>\\n<Apply FunctionId=\\\"urn:oasis:names:tc:xacml:1.0:function:time-one-and-only\\\">\\n<Apply FunctionId=\\\"urn:oasis:names:tc:xacml:1.0:function:time-bag\\\">\\n<AttributeValue DataType=\\\"http://www.w3.org/2001/XMLSchema#time\\\">08:00:00</AttributeValue>\\n</Apply>\\n</Apply>\\n<Apply FunctionId=\\\"urn:oasis:names:tc:xacml:1.0:function:time-one-and-only\\\">\\n<Apply FunctionId=\\\"urn:oasis:names:tc:xacml:1.0:function:time-bag\\\">\\n<AttributeValue DataType=\\\"http://www.w3.org/2001/XMLSchema#time\\\">17:00:00</AttributeValue>\\n</Apply>\\n</Apply>\\n</Apply>\\n</Apply>\\n</Condition>\\n</Rule>\"\n\t}\n}"
 						},
 						"url": {
-							"raw": "http://{{keyrock}}/v1/applications/{{application-id}}/permissions/{{permission-id}}",
+							"raw": "http://{{keyrock}}/v1/applications/{{app-id}}/permissions/alrmbell-ring-24hr-xaml-000000000000",
 							"protocol": "http",
 							"host": [
 								"{{keyrock}}"
@@ -357,17 +445,101 @@
 							"path": [
 								"v1",
 								"applications",
-								"{{application-id}}",
+								"{{app-id}}",
 								"permissions",
-								"{{permission-id}}"
+								"alrmbell-ring-24hr-xaml-000000000000"
 							]
 						},
-						"description": "To amend the details of an existing permission, a  PATCH request is send to the `/applications/{{application-id}}/permissions/{permission-id}}`  endpoint.\n\nThe response contains a list of the fields which have been amended."
+						"description": "To amend the XACML rules governing a permission, make a PATCH request to the  `/applications/{{app-id}}/permissions/{permission-id}}` endpoint. The body of the request must include three attributes - `action` and `resource` must both be set to `\"\"` and the `xml` attribute should hold the XACML text.\n\nThis is most easily be done in the GUI by pasting the rule into the appropriate text box, however it can also be done programmatically.\n\n\nThe response shows the details of the attributes which have been updated."
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Role-Permission Association",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"disabled": true
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "X-Auth-token",
+								"value": "{{X-Auth-token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://{{keyrock}}/v1/applications/{{app-id}}/roles/{{role-id}}/permissions/alrmbell-ring-24hr-xaml-000000000000",
+							"protocol": "http",
+							"host": [
+								"{{keyrock}}"
+							],
+							"path": [
+								"v1",
+								"applications",
+								"{{app-id}}",
+								"roles",
+								"{{role-id}}",
+								"permissions",
+								"alrmbell-ring-24hr-xaml-000000000000"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create a Role-Permission Association",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"disabled": true
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "X-Auth-token",
+								"value": "{{X-Auth-token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://{{keyrock}}/v1/applications/{{app-id}}/roles/{{role-id}}/permissions/alrmbell-ring-24hr-xaml-000000000000",
+							"protocol": "http",
+							"host": [
+								"{{keyrock}}"
+							],
+							"path": [
+								"v1",
+								"applications",
+								"{{app-id}}",
+								"roles",
+								"{{role-id}}",
+								"permissions",
+								"alrmbell-ring-24hr-xaml-000000000000"
+							]
+						}
 					},
 					"response": []
 				}
 			],
-			"description": "**Keyrock** offers a role based access control identity management system. Therefore every permission is only accessible to  users within a given role. We have already seen how Verb-Resource rules can be [set-up](https://github.com/Fiware/tutorials.Roles-Permissions/)) and [enforced](https://github.com/Fiware/tutorials.Securing-Access/)) using the basic authorization (level 2) access control mechanism found within Keyrock, the data for defining an advanced permission can also be administed using the **Keyrock** GUI or via **Keyrock** REST API requests.\n\n**Keyrock** permissions work on individual XACML `<Rule>` elements rather than a complete `<PolicySet>`. The `<PolicySet>` is generated by combining all the roles and permissions.",
+			"description": "**Keyrock** offers a role based access control identity management system. Typically every permission is only accessible to  users within a given role. We have already seen how Verb-Resource rules can be [set-up](https://github.com/Fiware/tutorials.Roles-Permissions/) and [enforced](https://github.com/Fiware/tutorials.Securing-Access/) using the basic authorization (level 2) access control mechanism found within Keyrock, the data for defining an advanced permission can also be administed using the **Keyrock** GUI or via **Keyrock** REST API requests.\n\n**Keyrock** permissions work on individual XACML `<Rule>` elements rather than a complete `<PolicySet>`. The `<PolicySet>` is generated by combining all the roles and permissions.\n\n### Predefined Roles and Permissions\n\nIn a similar manner to the previous tutorial, two roles have been created, one\nfor store detectives and another for management users. A series of permissions have been set up for the supermarket application, the following XACML rules are applied:\n\n#### Security Staff\n\n* Can unlock the door at any time\n* Can ring the alarm bell before 9 a.m. or after 5 p.m.\n* Can access the **context broker** data at any time\n\n\n#### Mangement\n\n* Have access to the price change area\n* Have access to the stock count area\n* Can ring the alarm bell between 9 a.m. and 5 p.m.\n* Can access the **context broker** data from 9 a.m. to 5 p.m.\n\nAs you can see some of the new rules now have a time element to them and are no longer simple Verb-Resource rules.\n\nFor most of the\nrules, the Policy Execution Point (i.e. the request to **Authzforce** and analysis of the result)  is found within the tutorial [code](https://github.com/Fiware/tutorials.Step-by-Step/blob/master/context-provider/lib/azf.js) -\n\nThe **context broker** data for the **Store** and **IoT Devices** is held in is secured behind the **PEP Proxy**. This means that only security staff are able to access the system outside of core hours.\n\n> **Note** within the **Keyrock**, only four resources have been secured using advanced authorization rules (level 3)\n>\n> -   sending the ring bell command\n> -   access to the price-change area\n> -   access to the order-stock area\n> -   PEP Proxy access to the **context broker**\n>\n> For contrast, one resource has been left as a simple VERB Resource permission (level 2)\n>\n> -   sending the unlock door command",
 			"event": [
 				{
 					"listen": "prerequest",
@@ -390,6 +562,103 @@
 					}
 				}
 			]
+		},
+		{
+			"name": "Authzforce PDP - Requesting Policy Decisions",
+			"item": [
+				{
+					"name": "Deny Access to a Resource",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/xml",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<Request xmlns=\"urn:oasis:names:tc:xacml:3.0:core:schema:wd-17\" CombinedDecision=\"false\" ReturnPolicyIdList=\"false\">\n  <Attributes Category=\"urn:oasis:names:tc:xacml:1.0:subject-category:access-subject\">\n     <Attribute AttributeId=\"urn:oasis:names:tc:xacml:2.0:subject:role\" IncludeInResult=\"false\">\n        <AttributeValue DataType=\"http://www.w3.org/2001/XMLSchema#string\">security-role-0000-0000-000000000000</AttributeValue>\n     </Attribute>\n  </Attributes>\n  <Attributes Category=\"urn:oasis:names:tc:xacml:3.0:attribute-category:resource\">\n     <Attribute AttributeId=\"urn:oasis:names:tc:xacml:1.0:resource:resource-id\" IncludeInResult=\"false\">\n        <AttributeValue DataType=\"http://www.w3.org/2001/XMLSchema#string\">tutorial-dckr-site-0000-xpresswebapp</AttributeValue>\n     </Attribute>\n     <Attribute AttributeId=\"urn:thales:xacml:2.0:resource:sub-resource-id\" IncludeInResult=\"false\">\n        <AttributeValue DataType=\"http://www.w3.org/2001/XMLSchema#string\">/bell/ring</AttributeValue>\n     </Attribute>\n  </Attributes>\n  <Attributes Category=\"urn:oasis:names:tc:xacml:3.0:attribute-category:action\">\n     <Attribute AttributeId=\"urn:oasis:names:tc:xacml:1.0:action:action-id\" IncludeInResult=\"false\">\n        <AttributeValue DataType=\"http://www.w3.org/2001/XMLSchema#string\">POST</AttributeValue>\n     </Attribute>\n  </Attributes>\n  <Attributes Category=\"urn:oasis:names:tc:xacml:3.0:attribute-category:environment\" />\n</Request>"
+						},
+						"url": {
+							"raw": "http://{{authzforce}}/authzforce-ce/domains/{{domain-id}}/pdp",
+							"protocol": "http",
+							"host": [
+								"{{authzforce}}"
+							],
+							"path": [
+								"authzforce-ce",
+								"domains",
+								"{{domain-id}}",
+								"pdp"
+							]
+						},
+						"description": "To request a decision from Authzforce, make a POST request to the\n`domains/{domain-id}/pdp` endpoint. In this case the user has the\nis requesting access to `POST` to the `/ring/bell` endpoint.\n\nThe response for the request includes a `<Decision>` element to `Permit` or `Deny` access to the resource.\n\nIf the time on the server is between 9 a.m. and 5 p.m. the access request will be denied."
+					},
+					"response": []
+				},
+				{
+					"name": "Permit Access to a Resource",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/xml",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<Request xmlns=\"urn:oasis:names:tc:xacml:3.0:core:schema:wd-17\" CombinedDecision=\"false\" ReturnPolicyIdList=\"false\">\n  <Attributes Category=\"urn:oasis:names:tc:xacml:1.0:subject-category:access-subject\">\n     <Attribute AttributeId=\"urn:oasis:names:tc:xacml:1.0:subject:subject-id\" IncludeInResult=\"false\">\n        <AttributeValue DataType=\"http://www.w3.org/2001/XMLSchema#string\">charlie</AttributeValue>\n     </Attribute>\n     <Attribute AttributeId=\"urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress\" IncludeInResult=\"false\">\n        <AttributeValue DataType=\"http://www.w3.org/2001/XMLSchema#string\">charlie-security@test.com</AttributeValue>\n     </Attribute>\n     <Attribute AttributeId=\"urn:oasis:names:tc:xacml:2.0:subject:role\" IncludeInResult=\"false\">\n        <AttributeValue DataType=\"http://www.w3.org/2001/XMLSchema#string\">security-role-0000-0000-000000000000</AttributeValue>\n     </Attribute>\n  </Attributes>\n  <Attributes Category=\"urn:oasis:names:tc:xacml:3.0:attribute-category:resource\">\n     <Attribute AttributeId=\"urn:oasis:names:tc:xacml:1.0:resource:resource-id\" IncludeInResult=\"false\">\n        <AttributeValue DataType=\"http://www.w3.org/2001/XMLSchema#string\">tutorial-dckr-site-0000-xpresswebapp</AttributeValue>\n     </Attribute>\n     <Attribute AttributeId=\"urn:thales:xacml:2.0:resource:sub-resource-id\" IncludeInResult=\"false\">\n        <AttributeValue DataType=\"http://www.w3.org/2001/XMLSchema#string\">/bell/ring</AttributeValue>\n     </Attribute>\n  </Attributes>\n  <Attributes Category=\"urn:oasis:names:tc:xacml:3.0:attribute-category:action\">\n     <Attribute AttributeId=\"urn:oasis:names:tc:xacml:1.0:action:action-id\" IncludeInResult=\"false\">\n        <AttributeValue DataType=\"http://www.w3.org/2001/XMLSchema#string\">POST</AttributeValue>\n     </Attribute>\n  </Attributes>\n  <Attributes Category=\"urn:oasis:names:tc:xacml:3.0:attribute-category:environment\" />\n</Request>"
+						},
+						"url": {
+							"raw": "http://{{authzforce}}/authzforce-ce/domains/{{domain-id}}/pdp",
+							"protocol": "http",
+							"host": [
+								"{{authzforce}}"
+							],
+							"path": [
+								"authzforce-ce",
+								"domains",
+								"{{domain-id}}",
+								"pdp"
+							]
+						},
+						"description": "Additional Fields can be added to the policy decision request to improve the likelyhood of a `Permit` response.\n\nIn the example below, the `emailaddress` and `subject:subject-id` have been added to the body of the request\nwithin the `subject-category:access-subject` category.\n\nWith the new rule in place, the user `charlie` will be able to access the `/bell/ring` endpoint at all times of day."
+					},
+					"response": []
+				}
+			],
+			"description": "To request a decision from Authzforce, a structured request containing all\nrelevant information must be sent to the `domains/{domain-id}/pdp` endpoint. In\nthis case, the Body of the request includes information such as the roles that\nthe User has, the application id that is being requested\n(`tutorial-dckr-site-0000-xpresswebapp`) and the HTTP verb and resource that are\nbeing requested ( a GET request on the `/app/price-change` URL). Obviously the\ninformation passed in the Body can be expanded as the rules become more complex.",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "7b40d496-0a0f-424d-a300-d7a4c7946cf7",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "121f1a38-45b2-4245-9fdc-97dfd34c1f5b",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Tutorial PEP - Extending Advanced Authorization",
+			"item": [],
+			"description": "The new policy for Charlie the security manager needs additional information to\nbe passed to **Authzforce**\n\n### Extending Advanced Authorization - Sample Code\n\nProgrammatically, any Policy Execution Point consists of two parts, an OAuth\nrequest to Keyrock retrieves information about the user (such as the assigned\nroles) as well as the policy domain to be queried.\n\nA second request is sent to the relevant domain endpoint within Authzforce,\nproviding all of the information necessary for Authzforce to provide a\njudgement. Authzforce responds with a **permit** or **deny** response, and the\ndecision whether to continue can be made thereafter.\n\nThe `user.username` and `user.email` have been added to the list of fields\nto be sent to **Authzforce**\n\n```javascript\nfunction authorizeAdvancedXACML(req, res, next, resource = req.url) {\n    const keyrockUserUrl =\n        \"http://keyrock/user?access_token=\" +\n        req.session.access_token +\n        \"&app_id=\" +\n        clientId +\n        \"&authzforce=true\";\n\n    return oa\n        .get(keyrockUserUrl)\n        .then(response => {\n            const user = JSON.parse(response);\n            return azf.policyDomainRequest(\n                user.app_azf_domain,\n                user.roles,\n                user.username,\n                user.email,\n                resource,\n                req.method\n            );\n        })\n        .then(authzforceResponse => {\n            res.locals.authorized = authzforceResponse === \"Permit\";\n            return next();\n        })\n        .catch(error => {\n            debug(error);\n            res.locals.authorized = false;\n            return next();\n        });\n}\n```\n\nThe full code to supply each request to Authzforce can be found within the\ntutorials'\n[Git Repository](https://github.com/Fiware/tutorials.Step-by-Step/blob/master/context-provider/lib/azf.js) -\nthe supplied information has been expanded to include the `username` and `email` within the generated XACML request\n\n```javascript\nconst xml2js = require(\"xml2js\");\nconst request = require(\"request\");\n\nfunction policyDomainRequest(domain, roles, resource, action, username, email ) {\n    let body =\n        '<?xml version=\"1.0\" encoding=\"UTF-8\"?>\\n' +\n        '<Request xmlns=\"urn:oasis:names:tc:xacml:3.0:core:schema:wd-17\" CombinedDecision=\"false\" ReturnPolicyIdList=\"false\">\\n';\n    // Code to create the XML body for the request is omitted\n    body = body + \"</Request>\";\n\n    const options = {\n        method: \"POST\",\n        url: \"http://authzforceUrl/authzforce-ce/domains/\" + domain + \"/pdp\",\n        headers: { \"Content-Type\": \"application/xml\" },\n        body\n    };\n\n    return new Promise((resolve, reject) => {\n        request(options, function(error, response, body) {\n            let decision;\n            xml2js.parseString(\n                body,\n                { tagNameProcessors: [xml2js.processors.stripPrefix] },\n                function(err, jsonRes) {\n                    // The decision is found within the /Response/Result[0]/Decision[0] XPath\n                    decision = jsonRes.Response.Result[0].Decision[0];\n                }\n            );\n            decision = String(decision);\n            return error ? reject(error) : resolve(decision);\n        });\n    });\n}\n```\n\n\n\n## Extending Advanced Authorization - Running the Example\n\nAfter successfully update the **Authzforce** `<PolicySet>` to include a special rule for Charlie, his rights will differ from other users in the security role\n\n#### Detective 1\n\nDetective1 works for Charlie and has the **security** role\n\n-   From `http://localhost:3000`, log in as `detective1@test.com` with the\n    password `test`\n\n##### Level 3: Advanced Authorization Access\n\n-   Click on the restricted access links at `http://localhost:3000` - access is\n    **denied** - This is a management only permission\n-   Open the Device Monitor on `http://localhost:3000/device/monitor`\n    -   Unlock a door - access is **permitted** - This is a security only\n        permission\n    -   Ring a bell - access is **denied** - This is not permitted to security\n        users between 9 a.m. and 5 p.m.\n\n#### Charlie the Security Manager\n\nCharlie has the **security** role\n\n-   From `http://localhost:3000`, log in as `charlie-security@test.com` with the\n    password `test`\n\n##### Level 3: Advanced Authorization Access\n\n-   Click on the restricted access links at `http://localhost:3000` - access is\n    **denied** - This is a management only permission\n-   Open the Device Monitor on `http://localhost:3000/device/monitor`\n    -   Unlock a door - access is **permitted** - This is a security only\n        permission\n    -   Ring a bell - access is **permitted** - This is an exception which is only permitted to the user called `charlie`"
 		}
 	],
 	"event": [
@@ -416,51 +685,57 @@
 	],
 	"variable": [
 		{
-			"id": "ca5fcf7d-b747-475c-8aad-51d2a870ea0d",
+			"id": "e4cffc3d-4214-4065-a1c1-8ed777fe6448",
 			"key": "authzforce",
 			"value": "localhost:8080",
 			"type": "string"
 		},
 		{
-			"id": "7c4e592d-7f32-4e4a-b960-2f7b0968e668",
+			"id": "6663ba75-01c4-46b7-bcce-11510fd9489b",
 			"key": "keyrock",
 			"value": "localhost:3005",
 			"type": "string"
 		},
 		{
-			"id": "b576f542-bed7-46bd-8adf-581081eb9770",
+			"id": "dfddc853-320a-408e-be64-f009250f3b48",
 			"key": "domain-id",
 			"value": "gQqnLOnIEeiBFQJCrBIBDA",
 			"type": "string"
 		},
 		{
-			"id": "014d6450-01c2-4cd3-bd48-75ec24a46cae",
+			"id": "48e187d7-6f9d-4361-af42-f88e2c06e2d8",
 			"key": "policy-id",
 			"value": "f8194af5-8a07-486a-9581-c1f05d05483c",
 			"type": "string"
 		},
 		{
-			"id": "8ca14ec0-63c6-4d3f-b63a-a08eef70b34c",
-			"key": "Authorization",
-			"value": "dHV0b3JpYWwtZGNrci1zaXRlLTAwMDAteHByZXNzd2ViYXBwOnR1dG9yaWFsLWRja3Itc2l0ZS0wMDAwLWNsaWVudHNlY3JldA==",
-			"type": "string"
-		},
-		{
-			"id": "b50e6969-82ea-4271-aefc-352882937ed5",
-			"key": "access-token-bob",
-			"value": "1b88827586409b3b4dc67378e6b945c99b94c6cf",
-			"type": "string"
-		},
-		{
-			"id": "644c2922-5146-419e-8eeb-f5eb0e1433e4",
+			"id": "469693d3-f9a5-434a-be07-e4b1a76334a5",
 			"key": "app-id",
 			"value": "tutorial-dckr-site-0000-xpresswebapp",
 			"type": "string"
 		},
 		{
-			"id": "e2a6edc2-0e6f-4bfa-a5a5-14dcf8fbfabf",
+			"id": "11cbf34e-feb7-4e04-a3bf-4be08d905fec",
 			"key": "new-domain-id",
-			"value": "Sv-RRw9vEem6UQJCrBIBDA",
+			"value": "czGVrRJvEemHrAJCrBIBDA",
+			"type": "string"
+		},
+		{
+			"id": "cd98f962-24c7-4a79-9bb2-b7e9198eb100",
+			"key": "X-Auth-token",
+			"value": "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa",
+			"type": "string"
+		},
+		{
+			"id": "fc60b9d8-3b2f-4eef-8a4a-9dbe4c48b39c",
+			"key": "X-Subject-token",
+			"value": "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa",
+			"type": "string"
+		},
+		{
+			"id": "16a80a80-b8cc-45c1-88ea-02cb925b3b15",
+			"key": "role-id",
+			"value": "security-role-0000-0000-000000000000",
 			"type": "string"
 		}
 	]

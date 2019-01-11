@@ -264,14 +264,6 @@
                   </Match>
                </AllOf>
             </AnyOf>
-            <AnyOf>
-               <AllOf>
-                  <Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
-                     <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">managers-role-0000-0000-000000000000</AttributeValue>
-                     <AttributeDesignator Category="urn:oasis:names:tc:xacml:1.0:subject-category:access-subject" AttributeId="urn:oasis:names:tc:xacml:2.0:subject:role" DataType="http://www.w3.org/2001/XMLSchema#string" MustBePresent="true" />
-                  </Match>
-               </AllOf>
-            </AnyOf>
          </Target>
          <Condition>
             <Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:and">
