@@ -55,9 +55,12 @@ is also available.
         -   [Update an XACML Permission](#update-an-xacml-permission)
         -   [Passing the Updated Policy Set to Authzforce](#passing-the-updated-policy-set-to-authzforce)
         -   [Permit Access to a Resource](#permit-access-to-a-resource)
-    -   [Tutorial PEP - Running the Example](#tutorial-pep---running-the-example)
+    -   [Tutorial PEP - Extending Advanced Authorization](#tutorial-pep---extending-advanced-authorization)
+        -   [Extending Advanced Authorization - Sample Code](#extending-advanced-authorization---sample-code)
+    -   [Extending Advanced Authorization - Running the Example](#extending-advanced-authorization---running-the-example)
 -   [Next Steps](#next-steps)
-    </details>
+
+</details>
 
 # Administrating XACML Rules
 
@@ -1493,8 +1496,8 @@ providing all of the information necessary for Authzforce to provide a
 judgement. Authzforce responds with a **permit** or **deny** response, and the
 decision whether to continue can be made thereafter.
 
-The `user.username` and `user.email` have been added to the list of fields
-to be sent to **Authzforce**
+The `user.username` and `user.email` have been added to the list of fields to be
+sent to **Authzforce**
 
 ```javascript
 function authorizeAdvancedXACML(req, res, next, resource = req.url) {
@@ -1533,13 +1536,14 @@ function authorizeAdvancedXACML(req, res, next, resource = req.url) {
 The full code to supply each request to Authzforce can be found within the
 tutorials'
 [Git Repository](https://github.com/Fiware/tutorials.Step-by-Step/blob/master/context-provider/lib/azf.js) -
-the supplied information has been expanded to include the `username` and `email` within the generated XACML request
+the supplied information has been expanded to include the `username` and `email`
+within the generated XACML request
 
 ```javascript
 const xml2js = require("xml2js");
 const request = require("request");
 
-function policyDomainRequest(domain, roles, resource, action, username, email ) {
+function policyDomainRequest(domain, roles, resource, action, username, email) {
     let body =
         '<?xml version="1.0" encoding="UTF-8"?>\n' +
         '<Request xmlns="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17" CombinedDecision="false" ReturnPolicyIdList="false">\n';
@@ -1571,11 +1575,10 @@ function policyDomainRequest(domain, roles, resource, action, username, email ) 
 }
 ```
 
-
-
 ## Extending Advanced Authorization - Running the Example
 
-After successfully update the **Authzforce** `<PolicySet>` to include a special rule for Charlie, his rights will differ from other users in the security role
+After successfully update the **Authzforce** `<PolicySet>` to include a special
+rule for Charlie, his rights will differ from other users in the security role
 
 #### Detective 1
 
@@ -1608,9 +1611,8 @@ Charlie has the **security** role
 -   Open the Device Monitor on `http://localhost:3000/device/monitor`
     -   Unlock a door - access is **permitted** - This is a security only
         permission
-    -   Ring a bell - access is **permitted** - This is an exception which is only permitted to the user called `charlie`
-
-
+    -   Ring a bell - access is **permitted** - This is an exception which is
+        only permitted to the user called `charlie`
 
 # Next Steps
 
