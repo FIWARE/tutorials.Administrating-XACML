@@ -450,7 +450,7 @@
 								"alrmbell-ring-24hr-xaml-000000000000"
 							]
 						},
-						"description": "To amend the XACML rules governing a permission, make a PATCH request to the  `/applications/{{app-id}}/permissions/{permission-id}}` endpoint. The body of the request must include three attributes - `action` and `resource` must both be set to `\"\"` and the `xml` attribute should hold the XACML text.\n\nThis is most easily be done in the GUI by pasting the rule into the appropriate text box, however it can also be done programmatically.\n\n\nThe response shows the details of the attributes which have been updated."
+						"description": "This is most easily be done in the GUI by pasting the rule into the appropriate\ntext box, however it can also be done programmatically.\n\nTo log-in to the **Keyrock** GUI, enter the username and password on the log-in\npage `http://localhost:3005/`\n\n![](https://fiware.github.io/tutorials.Administrating-XACML/img/login.png)\n\nNavigate to correct application, and click on the manage roles tab\n\n![](https://fiware.github.io/tutorials.Administrating-XACML/img/manage-roles.png)\n\nSelect a permission to edit\n\n![](https://fiware.github.io/tutorials.Administrating-XACML/img/edit-permission.png)\n\nThe HTTP Verb and Resource rule needs to be left blank, but the applicable XACML\n`<Rule>` elements need to be pasted within the **Advanced XACML Rule** textbox\nas shown:\n\n![](https://fiware.github.io/tutorials.Administrating-XACML/img/permission.png)\n\nTo amend the XACML rules governing a permission, make a PATCH request to the  `/applications/{{app-id}}/permissions/{permission-id}}` endpoint. The body of the request must include three attributes - `action` and `resource` must both be set to `\"\"` and the `xml` attribute should hold the XACML text.\n\n\nThe response shows the details of the attributes which have been updated."
 					},
 					"response": []
 				},
@@ -685,55 +685,55 @@
 	],
 	"variable": [
 		{
-			"id": "e4cffc3d-4214-4065-a1c1-8ed777fe6448",
+			"id": "27142bca-d545-4097-a67c-983e9159366a",
 			"key": "authzforce",
 			"value": "localhost:8080",
 			"type": "string"
 		},
 		{
-			"id": "6663ba75-01c4-46b7-bcce-11510fd9489b",
+			"id": "773732a3-83c3-4517-a959-378beb9f5f7f",
 			"key": "keyrock",
 			"value": "localhost:3005",
 			"type": "string"
 		},
 		{
-			"id": "dfddc853-320a-408e-be64-f009250f3b48",
+			"id": "04777bc5-5942-4727-bc30-5a634d050cbe",
 			"key": "domain-id",
 			"value": "gQqnLOnIEeiBFQJCrBIBDA",
 			"type": "string"
 		},
 		{
-			"id": "48e187d7-6f9d-4361-af42-f88e2c06e2d8",
+			"id": "3b1f9f18-ef6f-4295-8c5c-96a593d8d04c",
 			"key": "policy-id",
 			"value": "f8194af5-8a07-486a-9581-c1f05d05483c",
 			"type": "string"
 		},
 		{
-			"id": "469693d3-f9a5-434a-be07-e4b1a76334a5",
+			"id": "80d528bf-ecef-417a-90f3-64bf6035fb51",
 			"key": "app-id",
 			"value": "tutorial-dckr-site-0000-xpresswebapp",
 			"type": "string"
 		},
 		{
-			"id": "11cbf34e-feb7-4e04-a3bf-4be08d905fec",
+			"id": "bff37774-d3ea-48da-bbfc-e0e1556e3089",
 			"key": "new-domain-id",
 			"value": "czGVrRJvEemHrAJCrBIBDA",
 			"type": "string"
 		},
 		{
-			"id": "cd98f962-24c7-4a79-9bb2-b7e9198eb100",
+			"id": "7de0f3db-769d-4a61-a1c9-f19b9f97a72f",
 			"key": "X-Auth-token",
 			"value": "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa",
 			"type": "string"
 		},
 		{
-			"id": "fc60b9d8-3b2f-4eef-8a4a-9dbe4c48b39c",
+			"id": "9d2d152b-cc60-41d2-bcad-357fe734b574",
 			"key": "X-Subject-token",
 			"value": "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa",
 			"type": "string"
 		},
 		{
-			"id": "16a80a80-b8cc-45c1-88ea-02cb925b3b15",
+			"id": "63e567ad-0fd4-44bc-8738-f993786543a3",
 			"key": "role-id",
 			"value": "security-role-0000-0000-000000000000",
 			"type": "string"
