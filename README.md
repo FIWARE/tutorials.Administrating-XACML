@@ -1430,7 +1430,7 @@ category.
 With the new rule in place, the user `charlie` will be able to access the
 `/bell/ring` endpoint at all times of day.
 
-#### :one: Request
+#### :one::seven: Request
 
 The full data for the request very verbose and has been omitted below:
 
