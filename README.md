@@ -17,7 +17,7 @@ such as the **PEP proxy** are able to apply the latest ruleset.
 The tutorial demonstrates examples of interactions using the **Keyrock** GUI, as
 well [cUrl](https://ec.haxx.se/) commands used to access the REST APIs of
 **Keyrock** and **Authzforce** -
-[Postman documentation](https://fiware.github.io/tutorials.Identity-Management/)
+[Postman documentation](https://fiware.github.io/tutorials.Administrating-XACML)
 is also available.
 
 [![Run in Postman](https://run.pstmn.io/button.svg)](https://www.getpostman.com/collections/23b7045a5b52a54a2666)
@@ -1102,7 +1102,7 @@ following:
 
 <details>
   <summary>
-   To see the full <code>&lt;Rule&gt;</code>  <b>(Click to expand)</b>
+   To see the full `<Rule>`  <b>(Click to expand)</b>
   </summary>
 
 ```xml
@@ -1246,7 +1246,7 @@ to be amended to apply two rules:
 
 <details>
   <summary>
-   To see the new <code>&lt;Rule&gt;</code> <b>(Click to expand)</b>
+   To see the new `<Rule>`  <b>(Click to expand)</b>
   </summary>
 
 ```xml
@@ -1283,13 +1283,33 @@ to be amended to apply two rules:
 
 </details>
 
-To amend the XACML rules governing a permission, make a PATCH request to the
-`/applications/{{app-id}}/permissions/{permission-id}}` endpoint. The body of
-the request must include three attributes - `action` and `resource` must both be
-set to `""` and the `xml` attribute should hold the XACML text.
 
 This is most easily be done in the GUI by pasting the rule into the appropriate
 text box, however it can also be done programmatically.
+
+To log-in to the **Keyrock** GUI, enter the username and password on the log-in
+page `http://localhost:3005/`
+
+![](https://fiware.github.io/tutorials.Administrating-XACML/img/login.png)
+
+Navigate to correct application, and click on the manage roles tab
+
+![](https://fiware.github.io/tutorials.Administrating-XACML/img/manage-roles.png)
+
+Select a permission to edit
+
+![](https://fiware.github.io/tutorials.Administrating-XACML/img/edit-permission.png)
+
+The HTTP Verb and Resource rule needs to be left blank, but the applicable XACML
+`<Rule>` elements need to be pasted within the **Advanced XACML Rule** textbox
+as shown:
+
+![](https://fiware.github.io/tutorials.Administrating-XACML/img/permission.png)
+
+Alternatively to programatically amend the XACML rules governing a permission, make a PATCH request to the
+`/applications/{{app-id}}/permissions/{permission-id}}` endpoint. The body of
+the request must include three attributes - `action` and `resource` must both be
+set to `""` and the `xml` attribute should hold the XACML text.
 
 #### :one::five: Request
 
