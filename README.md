@@ -1102,7 +1102,7 @@ following:
 
 <details>
   <summary>
-   To see the full `<Rule>`  <b>(Click to expand)</b>
+   To see the full <code>&lt;Rule&gt;</code>  <b>(Click to expand)</b>
   </summary>
 
 ```xml
@@ -1246,7 +1246,7 @@ to be amended to apply two rules:
 
 <details>
   <summary>
-   To see the new `<Rule>`  <b>(Click to expand)</b>
+   To see the new <code>&lt;Rule&gt;</code>  <b>(Click to expand)</b>
   </summary>
 
 ```xml
