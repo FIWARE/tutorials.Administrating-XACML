@@ -57,7 +57,7 @@ is also available.
         -   [Permit Access to a Resource](#permit-access-to-a-resource)
     -   [Tutorial PEP - Extending Advanced Authorization](#tutorial-pep---extending-advanced-authorization)
         -   [Extending Advanced Authorization - Sample Code](#extending-advanced-authorization---sample-code)
-    -   [Extending Advanced Authorization - Running the Example](#extending-advanced-authorization---running-the-example)
+        -   [Extending Advanced Authorization - Running the Example](#extending-advanced-authorization---running-the-example)
 -   [Next Steps](#next-steps)
 
 </details>
@@ -1595,7 +1595,7 @@ function policyDomainRequest(domain, roles, resource, action, username, email) {
 }
 ```
 
-## Extending Advanced Authorization - Running the Example
+### Extending Advanced Authorization - Running the Example
 
 After successfully update the **Authzforce** `<PolicySet>` to include a special
 rule for Charlie, his rights will differ from other users in the security role
