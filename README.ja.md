@@ -82,7 +82,7 @@
 > Landside Motor Vehicle Operations
 
 ビジネス・ルールは時間とともに変化し、それに応じてアクセス制御を
-修正できるようにする必要があります。 
+修正できるようにする必要があります。
 [以前のチュートリアル](https://github.com/Fiware/tutorials.XACML-Access-Rules)
 には、**Authzforce** にロードされた、静的 XACML `<PolicySet>` が含まれて
 いました。このコンポーネントは、すべてのポリシー決定がその場で計算され、
@@ -748,7 +748,7 @@ curl -X POST \
 ### ポリシーセットを更新
 
 **Authzforce** で特定のドメイン情報の `PolicySet` を更新するには、
-アップロードする XACML ルールのフルセットを含む 
+アップロードする XACML ルールのフルセットを含む
 `/authzforce-ce/domains/{{domain-id}}/pap/policies` エンドポイントに
 POST リクエストを行います。`Version` は一意である必要があります。
 
@@ -1048,10 +1048,10 @@ PEP Proxy の背後で保護されています。これは、セキュリティ�
 > -   価格変更エリアへのアクセス
 > -   注文在庫エリアへのアクセス
 > -   **context broker** への PEP Proxy アクセス
->  
+>
 > -   対照的に、1つのリソースは単純な動詞リソースのパーミッション
 >     (レベル2) として残されています
-> 
+>
 > -   ドアのロック解除コマンドを送信
 
 <a name="create-token-with-password"></a>
@@ -1702,7 +1702,7 @@ Detective1 は Charlie に対応し、**セキュリティ**・ロールを果�
 
 -   `http://localhost:3000` で、制限されたアクセス・リンクをクリック
     してください - アクセスが**拒否**されました - これは管理のみの権限です
--   `http://localhost:3000/device/monitor` でデバイス・モニタを開きます 
+-   `http://localhost:3000/device/monitor` でデバイス・モニタを開きます
     -   ドアのロックを解除 - アクセスは**許可**されています - これは
         セキュリティ上の唯一の許可です
     -   ベルを鳴らす - アクセスは**拒否**されます - これは、午前9時から
@@ -1719,7 +1719,7 @@ Charlie は、**セキュリティ**・ロールを担っています。
 
 -   `http://localhost:3000` で、制限されたアクセス・リンクをクリック
     してください - アクセスが**拒否**されました - これは管理のみの権限です
--   `http://localhost:3000/device/monitor` でデバイス・モニタを開きます 
+-   `http://localhost:3000/device/monitor` でデバイス・モニタを開きます
     -   ドアのロックを解除 - アクセスは**許可**されています - これは
         セキュリティ上の唯一の許可です
     -   ベルを鳴らす - アクセスは**許可**されます - これは、`charlie` という
@@ -1738,4 +1738,4 @@ Charlie は、**セキュリティ**・ロールを担っています。
 
 ## License
 
-[MIT](LICENSE) © FIWARE Foundation e.V.
+[MIT](LICENSE) © 2019 FIWARE Foundation e.V.
