@@ -7,64 +7,66 @@
 <br/>
 [![Documentation](https://img.shields.io/readthedocs/fiware-tutorials.svg)](https://fiware-tutorials.rtfd.io)
 
-This tutorial describes the administration of level 3 advanced authorization
-rules into **Authzforce**, either directly, or with the help of the **Keyrock**
-GUI. The simple verb-resource based permissions are amended to use XACML and new
-XACML permissions added to the existing roles. The updated ruleset is
-automatically uploaded to **Authzforce** PDP, so that policy execution points
-such as the **PEP proxy** are able to apply the latest ruleset.
+このチュートリアルでは、直接または **Keyrock** GUI を使用した、**Authzforce**
+での、レベル3の高度な認可ルールの管理について説明します。
+単純な動詞リソース・ベースのパーミッション
+(simple verb-resource based permissions) は、既存のロールに追加された XACML
+および新しい XACML パーミッションを使用するように修正されています。
+更新されたルールセットは自動的に **Authzforce PDP** にアップロード
+されるため、**PEP proxy** などのポリシー実行ポイント (PEP) は最新のルールセット
+を適用できます。
 
-The tutorial demonstrates examples of interactions using the **Keyrock** GUI, as
-well [cUrl](https://ec.haxx.se/) commands used to access the REST APIs of
-**Keyrock** and **Authzforce** -
+チュートリアルは、**Keyrock** GUI を使用してインタラクションの例を示し、
+同様に、**Keyrock** と **Authzforce** の REST API にアクセスするために使用する、
+[cUrl](https://ec.haxx.se/) コマンドも説明します。
 [Postman documentation](https://fiware.github.io/tutorials.Administrating-XACML)
-is also available.
+も利用できます。
 
 [![Run in Postman](https://run.pstmn.io/button.svg)](https://www.getpostman.com/collections/23b7045a5b52a54a2666)
 
--   このチュートリアルは[日本語](README.ja.md)でもご覧いただけます。
-
-## Contents
+## コンテンツ
 
 <details>
-<summary><strong>Details</strong></summary>
+<summary><strong>詳細</strong></summary>
 
--   [Administrating XACML Rules](#administrating-xacml-rules)
-    -   [What is XACML](#what-is-xacml)
-    -   [PAP - Policy Administration Point](#pap---policy-administration-point)
+-   [XACML ルールを管理](#administrating-xacml-rules)
+    -   [XACML とは](#what-is-xacml)
+    -   [PAP - Policy Administration Point (ポリシー管理ポイント)](#pap---policy-administration-point)
         -   [Authzforce PAP](#authzforce-pap)
         -   [Keyrock PAP](#keyrock-pap)
-    -   [PEP - Policy Execution Point](#pep---policy-execution-point)
--   [Prerequisites](#prerequisites)
+    -   [PEP - Policy Execution Point (ポリシー実行ポイント)](#pep---policy-execution-point)
+-   [前提条件](#prerequisites)
     -   [Docker](#docker)
     -   [Cygwin](#cygwin)
--   [Architecture](#architecture)
--   [Start Up](#start-up)
-    -   [Dramatis Personae](#dramatis-personae)
--   [XACML Administration](#xacml-administration)
+-   [アーキテクチャ](#architecture)
+-   [起動](#start-up)
+    -   [登場人物 (Dramatis Personae)](#dramatis-personae)
+-   [XACML 管理](#xacml-administration)
     -   [Authzforce PAP](#authzforce-pap-1)
-        -   [Creating a new Domain](#creating-a-new-domain)
-        -   [Creating an initial PolicySet](#creating-an-initial-policyset)
-        -   [Activating the initial PolicySet](#activating-the-initial-policyset)
-        -   [Updating a PolicySet](#updating-a-policyset)
-        -   [Activating an updated PolicySet](#activating-an-updated-policyset)
+        -   [新しいドメインを作成](#creating-a-new-domain)
+        -   [初期ポリシーセットを作成](#creating-an-initial-policyset)
+        -   [初期ポリシーセットをアクティブ化](#activating-the-initial-policyset)
+        -   [ポリシーセットを更新](#updating-a-policyset)
+        -   [更新されたポリシーセットをアクティブ化](#activating-an-updated-policyset)
     -   [Keyrock PAP](#keyrock-pap-1)
-        -   [Predefined Roles and Permissions](#predefined-roles-and-permissions)
-        -   [Create Token with Password](#create-token-with-password)
-        -   [Read a Verb-Resource Permission](#read-a-verb-resource-permission)
-        -   [Read a XACML Rule Permission](#read-a-xacml-rule-permission)
-        -   [Deny Access to a Resource](#deny-access-to-a-resource)
-        -   [Update an XACML Permission](#update-an-xacml-permission)
-        -   [Passing the Updated Policy Set to Authzforce](#passing-the-updated-policy-set-to-authzforce)
-        -   [Permit Access to a Resource](#permit-access-to-a-resource)
-    -   [Tutorial PEP - Extending Advanced Authorization](#tutorial-pep---extending-advanced-authorization)
-        -   [Extending Advanced Authorization - Sample Code](#extending-advanced-authorization---sample-code)
-        -   [Extending Advanced Authorization - Running the Example](#extending-advanced-authorization---running-the-example)
--   [Next Steps](#next-steps)
+        -   [定義済みのロールと権限](#predefined-roles-and-permissions)
+        -   [パスワードでトークンを作成](#create-token-with-password)
+        -   [動詞リソースのパーミッションを読み込む](#read-a-verb-resource-permission)
+        -   [XACML ルール権限を読み込む](#read-a-xacml-rule-permission)
+        -   [リソースへのアクセスを拒否](#deny-access-to-a-resource)
+        -   [XACML 権限を更新](#update-an-xacml-permission)
+        -   [更新したポリシーセットを Authzforce に渡す](#passing-the-updated-policy-set-to-authzforce)
+        -   [リソースへのアクセスを許可](#permit-access-to-a-resource)
+    -   [PEP のチュートリアル  - 高度な認可の拡張](#tutorial-pep---extending-advanced-authorization)
+        -   [高度な認可の拡張 - サンプル・コード](#extending-advanced-authorization---sample-code)
+        -   [高度な認可の拡張 - 例の実行](#extending-advanced-authorization---running-the-example)
+-   [次のステップ](#next-steps)
 
 </details>
 
-# Administrating XACML Rules
+<a name="administrating-xacml-rules"></a>
+
+# XACML ルールを管理
 
 > **12.3 Central Terminal Area**
 >
@@ -79,205 +81,231 @@ is also available.
 > — Los Angeles International Airport Rules and Regulations, Section 12 -
 > Landside Motor Vehicle Operations
 
-Business rules change over time, and it is necessary to be able to amend access
-controls accordingly. The
-[previous tutorial](https://github.com/Fiware/tutorials.XACML-Access-Rules)
-included a static XACML `<PolicySet>` loaded into **Authzforce**. This component
-offers advanced authorization (level 3) access control where every policy
-decision is calculated on the fly and new rules can be applied under new
-circumstances. The details of the
+ビジネス・ルールは時間とともに変化し、それに応じてアクセス制御を
+修正できるようにする必要があります。 
+[以前のチュートリアル](https://github.com/Fiware/tutorials.XACML-Access-Rules)
+には、**Authzforce** にロードされた、静的 XACML `<PolicySet>` が含まれて
+いました。このコンポーネントは、すべてのポリシー決定がその場で計算され、
+新しいルールが新しい状況下で適用されることができる高度な認可 (レベル3)
+アクセス制御を提供します。
 [Authzforce](https://authzforce-ce-fiware.readthedocs.io/) Policy Decision Point
-(PDP) were discussed in the
-[previous tutorial](https://github.com/Fiware/tutorials.XACML-Access-Rules),
-suffice to say, the **Authzforce** PDP interprets rules according to the
-[XACML standard](https://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml)
-and offers a means to adjudicate on any access request provided that sufficient
-information can be supplied.
+(PDP:ポリシー決定ポイント) の詳細は
+[以前のチュートリアル](https://github.com/Fiware/tutorials.XACML-Access-Rules)
+で説明しましたが、**Authzforce** PDP は XACML 標準に従ってルールを解釈し、
+十分な情報を提供できる場合はアクセスを判断する手段を提供します。
 
-For full flexibility, it must be possible to load, update and activate a new
-access control XACML `<PolicySet>` whenever necessary. In order to do, this
-**Authzforce** offers a simple REST Policy Administration Point (PAP), an
-alternative role-based PAP is available within **Keyrock**
+最大限の柔軟性を得るために、必要に応じて新しいアクセス制御 XACML`<PolicySet>` を
+ロード、更新、およびアクティブ化することが可能でなければなりません。
+そうするために、この **Authzforce** は単純な REST Policy Adminstration Point
+(PAP:ポリシー管理ポイント) を提供します、代わりのロール・ベースの
+PAP は **Keyrock** 内で利用可能です。
 
-## What is XACML
+<a name="what-is-xacml"></a>
 
-eXtensible Access Control Markup Language (XACML) is a vendor neutral
-declarative access control policy language. It was created to promote common
-access control terminology and interoperability. The architectural naming
-conventions for elements such as Policy Execution Point (PEP) and Policy
-Decision Point (PDP) come from the XACML specifications.
+## XACML とは
 
-XACML policies are split into a hierarchy of three levels - `<PolicySet>`,
-`<Policy>` and `<Rule>`, the `<PolicySet>` is a collection of `<Policy>`
-elements each of which contain one or more `<Rule>` elements.
+eXtensible Access Control Markup Language (XACML) は、ベンダーに依存しない
+宣言型アクセス制御ポリシー言語です。これは、一般的なアクセス制御の用語と
+相互運用性を促進するために作成されました。ポリシー実行ポイント
+(PEP : Policy Execution Point) やポリシー決定ポイント (PDP : Policy
+Decision Point) などの要素のアーキテクチャの命名ルールは、XACML
+仕様に基づいています。
 
-Each `<Rule>` within a `<Policy>` is evaluated as to whether it should grant
-access to a resource - the overall `<Policy>` result is defined by the overall
-result of all `<Rule>` elements processed in turn. Separate `<Policy>` results
-are then evaluated against each other using combining algorithms define which
-`<Policy>` wins in case of conflict.
+XACML ポリシーは、`<PolicySet>`, `<Policy>` と `<Rule>` の3つのレベルの
+階層に分けられます。`<PolicySet>` は、それぞれが一つ以上の `<Rule>` 要素を
+含む `<Policy>` 要素の集合です。
 
-Further information can be found within the
-[XACML standard](https://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml)
-and [additional resources](https://www.webfarmr.eu/xacml-tutorial-axiomatics/)
-can be found on the web.
+`<Policy>` 内の各 `<Rule>` は、それがリソースへのアクセスを許可すべきか
+どうかに関して評価されます。総合的な `<Policy>` 結果は、順番に処理された
+すべての `<Rule>` 要素の総合的な結果によって定義されます。そして、別々の
+`<Policy>` 結果は、衝突の場合にどちらの `<Policy>` が勝つかを定義する
+組み合わせアルゴリズムを使用してお互いに対して評価されます。
 
-## PAP - Policy Administration Point
+さらなる情報は、
+[XACML 標準](https://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml)
+内にあり、
+[追加のリソース](https://www.webfarmr.eu/xacml-tutorial-axiomatics/)
+は Web 上にあります。
 
-For the first half of the tutorial, a simple two rule `<PolicySet>` will be
-administered using the **Authzforce** PAP. Thereafter the **Keyrock** GUI will
-be used to administer XACML rules within the existing tutorial application on an
-individual XACML `<Rule>` level. The policy decision request code within the
-**PEP-Proxy** may also need to be customized to enable the enforcement of
-complex XACML rules.
+<a name="pap---policy-administration-point"></a>
+
+## PAP - Policy Administration Point (ポリシー管理ポイント)
+
+チュートリアルの前半では、**Authzforce** PAP を使用して単純な2つのルール
+`<PolicySet>` を管理します。その後、**Keyrock** GUI を使用して既存の
+チュートリアルのアプリケーション内の XACML ルールを個々の XACML `<Rule>` レベルで
+管理します。**PEP-Proxy** 内のポリシー決定のリクエスト・コードも、複雑な XACML
+ルールの実施を可能にするためにカスタマイズする必要があるかもしれません。
+<a name="authzforce-pap"></a>
 
 ### Authzforce PAP
 
-Within the **Authzforce** PAP all CRUD actions occur on the `<PolicySet>` level.
-It is therefore necessary to create a complete, valid XACML file before
-uploading it to the service. There is no GUI available to ensure the validity of
-the `<PolicySet>` prior to uploading the XACML.
+**Authzforce** PAP 内では、すべての CRUD アクションは `<PolicySet>` レベルで
+発生します。そのため、サービスにアップロードする前に、完全で有効な XACML ファイル
+を作成する必要があります。XACML をアップロードする前に `<PolicySet>` の有効性を
+保証するために利用できる GUI はありません。
+
+<a name="keyrock-pap"></a>
 
 ### Keyrock PAP
 
-**Keyrock** can create a valid XACML file based on available roles and
-permissions and pass this to **Authzforce**. Indeed **Keyrock** already does
-this whenever it combines with **Authzforce** as all its own basic authorization
-(level 2) permissions must be translated into advanced authorization (level 3)
-permissions before they can be adjudicated by **Authzforce**.
+**Keyrock**は、利用可能なロールとパーミッションに基づいて有効な XACML ファイルを
+作成し、これを **Authzforce** に渡すことができます。実際、**Keyrock** は、
+**Authzforce** と組み合わせるたびに、これを実行しています。これは、**Authzforce**
+によって判断される前に、すべての独自の基本認可 (レベル2) パーミッションを高度な
+認可 (レベル3) パーミッションに変換する必要があるためです。
 
-Within **Keyrock**, each role corresponds to an XACML `<Policy>`, each
-permission within that role corresponds to an XACML `<Rule>`. There is a GUI
-available for uploading and amending the XACML for each `<Rule>` and all CRUD
-actions occur on the `<Rule>` level.
+**Keyrock** 内では、各ロールは XACML `<Policy>` に対応し、そのロール内の
+各パーミッションは XACML `<Rule>` に対応します。`<Rule>` ごとに XACML を
+アップロードおよび修正するための GUI があり、すべての CRUD アクションは
+`<Rule>` レベルで発生します。
 
-Provided care is taken when creating `<Rule>` you can use **Keyrock** to
-simplify the administration of XACML and create a valid `<PolicySet>` for
-**Authzforce**.
+`<Rule>` を作成する際には注意が必要ですが、XACML の管理を単純化し、
+**Authzforce** に対して有効な `<PolicySet>` を作成するために
+**Keyrock** を使用できます。
 
-## PEP - Policy Execution Point
+<a name="pep---policy-execution-point"></a>
 
-When using advanced authorization (level 3), a policy execution point sends
-an authorization request to the relevant domain endpoint within **Authzforce**,
-providing all of the information necessary for **Authzforce** to provide a
-judgement. Details of the interaction can be found in the
-[previous tutorial](https://github.com/Fiware/tutorials.XACML-Access-Rules).
+## PEP - Policy Execution Point (ポリシー実行ポイント)
 
-The full code to supply each request to **Authzforce** can be found within the
-tutorials'
-[Git Repository](https://github.com/Fiware/tutorials.Step-by-Step/blob/master/context-provider/lib/azf.js)
+高度な認可 (レベル3) を使用する場合、ポリシー実行ポイント (PEP) は認可リクエストを
+**Authzforce** 内の関連ドメイン・エンドポイントに送信し、**Authzforce** が判断を
+下すために必要なすべての情報を提供します。インタラクションの詳細は
+[以前のチュートリアル](https://github.com/Fiware/tutorials.XACML-Access-Rules)にあります。
 
-Obviously the definition of _"all of the information necessary"_ may change over
-time, applications must therefore be flexible enough to be able to modify the
-requests sent to ensure that sufficient information is passed.
+各リクエストを **Authzforce** に提供するための完全なコードは、チュートリアルの
+[Gitリポジトリ](https://github.com/Fiware/tutorials.Step-by-Step/blob/master/context-provider/lib/azf.js)
+にあります。
 
-# Prerequisites
+明らかに "必要なすべての情報" の定義は時間とともに変化するかもしれません。
+したがって、アプリケーションは十分な情報が渡されることを確実にするために
+送られるリクエストを修正することができるほど十分に柔軟でなければなりません。
+
+<a name="prerequisites"></a>
+
+# 前提条件
+
+<a name="docker"></a>
 
 ## Docker
 
-To keep things simple all components will be run using
-[Docker](https://www.docker.com). **Docker** is a container technology which
-allows to different components isolated into their respective environments.
+物事を単純にするために、両方のコンポーネントが [Docker](https://www.docker.com)
+を使用して実行されます。**Docker** は、さまざまコンポーネントをそれぞれの環境に
+分離することを可能にするコンテナ・テクノロジです。
 
--   To install Docker on Windows follow the instructions
-    [here](https://docs.docker.com/docker-for-windows/)
--   To install Docker on Mac follow the instructions
-    [here](https://docs.docker.com/docker-for-mac/)
--   To install Docker on Linux follow the instructions
-    [here](https://docs.docker.com/install/)
+-   Docker Windows にインストールするには
+    、[こちら](https://docs.docker.com/docker-for-windows/)の手順に従ってくださ
+    い
+-   Docker Mac にインストールするには
+    、[こちら](https://docs.docker.com/docker-for-mac/)の手順に従ってください
+-   Docker Linux にインストールするには
+    、[こちら](https://docs.docker.com/install/)の手順に従ってください
 
-**Docker Compose** is a tool for defining and running multi-container Docker
-applications. A
+**Docker Compose** は、マルチコンテナ Docker アプリケーションを定義して実行する
+ためのツールです。
 [YAML file](https://raw.githubusercontent.com/Fiware/tutorials.Identity-Management/master/docker-compose.yml)
-is used configure the required services for the application. This means all
-container services can be brought up in a single command. Docker Compose is
-installed by default as part of Docker for Windows and Docker for Mac, however
-Linux users will need to follow the instructions found
-[here](https://docs.docker.com/compose/install/)
+ファイルは、アプリケーションのために必要なサービスを構成するために使用します。つ
+まり、すべてのコンテナ・サービスは 1 つのコマンドで呼び出すことができます
+。Docker Compose は、デフォルトで Docker for Windows と Docker for Mac の一部と
+してインストールされますが、Linux ユーザは
+[ここ](https://docs.docker.com/compose/install/)に記載されている手順に従う必要
+があります。
+
+<a name="cygwin"></a>
 
 ## Cygwin
 
-We will start up our services using a simple bash script. Windows users should
-download [cygwin](http://www.cygwin.com/) to provide a command-line
-functionality similar to a Linux distribution on Windows.
+シンプルな bash スクリプトを使用してサービスを開始します。Windows ユーザは
+[cygwin](http://www.cygwin.com/) をダウンロードして、Windows 上の Linux
+ディストリビューションと同様のコマンドライン機能を提供する必要があります。
 
-# Architecture
+<a name="architecture"></a>
 
-This application demonstrates the administration of level 3 Advanced
-Authorization security into the existing Stock Management and Sensors-based
-application created in
-[previous tutorials](https://github.com/Fiware/tutorials.XACML-Access-Rules/)
-and secures access to the context broker behind a
-[PEP Proxy](https://github.com/Fiware/tutorials.PEP-Proxy/). It will make use of
-five FIWARE components - the
-[Orion Context Broker](https://fiware-orion.readthedocs.io/en/latest/), the
+# アーキテクチャ
+
+このアプリケーションは、
+[以前のチュートリアル](https://github.com/Fiware/tutorials.Securing-Access/)
+で作成した既存の在庫管理 およびセンサ・ベースのアプリケーションにレベル3の
+高度な認可のセキュリティを追加し、
+[PEP Proxy](https://github.com/Fiware/tutorials.PEP-Proxy/) の背後にある
+Context Broker へのアクセスを保護します。
+[Orion Context Broker](https://fiware-orion.readthedocs.io/en/latest/),
 [IoT Agent for UltraLight 2.0](https://fiware-iotagent-ul.readthedocs.io/en/latest/),
-the [Keyrock](https://fiware-idm.readthedocs.io/en/latest/) Identity Manager,
-the [Wilma]() PEP Proxy and the
-[Authzforce](https://authzforce-ce-fiware.readthedocs.io) XACML Server. All
-access control decisions will be delegated to **Authzforce** which will read the
-ruleset from a previously uploaded policy domain.
+[Keyrock](https://fiware-idm.readthedocs.io/en/latest/) Identity Manager,
+[Wilma](https://fiware-pep-proxy.readthedocs.io/en/latest/) PEP Proxy,
+[Authzforce](https://authzforce-ce-fiware.readthedocs.io) XACML Server
+の5つの FIWARE コンポーネントを利用します。すべてのアクセス制御の決定は、
+以前にアップロードされたポリシー・ドメインからルールセットを読み取る
+**Authzforce** に委任されます。
 
-Both the Orion Context Broker and the IoT Agent rely on open source
-[MongoDB](https://www.mongodb.com/) technology to keep persistence of the
-information they hold. We will also be using the dummy IoT devices created in
-the [previous tutorial](https://github.com/Fiware/tutorials.IoT-Sensors/).
-**Keyrock** uses its own [MySQL](https://www.mysql.com/) database.
+Orion Context Brokerと IoT Agent はどちらも、オープンソースの
+[MongoDB](https://www.mongodb.com/) テクノロジを使用して、保持している情報を
+永続化します。また、
+[以前のチュートリアル](https://github.com/Fiware/tutorials.IoT-Sensors/)
+で作成したダミー IoT デバイスも使用します。**Keyrock** は、独自に
+[MySQL](https://www.mysql.com/) データベースを使用しています。
 
-Therefore the overall architecture will consist of the following elements:
+したがって、アーキテクチャ全体は次の要素から構成されます :
 
--   The FIWARE
-    [Orion Context Broker](https://fiware-orion.readthedocs.io/en/latest/) which
-    will receive requests using
+-   FIWARE
+    [Orion Context Broker](https://fiware-orion.readthedocs.io/en/latest/) は
+    、[NGSI](https://fiware.github.io/specifications/ngsiv2/latest/) を使用
+    してリクエストを受信します
+-   FIWARE
+    [IoT Agent for Ultralight 2.0](https://fiware-iotagent-ul.readthedocs.io/en/latest/)
+    は、
+    [Ultralight 2.0](https://fiware-iotagent-ul.readthedocs.io/en/latest/usermanual/index.html#user-programmers-manual)
+    フォーマットのダミー IoT デバイスからノース・バウンドの測定値を受信し、
+    Context Broker がコンテキスト・エンティティの状態を変更するための
     [NGSI](https://fiware.github.io/specifications/OpenAPI/ngsiv2)
--   The FIWARE
-    [IoT Agent for UltraLight 2.0](https://fiware-iotagent-ul.readthedocs.io/en/latest/)
-    which will receive southbound requests using
-    [NGSI](https://fiware.github.io/specifications/OpenAPI/ngsiv2) and convert
-    them to
+    リクエストに変換します
+-   FIWARE [Keyrock](https://fiware-idm.readthedocs.io/en/latest/) は、以下を含
+    んだ、補完的な ID 管理システムを提供します :
+    -   アプリケーションとユーザのための OAuth2 認証システム
+    -   ID 管理のための Web サイトのグラフィカル・フロントエンド
+    -   HTTP リクエストによる ID 管理用の同等の REST API
+-   FIWARE
+    [Authzforce](https://authzforce-ce-fiware.readthedocs.io/)
+    **Orion** やチュートリアル・アプリケーションなどのリソースへのアクセスを
+    保護する解釈可能な Policy Decision Point (PDP) を提供する XACML Server です
+-   FIWARE
+    [Wilma](https://fiware-pep-proxy.rtfd.io/)
+    **Orion** マイクロサービスへのアクセスを保護する PEP Proxy プロキシです。
+    認可決定の受渡しを **Authzforce** PDP に委任します
+-   [MongoDB](https://www.mongodb.com/) データベース :
+    -   **Orion Context Broker** が、データ・エンティティ、サブスクリプション、
+        レジストレーションなどのコンテキスト・データ情報を保持するために使用しま
+        す
+    -   デバイスの URLs や Keys などのデバイス情報を保持するために **IoT Agent**
+        によって使用されます
+-   [MySQL](https://www.mysql.com/) データベース :
+    -   ユーザ ID、アプリケーション、ロール、および権限を保持するために使用され
+        ます
+-   **在庫管理フロントエンド**には、次のことを行います :
+    -   店舗情報を表示します
+    -   各店舗でどの商品を購入できるかを示します
+    -   ユーザが製品を"購入"して在庫数を減らすことができます
+    -   許可されたユーザを制限されたエリアに入れることができます。認可の決定を
+        **Authzforce** PDP に委任します
+-   HTTP を介して実行されている
     [UltraLight 2.0](https://fiware-iotagent-ul.readthedocs.io/en/latest/usermanual/index.html#user-programmers-manual)
-    commands for the devices
--   FIWARE [Keyrock](https://fiware-idm.readthedocs.io/en/latest/) offer a
-    complement Identity Management System including:
-    -   An OAuth2 authentication system for Applications and Users
-    -   A site graphical frontend for Identity Management Administration
-    -   An equivalent REST API for Identity Management via HTTP requests
--   FIWARE [Authzforce](https://authzforce-ce-fiware.readthedocs.io/) is a XACML
-    Server providing an interpretive Policy Decision Point (PDP) protecting
-    access to resources such as **Orion** and the tutorial application.
--   FIWARE [Wilma](https://fiware-pep-proxy.rtfd.io/) is a PEP Proxy securing
-    access to the **Orion** microservices, it delegates the passing of
-    authorization decisions to **Authzforce** PDP
--   The underlying [MongoDB](https://www.mongodb.com/) database :
-    -   Used by the **Orion Context Broker** to hold context data information
-        such as data entities, subscriptions and registrations
-    -   Used by the **IoT Agent** to hold device information such as device URLs
-        and Keys
--   A [MySQL](https://www.mysql.com/) database :
-    -   Used to persist user identities, applications, roles and permissions
--   The **Stock Management Frontend** does the following:
-    -   Displays store information
-    -   Shows which products can be bought at each store
-    -   Allows users to "buy" products and reduce the stock count.
-    -   Allows authorized users into restricted areas, it also delegates
-        authorization decisions to the **Authzforce** PDP
--   A webserver acting as set of
-    [dummy IoT devices](https://github.com/Fiware/tutorials.IoT-Sensors) using
-    the
-    [UltraLight 2.0](https://fiware-iotagent-ul.readthedocs.io/en/latest/usermanual/index.html#user-programmers-manual)
-    protocol running over HTTP - access to certain resources is restricted.
+    プロトコルを使用す
+    る[ダミー IoT デバイス](https://github.com/Fiware/tutorials.IoT-Sensors)のセ
+    ットとして機能する Web サーバ。特定のリソースへのアクセスが制限されています
 
-Since all interactions between the elements are initiated by HTTP requests, the
-entities can be containerized and run from exposed ports.
+要素間のやり取りはすべて HTTP リクエストによって開始されるため、
+エンティティをコンテナ化して公開ポートから実行することができます。
 
 ![](https://fiware.github.io/tutorials.Administrating-XACML/img/architecture.png)
 
-The all container configuration values found in the YAML file have been
-described in previous tutorials.
+YAMLファイルに記述されている全てのコンテナの設定値は
+以前のチュートリアルで説明されています。
 
-# Start Up
+<a name="start-up"></a>
 
-To start the installation, do the following:
+# 起動
+
+インストールを開始するには、次の手順に従います :
 
 ```console
 git clone git@github.com:Fiware/tutorials.Administrating-XACML.git
@@ -286,109 +314,118 @@ cd tutorials.Administrating-XACML
 ./services create
 ```
 
-> **Note** The initial creation of Docker images can take up to three minutes
+> **注:** Docker イメージの最初の作成には最大 3 分かかります
 
-Thereafter, all services can be initialized from the command-line by running the
-[services](https://github.com/Fiware/tutorials.Administrating-XACML/blob/master/services)
-Bash script provided within the repository:
+[services](https://github.com/Fiware/tutorials.XACML-Access-Rules/blob/master/services)
+Bash スクリプトを実行することによって、コマンドラインからすべてのサービスを初期
+化することができます :
 
 ```console
 ./services start
 ```
 
-> :information_source: **Note:** If you want to clean up and start over again
-> you can do so with the following command:
+> :information_source: **注:** クリーンアップをやり直したい場合は、次のコマンド
+> を使用して再起動することができます :
 >
 > ```console
 > ./services stop
 > ```
 
-### Dramatis Personae
+<a name="dramatis-personae"></a>
 
-The following people at `test.com` legitimately have accounts within the
-Application
+### 登場人物 (Dramatis Personae)
 
--   Alice, she will be the Administrator of the **Keyrock** Application
--   Bob, the Regional Manager of the supermarket chain - he has several store
-    managers under him:
-    -   Manager1
-    -   Manager2
--   Charlie, the Head of Security of the supermarket chain - he has several
-    store detectives under him:
-    -   Detective1
-    -   Detective2
+次の `test.com` のメンバは、合法的にアプリケーション内にアカウントを持っています
 
-The following people at `example.com` have signed up for accounts, but have no
-reason to be granted access
+-   Alice, **Keyrock** アプリケーションの管理者です
+-   Bob, スーパー・マーケット・チェーンの地域マネージャで、数人のマネージャがい
+    ます :
+    -   Manager1 (マネージャ 1)
+    -   Manager2 (マネージャ 2)
+-   Charlie, スーパー・マーケット・チェーンのセキュリティ責任者。彼の下に数人の
+    警備員がいます :
+    -   Detective1 (警備員 1)
+    -   Detective2 (警備員 2)
 
--   Eve - Eve the Eavesdropper
--   Mallory - Mallory the malicious attacker
--   Rob - Rob the Robber
+次の`example.com` のメンバはアカウントにサインアップしましたが、アクセスを許可す
+る理由はありません
+
+-   Eve - 盗聴者のイブ
+-   Mallory - 悪意のある攻撃者のマロリー
+-   Rob - 強盗のロブ
 
 <details>
   <summary>
-   For more details <b>(Click to expand)</b>
+   詳細<b>(クリックして拡大)</b>
   </summary>
 
-| Name       | eMail                     | Password |
-| ---------- | ------------------------- | -------- |
-| alice      | alice-the-admin@test.com  | `test`   |
-| bob        | bob-the-manager@test.com  | `test`   |
-| charlie    | charlie-security@test.com | `test`   |
-| manager1   | manager1@test.com         | `test`   |
-| manager2   | manager2@test.com         | `test`   |
-| detective1 | detective1@test.com       | `test`   |
-| detective2 | detective2@test.com       | `test`   |
+| 名前       | E メール                  | パスワード |
+| ---------- | ------------------------- | ---------- |
+| alice      | alice-the-admin@test.com  | `test`     |
+| bob        | bob-the-manager@test.com  | `test`     |
+| charlie    | charlie-security@test.com | `test`     |
+| manager1   | manager1@test.com         | `test`     |
+| manager2   | manager2@test.com         | `test`     |
+| detective1 | detective1@test.com       | `test`     |
+| detective2 | detective2@test.com       | `test`     |
 
-| Name    | eMail               | Password |
-| ------- | ------------------- | -------- |
-| eve     | eve@example.com     | `test`   |
-| mallory | mallory@example.com | `test`   |
-| rob     | rob@example.com     | `test`   |
+| 名前    | E メール            | パスワード |
+| ------- | ------------------- | ---------- |
+| eve     | eve@example.com     | `test`     |
+| mallory | mallory@example.com | `test`     |
+| rob     | rob@example.com     | `test`     |
 
 </details>
 
-# XACML Administration
+<a name="xacml-administration"></a>
 
-To apply an access control policy, it is necessary to be able to do the
-following:
+# XACML 管理
 
-1. Create a consistent `<PolicySet>`
-2. Supply a Policy Execution Point (PEP) which provides necessary data
+アクセス制御ポリシーを適用するには、次のことができるようにする必要があります :
 
-As will be seen, **Keyrock** is able help with the first point, and custom code
-within the **PEP Proxy** can help with the second. **Authzforce** itself does
-not offer a UI, and is not concerned with generation and management of XACML
-policies - it assumes that each `<PolicySet>` it receives has already been
-generated by another component.
+1. 一貫した `<PolicySet>` を作成します
+2. 必要なデータを提供する ポリシー実行ポイント (PEP) を供給します
 
-Full-blown XACML editors are available, but the limited editor within
-**Keyrock** is usually sufficient for most access control scenarios.
+お分かりのように、**Keyrock** は最初のポイントに役立ち、**PEP Proxy** 内の
+カスタム・コードは2番目のポイントに役立ちます。**Authzforce** 自体は UI を
+提供せず、XACML ポリシーの生成と管理には関係ありません。受け取った各
+`<PolicySet>`
+はすでに別のコンポーネントによって生成されていると想定しています。
+
+本格的な XACML エディタが利用可能ですが、**Keyrock** 内の限られたエディタで
+通常、ほとんどのアクセス制御シナリオおいて十分です。
+
+<a name="authzforce-pap-1"></a>
 
 ## Authzforce PAP
 
-**Authzforce** can act as a Policy Administration Point (PAP), this means that
-PolicySets can be created and amended using API calls directly to **Authzforce**
+**Authzforce** はポリシー管理ポイント (PAP) として機能できます。
+つまり、**Authzforce** への直接の API 呼び出しを使用して `PolicySet`
+を作成および修正できます。
 
-However there is no GUI for creating or amending a `<PolicySet>`, and no
-generation tool. All CRUD actions occur on the `<PolicySet>` level.
+ただし、`<PolicySet>` を作成または修正するための GUI や生成ツールはありません。
+すべての CRUD アクションは `<PolicySet>` レベルで発生します。
 
-A full XACML `<PolicySet>` for any non-trivial application is very verbose. For
-simplicity, for this part of the tutorial, we will work on a completely new set
-of access rules designed for airport parking enforcement. **Authzforce** is
-implicitly multi-tenant - a single XACML server can be used to administrate
-access control policies for multiple applications. Security policies for each
-application are held in a separate **domain** where they can access their own
-`<PolicySets>` - therefore administrating the airport application will not
-interfere with the existing rules for the tutorial supermarket application.
+それほど重要ではないアプリケーション用の完全な XACML `<PolicySet>`
+は非常に冗長です。話を簡単にするために、チュートリアルのこの部分では、
+空港駐車場の施行用に設計されたまったく新しいアクセス・ルールのセットを
+作成します。**Authzforce** は、暗黙的にマルチテナントです。単一の XACML
+サーバを使用して複数のアプリケーションに対するアクセス制御ポリシーを
+管理できます。各アプリケーションのセキュリティ・ポリシーは、独自の
+`<PolicySets>`にアクセスできる個別のドメインに保持されます。
+したがって、空港アプリケーションを管理しても、チュートリアルの
+スーパーマーケット・アプリケーションの既存のルールが
+妨げられることはありません。
 
-### Creating a new Domain
+<a name="creating-a-new-domain"></a>
 
-To create a new domain in **Authzforce**, make a POST request to the
-`/authzforce-ce/domains` endpoint including a unique `external-id` within the
-`<domainProperties>` element
+### 新しいドメインを作成
 
-#### :one: Request
+**Authzforce** で新しいドメインを作成するには、`<domainProperties>` 要素内に
+一意の  `external-id` を含む `/authzforce-ce/domains` エンドポイントに
+POST リクエストを送信します。
+
+#### :one: リクエスト
 
 ```console
 curl -X POST \
@@ -398,29 +435,30 @@ curl -X POST \
 <domainProperties xmlns="http://authzforce.github.io/rest-api-model/xmlns/authz/5" externalId="airplane"/>'
 ```
 
-#### Response
+#### レスポンス
 
-The response includes a `href` in the `<n2:link>` element which holds the
-`domain-id` used internally within **Authzforce**.
+レスポンスには、**Authzforce**で内部的に使われている `domain-id` を保持する
+`<n2:link>` 要素 に `href`  が含まれています。
 
-An empty `PolicySet` will be created for the new domain. By default all access
-will be permitted.
+空の `PolicySet` が新しいドメイン用に作成されます。デフォルトではすべての
+アクセスが許可されます。
 
 ```xml
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <ns4:link xmlns="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17" xmlns:ns2="http://authzforce.github.io/pap-dao-flat-file/xmlns/properties/3.6" xmlns:ns3="http://authzforce.github.io/rest-api-model/xmlns/authz/5" xmlns:ns4="http://www.w3.org/2005/Atom" xmlns:ns5="http://authzforce.github.io/core/xmlns/pdp/6.0" rel="item" href="Sv-RRw9vEem6UQJCrBIBDA" title="Sv-RRw9vEem6UQJCrBIBDA"/>
 ```
 
-The new `domain-id` (in this case `Sv-RRw9vEem6UQJCrBIBDA` ) will be used with
-all subsequent requests.
+新しい`domain-id` (この場合、`Sv-RRw9vEem6UQJCrBIBDA` ) は、以降のすべての
+リクエストで使用されます。
 
-#### :two: Request
+#### :two: リクエスト
 
-To request a decision from Authzforce, make a POST request to the
-`domains/{domain-id}/pdp` endpoint. In this case the user is requesting access
-to `loading` in the `white` zone.
+**Authzforce** に決定をリクエストするには、`domains/{domain-id}/pdp`
+エンドポイントに POST リクエストを出します。この場合、ユーザは `white`
+ゾーン内の `loading` へのアクセスをリクエストします。
 
-Remember to amend the request below to use your own `{domain-id}`:
+あなた自身の `{domain-id}` を使うために下記のリクエストを修正することを
+忘れないでください :
 
 ```console
 curl -X POST \
@@ -445,10 +483,11 @@ curl -X POST \
 </Request>'
 ```
 
-#### Response
+#### レスポンス
 
-The response for the request includes a `<Decision>` element to `Permit` or
-`Deny` access to the resource. at this point all requests will be `Permit`
+リクエストに対するレスポンスには、リソースへのアクセスを `Permit`
+(許可) または `Deny` (拒否) するための `Deny` 要素が含まれます。
+この時点ですべてのリクエストは `Permit` になります。
 
 ```xml
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
@@ -459,26 +498,30 @@ The response for the request includes a `<Decision>` element to `Permit` or
 </Response>
 ```
 
-### Creating an initial PolicySet
+<a name="creating-an-initial-policyset"></a>
 
-To create a `PolicySet` for a given domain information in **Authzforce**, make a
-POST request to the `/authzforce-ce/domains/{{domain-id}}/pap/policies` endpoint
-including the full set of XACML rules to upload.
+### 初期ポリシーセットを作成
 
-For this initial Policy, the following rules will be enforced
+**Authzforce**で特定のドメイン情報のための `PolicySet` 作成するには、
+アップロードする XACML ルールの全セットを含む
+`/authzforce-ce/domains/{{domain-id}}/pap/policies` エンドポイントに
+POST リクエストを行います。
 
--   The **white** zone is for immediate loading and unloading of passengers only
--   There is no stopping in the **red** zone
+この初期ポリシーでは、以下のルールが強制されます。
 
-#### :three: Request
+-   **white** ゾーンは、乗客の即時積み降ろしのためです
+-   **red** ゾーンで止まることはありません
 
-The full data for an XACML `<PolicySet>` is very verbose and has been omitted
-from the request below:
+#### :three: リクエスト
+
+XACML `<PolicySet>` の全データは非常に冗長であり、
+以下のリクエストから省略されています :
 
 <details>
   <summary>
 
-Remember to amend the request below to use your own `{domain-id}`:
+あなた自身の `{domain-id}` を使うために下記のリクエストを
+修正することを忘れないでください :
 
 ```console
 curl -X POST \
@@ -487,11 +530,12 @@ curl -X POST \
   -d '<PolicySet>...etc</PolicySet>'
 ```
 
-**(Click to expand)**
+**(クリックすると拡大します)**
 
   </summary>
 
-Remember to amend the request below to use your own `{domain-id}`:
+あなた自身の `{domain-id}` を使うために下記のリクエストを
+修正することを忘れないでください :
 
 ```console
 curl -X POST \
@@ -562,26 +606,31 @@ curl -X POST \
 
 </details>
 
-#### Response
+#### レスポンス
 
-The response contains the internal id of the policy held within **Authzforce**
-and version information about the `PolicySet` versions available. The rules of
-the new `PolicySet` will not be applied until the `PolicySet` is activated.
+レスポンスには、**Authzforce** 内に保持されているポリシーの内部
+id と利用可能な  PolicySet バージョンに関するバージョン情報が
+含まれています。新しい `PolicySet` のルールは、`PolicySet`
+が有効になるまで適用されません。
 
 ```xml
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <ns4:link xmlns="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17" xmlns:ns2="http://authzforce.github.io/pap-dao-flat-file/xmlns/properties/3.6" xmlns:ns3="http://authzforce.github.io/rest-api-model/xmlns/authz/5" xmlns:ns4="http://www.w3.org/2005/Atom" xmlns:ns5="http://authzforce.github.io/core/xmlns/pdp/6.0" rel="item" href="f8194af5-8a07-486a-9581-c1f05d05483c/1" title="Policy 'f8194af5-8a07-486a-9581-c1f05d05483c' v1"/>
 ```
 
-### Activating the initial PolicySet
+<a name="activating-the-initial-policyset"></a>
 
-To activate a `PolicySet`, make a PUT request to the
-`/authzforce-ce/domains/{domain-id}/pap/pdp.properties` endpoint including the
-`policy-id` to update within the `<rootPolicyRefExpresion>` attribute
+### 初期ポリシーセットをアクティブ化
 
-#### :four: Request
+`PolicySet` をアクティブにするには、`<rootPolicyRefExpresion>`
+属性内で更新する `policy-id` を含む
+`/authzforce-ce/domains/{domain-id}/pap/pdp.properties`
+エンドポイントに PUT リクエストを行います。
 
-Remember to amend the request below to use your own `{domain-id}`:
+#### :four: リクエスト
+
+あなた自身の `{domain-id}` を使うために下記のリクエストを
+修正することを忘れないでください :
 
 ```console
 curl -X PUT \
@@ -593,9 +642,9 @@ curl -X PUT \
   </pdpPropertiesUpdate>'
 ```
 
-#### Response
+#### レスポンス
 
-The response returns information about the `PolicySet` applied.
+レスポンスは、適用された `PolicySet` についての情報を返します。
 
 ```xml
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
@@ -610,12 +659,13 @@ The response returns information about the `PolicySet` applied.
 </ns3:pdpProperties>
 ```
 
-#### :five: Request
+#### :five: リクエスト
 
-At this point, making a request to access to `loading` in the `white` zone will
-return `Permit`
+この時点で、`white` ゾーン内で `loading` へのアクセスを
+リクエストすると `Permit` を戻します。
 
-Remember to amend the request below to use your own `{domain-id}`:
+あなた自身の `{domain-id}` を使うために下記のリクエストを
+修正することを忘れないでください :
 
 ```console
 curl -X POST \
@@ -640,7 +690,7 @@ curl -X POST \
 </Request>'
 ```
 
-#### Response
+#### レスポンス
 
 ```xml
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
@@ -651,12 +701,13 @@ curl -X POST \
 </Response>
 ```
 
-#### :six: Request
+#### :six: リクエスト
 
-At this point, making a request to access to `loading` in the `red` zone will
-return `Deny`
+この時点で、`red` ゾーン内で `loading` へのアクセスを
+リクエストする `Deny` を戻します。
 
-Remember to amend the request below to use your own `{domain-id}`:
+あなた自身の `{domain-id}` を使うために下記のリクエストを
+修正することを忘れないでください :
 
 ```console
 curl -X POST \
@@ -681,7 +732,7 @@ curl -X POST \
 </Request>'
 ```
 
-#### Response
+#### レスポンス
 
 ```xml
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
@@ -692,27 +743,30 @@ curl -X POST \
 </Response>
 ```
 
-### Updating a PolicySet
+<a name="updating-a-policyset"></a>
 
-To update a `PolicySet` for a given domain information in **Authzforce**, make a
-POST request to the `/authzforce-ce/domains/{{domain-id}}/pap/policies` endpoint
-including the full set of XACML rules to upload. Note that the `Version` must be
-unique.
+### ポリシーセットを更新
 
-For the updated Policy, the previous rules will be reversed
+**Authzforce** で特定のドメイン情報の `PolicySet` を更新するには、
+アップロードする XACML ルールのフルセットを含む 
+`/authzforce-ce/domains/{{domain-id}}/pap/policies` エンドポイントに
+POST リクエストを行います。`Version` は一意である必要があります。
 
--   The **red** zone is for immediate loading and unloading of passengers only
--   There is no stopping in the **white** zone
+更新されたポリシーについては、以前のルールが逆になります。
 
-#### :seven: Request
+-   **red** ゾーンは、乗客の即時積み降ろしのためです
+-   **white** ゾーンで止まることはありません
 
-The full data for an XACML `<PolicySet>` is very verbose and has been omitted
-from the request below:
+#### :seven: リクエスト
+
+XACML `<PolicySet>` の全データは非常に冗長であり、
+以下のリクエストから省略されています。
 
 <details>
   <summary>
 
-Remember to amend the request below to use your own `{domain-id}`:
+あなた自身の `{domain-id}` を使うために下記のリクエストを
+修正することを忘れないでください :
 
 ```console
 curl -X POST \
@@ -721,11 +775,12 @@ curl -X POST \
   -d '<PolicySet>...etc</PolicySet>'
 ```
 
-**(Click to expand)**
+**(クリックすると拡大します)**
 
   </summary>
 
-Remember to amend the request below to use your own `{domain-id}`:
+あなた自身の `{domain-id}` を使うために下記のリクエストを
+修正することを忘れないでください :
 
 ```console
 curl -X POST \
@@ -796,27 +851,31 @@ curl -X POST \
 
 </details>
 
-#### Response
+#### レスポンス
 
-The response contains version information about the `PolicySet` versions
-available. The rules of the new `PolicySet` will not be applied until the
-`PolicySet` is activated.
+レスポンスには、利用可能な `PolicySet` バージョンに関するバージョン
+情報が含まれています。新しい `PolicySet` のルールは `PolicySet`
+が有効になるまで適用されません。
 
 ```xml
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <ns4:link xmlns="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17" xmlns:ns2="http://authzforce.github.io/pap-dao-flat-file/xmlns/properties/3.6" xmlns:ns3="http://authzforce.github.io/rest-api-model/xmlns/authz/5" xmlns:ns4="http://www.w3.org/2005/Atom" xmlns:ns5="http://authzforce.github.io/core/xmlns/pdp/6.0" rel="item" href="f8194af5-8a07-486a-9581-c1f05d05483c/2" title="Policy 'f8194af5-8a07-486a-9581-c1f05d05483c' v2"/>
 ```
 
-### Activating an updated PolicySet
+<a name="activating-an-updated-policyset"></a>
 
-To update an active a `PolicySet`, make another PUT request to the
-`/authzforce-ce/domains/{domain-id}/pap/pdp.properties` endpoint including the
-`policy-id` to update within the `<rootPolicyRefExpresion>` attribute. The
-ruleset will be updated to apply the latest uploaded version.
+### 更新されたポリシーセットをアクティブ化
 
-#### :eight: Request
+アクティブな `PolicySet` を更新するには、`<rootPolicyRefExpresion>`
+属性内で更新する `policy-id` を含む
+`/authzforce-ce/domains/{domain-id}/pap/pdp.properties`
+エンドポイントへ別の PUTリクエストを行います。最新のアップロード・
+バージョンを適用するようにルールセットが更新されます。
 
-Remember to amend the request below to use your own `{domain-id}`:
+#### :eight: リクエスト
+
+あなた自身の `{domain-id}` を使うために下記のリクエストを
+修正することを忘れないでください :
 
 ```console
 curl -X PUT \
@@ -828,9 +887,9 @@ curl -X PUT \
   </pdpPropertiesUpdate>'
 ```
 
-#### Response
+#### レスポンス
 
-The response returns information about the `PolicySet` applied.
+レスポンスは適用された `PolicySet` についての情報を返します。
 
 ```xml
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
@@ -845,12 +904,13 @@ The response returns information about the `PolicySet` applied.
 </ns3:pdpProperties>
 ```
 
-#### :nine: Request
+#### :nine: リクエスト
 
-Since the new policy has been activated, at this point, making a request to
-access to `loading` in the `white` zone will return `Deny`
+新しいポリシーが有効になっているので、この時点で、`white` ゾーンで
+`loading` へのアクセスをリクエストすると `Deny` が返されます。
 
-Remember to amend the request below to use your own `{domain-id}`:
+あなた自身の`{domain-id}` を使うために下記のリクエストを
+修正することを忘れないでください :
 
 ```console
 curl -X POST \
@@ -875,7 +935,7 @@ curl -X POST \
 </Request>'
 ```
 
-#### Response
+#### レスポンス
 
 ```xml
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
@@ -886,12 +946,13 @@ curl -X POST \
 </Response>
 ```
 
-#### :one::zero: Request
+#### :one::zero: リクエスト
 
-Making a request to access to `loading` in the `red` zone under the current
-policy will return `Permit`
+現在のポリシーの下にある `red` ゾーンで `loading` にアクセスを
+リクエストすると、`Permit` を戻します。
 
-Remember to amend the request below to use your own `{domain-id}`:
+あなた自身の `{domain-id}` を使うために下記のリクエストを
+修正することを忘れないでください :
 
 ```console
 curl -X POST \
@@ -916,7 +977,7 @@ curl -X POST \
 </Request>'
 ```
 
-#### Response
+#### レスポンス
 
 ```xml
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
@@ -927,71 +988,80 @@ curl -X POST \
 </Response>
 ```
 
+<a name="keyrock-pap-1"></a>
+
 ## Keyrock PAP
 
-**Keyrock** offers a role based access control identity management system.
-Typically every permission is only accessible to users within a given role. We
-have already seen how Verb-Resource rules can be
-[set-up](https://github.com/Fiware/tutorials.Roles-Permissions/) and
-[enforced](https://github.com/Fiware/tutorials.Securing-Access/) using the basic
-authorization (level 2) access control mechanism found within Keyrock, the data
-for defining an advanced permission can also be administered using the
-**Keyrock** GUI or via **Keyrock** REST API requests.
+**Keyrock** は、ロール・ベースのアクセス制御 ID 管理システムを提供しています。
+通常、すべてのパーミッションは、与えられたロールの範囲内でのみユーザに
+アクセス可能です。**Keyrock** 内にある基本認可 (レベル2) のアクセス制御
+メカニズムを使用して、動詞リソース・ルール (Verb-Resource rules) を
+[設定](https://github.com/Fiware/tutorials.Roles-Permissions/) および
+[強制](https://github.com/Fiware/tutorials.Securing-Access/) する方法を
+すでに説明しました。高度なパーミッションを定義するためのデータは、
+**Keyrock** GUI または **Keyrock** REST リクエストを使用して管理する
+こともできます。
 
-**Keyrock** permissions work on individual XACML `<Rule>` elements rather than a
-complete `<PolicySet>`. The `<PolicySet>` is generated by combining all the
-roles and permissions.
+**Keyrock** パーミッションは完全な `<PolicySet>` ではなく個々の XACML
+の `<Rule>` 要素に対して機能します。`<PolicySet>` はすべてのロールと
+パーミッションを組み合わせることによって生成されます。
 
-### Predefined Roles and Permissions
+<a name="predefined-roles-and-permissions"></a>
 
-In a similar manner to the previous tutorial, two roles have been created, one
-for store detectives and another for management users. A series of permissions
-have been set up for the supermarket application, the following XACML rules are
-applied:
+### 定義済みのロールと権限
 
-#### Security Staff
+以前のチュートリアルと同様の方法で、2つのロールが作成されました。
+1つはストアの警備員 (store detectives)、もう1つは管理ユーザ用
+(management users) です。スーパーマーケットのアプリケーションに
+一連のパーミッションが設定されており、次の XACML ルールが適用されます。
 
--   Can unlock the door at any time
--   Can ring the alarm bell before 9 a.m. or after 5 p.m.
--   Can access the **context broker** data at any time
+#### セキュリティ・スタッフ (Security Staff)
 
-#### Management
+-   いつでもドアのロックを解除可能
+-   午前9時または午後5時以降にアラーム・ベルを鳴らすことが可能
+-   いつでも **context broker** のデータにアクセス可能
 
--   Have access to the price change area
--   Have access to the stock count area
--   Can ring the alarm bell between 9 a.m. and 5 p.m.
--   Can access the **context broker** data from 9 a.m. to 5 p.m.
+#### 管理 (Mangement)
 
-As you can see some of the new rules now have a time element to them and are no
-longer simple Verb-Resource rules.
+-   価格変更エリアへのアクセス
+-   在庫数エリアへのアクセス
+-   午前9時から午後5時の間にアラーム・ベルを鳴らすことが可能
+-   午前9時から午後5時まで **context broker** のデータにアクセス可能
 
-For most of the rules, the Policy Execution Point (i.e. the request to
-**Authzforce** and analysis of the result) is found within the tutorial
-[code](https://github.com/Fiware/tutorials.Step-by-Step/blob/master/context-provider/lib/azf.js) -
+ご覧のとおり、いくつかの新しいルールには時間要素があり、
+もはや単純な動詞リソース・ルール (simple Verb-Resource rules)
+ではありません。
 
-The **context broker** data for the **Store** and **IoT Devices** is held in is
-secured behind the **PEP Proxy**. This means that only security staff are able
-to access the system outside of core hours.
+ほとんどのルールでは、ポリシー実行ポイント (つまり、**Authzforce** への
+リクエストと結果の分析) はチュートリアルの
+[コード](https://github.com/Fiware/tutorials.Step-by-Step/blob/master/context-provider/lib/azf.js)
+内にあります。
 
-> **Note** within the **Keyrock**, only four resources have been secured using
-> advanced authorization rules (level 3)
+**ストア** および **IoT デバイス**の **context broker** のデータは、
+PEP Proxy の背後で保護されています。これは、セキュリティ・スタッフだけが
+コア・タイム外にシステムにアクセスできることを意味します。
+
+> **注** **Keyrock** 内の、高度な認可ルール (レベル3) を使用して
+> 保護されているリソースは4つだけです
 >
-> -   sending the ring bell command
-> -   access to the price-change area
-> -   access to the order-stock area
-> -   PEP Proxy access to the **context broker**
->
-> For contrast, one resource has been left as a simple VERB Resource permission
-> (level 2)
->
-> -   sending the unlock door command
+> -   ベルを鳴らすコマンドの送信
+> -   価格変更エリアへのアクセス
+> -   注文在庫エリアへのアクセス
+> -   **context broker** への PEP Proxy アクセス
+>  
+> -   対照的に、1つのリソースは単純な動詞リソースのパーミッション
+>     (レベル2) として残されています
+> 
+> -   ドアのロック解除コマンドを送信
 
-### Create Token with Password
+<a name="create-token-with-password"></a>
 
-#### :one::one: Request
+### パスワードでトークンを作成
 
-Enter a username and password to enter the application. The default super-user
-has the values `alice-the-admin@test.com` and `test`.
+#### :one::one: リクエスト
+
+ユーザ名とパスワードを入力してアプリケーションに入ります。デフォルトの
+スーパーユーザは、`alice-the-admin@test.com` と `test`の値を持ちます。
 
 ```console
 curl -iX POST \
@@ -1004,11 +1074,11 @@ curl -iX POST \
 }'
 ```
 
-#### Response
+#### レスポンス
 
-The response header from **Keyrock** returns an `X-Subject-token` which
-identifies who has logged on the application. This token is required in all
-subsequent requests to gain access
+**Keyrock** からのレスポンス・ヘッダは、誰がアプリケーションにログオン
+したかを識別する `X-Subject-token` を返します。このトークンは、
+後続のすべてのリクエストでアクセスするために必要です。
 
 ```
 HTTP/1.1 201 Created
@@ -1020,8 +1090,8 @@ Date: Mon, 30 Jul 2018 12:07:54 GMT
 Connection: keep-alive
 ```
 
-The response body from **Keyrock** indicates that **Authzforce** is in use and
-XACML Rules can be used to define access policies.
+**Keyrock** からのレスポンスのボディは、**Authzforce** が使用中であり、
+XACML ルールを使用してアクセス・ポリシーを定義できることを示しています。
 
 ```json
 {
@@ -1036,14 +1106,16 @@ XACML Rules can be used to define access policies.
 }
 ```
 
-### Read a Verb-Resource Permission
+<a name="read-a-verb-resource-permission"></a>
 
-As a reminder, for simple verb-resource permissions, the
-`/applications/{{app-id}}/permissions/{permission-id}}` endpoint will return the
-permission listed under that id. The `X-Auth-token` must be supplied in the
-headers.
+### 動詞リソースのパーミッションを読み込む
 
-#### :one::two: Request
+ちなみに、単純な動詞リソースのパーミッションでは、
+`/applications/{{app-id}}/permissions/{permission-id}}` エンドポイントは
+その id の下にリストされたパーミッションを返します。`X-Auth-token` は、
+ヘッダで提供されなければなりません。
+
+#### :one::two: リクエスト
 
 ```console
 curl -X GET \
@@ -1052,12 +1124,13 @@ curl -X GET \
   -H 'X-Auth-token: aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa'
 ```
 
-#### Response
+#### レスポンス
 
-The response returns the details of the requested permission, for a
-verb-resource permission, the `xml` element is `null`. This permission indicates
-that a user is permitted to make a POST request to the `/door/unlock` endpoint
-to unlock the main entrance.
+レスポンスはリクエストされたパーミッションの詳細を返します。
+動詞リソースのパーミッションの場合、`xml` 要素は `null` です。
+このパーミッションは、メイン・エントランスのロックを解除するために、
+ユーザーが `/door/unlock` エンドポイントに POST リクエストを行うことを
+許可されていることを示します。
 
 ```json
 {
@@ -1074,14 +1147,16 @@ to unlock the main entrance.
 }
 ```
 
-### Read a XACML Rule Permission
+<a name="read-a-xacml-rule-permission"></a>
 
-XACML Rule permissions can be accessed in the same way, the
-`/applications/{{app-id}}/permissions/{permission-id}}` endpoint will return the
-permission listed under that id. The `X-Auth-token` must be supplied in the
-headers.
+### XACML ルール権限を読み込む
 
-#### :one::three: Request
+XACML ルールのパーミッションにも同じ方法でアクセスでき、
+`/applications/{{app-id}}/permissions/{permission-id}}` エンドポイントは
+その id 下にリストされたパーミッションを返します。`X-Auth-token` は、
+ヘッダで提供されなければなりません。
+
+#### :one::three: リクエスト
 
 ```console
 curl -X GET \
@@ -1090,21 +1165,21 @@ curl -X GET \
   -H 'X-Auth-token: aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa'
 ```
 
-#### Response
+#### レスポンス
 
-The response returns the details of the requested permission, for a XACML Rule
-permission, the `xml` element holds the details of the associated XACML `<Rule>`
-the `action` and `resource` fields are `null`.
+レスポンスはリクエストされたパーミッションの詳細を返します。XACML
+ルールのパーミッションの場合、`xml` 要素は関連付けられた XACML `<Rule>`
+の詳細を保持し、`action` および `resource` フィールドは `null` です。
 
-There is already one `<Rule>` within the `xml` attribute, which states the
-following:
+`xml`属性内には既に `<Rule>` が1つあります。
+次のように設定されています。
 
-> **Security Staff** Can only ring the alarm bell **before** 9 a.m. or **after**
-> 5 p.m.
+> *警備員* は、午前9時**前**、または午後5時**以降**に、
+> アラーム・ベルを鳴らすことができます
 
 <details>
   <summary>
-   To see the full <code>&lt;Rule&gt;</code>  <b>(Click to expand)</b>
+   完全な <code>&lt;Rule&gt;</code> を見るには <b>(クリックして拡大)</b>
   </summary>
 
 ```xml
@@ -1160,10 +1235,10 @@ following:
 
 </details>
 
-The `<Target>` element of the `<Rule>` defines access on a Verb-Resource level
-in a similar manner as seen in the previous tutorial. The `<Condition>`
-element holds the time part of the rule and is evaluated by **Authzforce** based
-on the current server time.
+`<Rule>` の `<Target>` 要素は、以前のチュートリアルで見たのと同じように
+動詞リソースのレベルでアクセスを定義します。`<Condition>` 要素は、
+ルールの時間部分を保持し、現在のサーバ時間に基づいて **Authzforce**
+によって評価されます。
 
 ```json
 {
@@ -1180,16 +1255,19 @@ on the current server time.
 }
 ```
 
-**Tip** An annotated version of the full `<PolicySet>` can be found within the
-[tutorial itself](https://github.com/Fiware/tutorials.Administrating-XACML/blob/master/authzforce/domains/gQqnLOnIEeiBFQJCrBIBDA/policies/ZjgxOTRhZjUtOGEwNy00ODZhLTk1ODEtYzFmMDVkMDU0ODNj/2.xml)
+**ヒント** 完全な  `<PolicySet>` の注釈付きバージョンは、
+[チュートリアル自体](https://github.com/Fiware/tutorials.Administrating-XACML/blob/master/authzforce/domains/gQqnLOnIEeiBFQJCrBIBDA/policies/ZjgxOTRhZjUtOGEwNy00ODZhLTk1ODEtYzFmMDVkMDU0ODNj/2.xml)
+の中にあります。
 
-### Deny Access to a Resource
+<a name="deny-access-to-a-resource"></a>
 
-To request a decision from Authzforce, make a POST request to the
-`domains/{domain-id}/pdp` endpoint. In this case the user has the is requesting
-access to `POST` to the `/ring/bell` endpoint.
+### リソースへのアクセスを拒否
 
-#### :one::four: Request
+**Authzforce** に決定をリクエストするには、`domains/{domain-id}/pdp`
+エンドポイントに POST リクエストを出します。この場合、`/ring/bell`
+エンドポイントへの `POST` へのアクセスをリクエストしています。
+
+#### :one::four: リクエスト
 
 ```console
 curl -X POST \
@@ -1219,13 +1297,12 @@ curl -X POST \
 </Request>'
 ```
 
-#### Response
+#### レスポンス
 
-The response for the request includes a `<Decision>` element to `Permit` or
-`Deny` access to the resource.
+リクエストに対するレスポンスには、リソースへのアクセスを `Permit` または `Deny`
+するための `<Decision>` 要素が含まれています。
 
-If the time on the server is between 9 a.m. and 5 p.m. the access request will
-be denied.
+サーバの時間が午前9時から午後5時の間の場合、アクセス・リクエストは拒否されます。
 
 ```xml
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
@@ -1236,19 +1313,21 @@ be denied.
 </ns2:Response>
 ```
 
-### Update an XACML Permission
+<a name="update-an-xacml-permission"></a>
 
-The policy will now be updated as follows:
+### XACML 権限を更新
 
-> **Security Staff** Can only ring the alarm bell before 9 a.m. or after 5 p.m.,
-> except for **Charlie** who can ring the bell at any time
+ポリシーは次のように更新されます :
 
-This means that the `alrmbell-ring-24hr-xaml-000000000000` permission will need
-to be amended to apply two rules:
+> **警備員**はいつでもベルを鳴らすことができる **Charlie** を除いて、
+> 午前9時または午後5時以降にのみアラーム・ベルを鳴らすことができます。
+
+これは、`alrmbell-ring-24hr-xaml-000000000000` パーミッションを、
+2つのルールを適用するために修正する必要があることを意味します :
 
 <details>
   <summary>
-   To see the new <code>&lt;Rule&gt;</code>  <b>(Click to expand)</b>
+   新しい <code>&lt;Rule&gt;</code> を見るには <b>(クリックして拡大)</b>
   </summary>
 
 ```xml
@@ -1285,37 +1364,38 @@ to be amended to apply two rules:
 
 </details>
 
+これは、ルールを適切なテキスト・ボックスに貼り付けることによって
+GUI で最も簡単に実行できますが、プログラムで実行することもできます。
 
-This is most easily be done in the GUI by pasting the rule into the appropriate
-text box, however it can also be done programmatically.
-
-To log-in to the **Keyrock** GUI, enter the username and password on the log-in
-page `http://localhost:3005/`
+**Keyrock** GUI にログインするには、ログイン・ページ
+ `http://localhost:3005/` にユーザ名とパスワードを入力してください。
 
 ![](https://fiware.github.io/tutorials.Administrating-XACML/img/login.png)
 
-Navigate to correct application, and click on the manage roles tab
+正しいアプリケーションに移動して、manage roles (ロールの管理)
+タブをクリックします。
 
 ![](https://fiware.github.io/tutorials.Administrating-XACML/img/manage-roles.png)
 
-Select a permission to edit
+編集する permission (パーミッション) を選択してください。
 
 ![](https://fiware.github.io/tutorials.Administrating-XACML/img/edit-permission.png)
 
-The HTTP Verb and Resource rule needs to be left blank, but the applicable XACML
-`<Rule>` elements need to be pasted within the **Advanced XACML Rule** textbox
-as shown:
+HTTP 動詞とリソースのルールは空白のままにする必要がありますが、適用可能な
+XACML の `<Rule>` 要素は、次に示すように **Advanced XACML Rule**
+テキスト・ボックス内にペーストする必要があります。
 
 ![](https://fiware.github.io/tutorials.Administrating-XACML/img/permission.png)
 
-Alternatively to programmatically amend the XACML rules governing a permission, make a PATCH request to the
-`/applications/{{app-id}}/permissions/{permission-id}}` endpoint. The body of
-the request must include three attributes - `action` and `resource` must both be
-set to `""` and the `xml` attribute should hold the XACML text.
+あるいは、パーミッションを管理する XACML ルールをプログラム的に修正するには、
+`/applications/{{app-id}}/permissions/{permission-id}}` エンドポイントに
+PATCH リクエストを出します。リクエストのボディは、3つの属性を含まなければ
+なりません。`action` と `resource` は、両方とも `""` に設定しなければならず、
+`xml` 属性は XACML テキストを保持するべきです。
 
-#### :one::five: Request
+#### :one::five: リクエスト
 
-The full data for the request very verbose and has been omitted below:
+リクエストの完全なデータは非常に詳細であり、以下で省略されています :
 
 <details>
   <summary>
@@ -1334,7 +1414,7 @@ curl -X PATCH \
 }
 ```
 
-**(Click to expand)**
+**(クリックすると拡大します)**
 
   </summary>
 
@@ -1354,9 +1434,9 @@ curl -X PATCH \
 
 </details>
 
-#### Response
+#### レスポンス
 
-The response shows the details of the attributes which have been updated.
+レスポンスには、更新された属性の詳細が表示されます。
 
 ```json
 {
@@ -1368,15 +1448,17 @@ The response shows the details of the attributes which have been updated.
 }
 ```
 
-### Passing the Updated Policy Set to Authzforce
+<a name="passing-the-updated-policy-set-to-authzforce"></a>
 
-When **Keyrock** is connected to **Authzforce** the `<PolicySet>` is
-automatically updated whenever the role-permission associations are amended, the
-easiest way to do this is to delete and re-create any single association.
+### 更新したポリシーセットを Authzforce に渡す
 
-Firstly delete an association using a DELETE request:
+**Keyrock** が **Authzforce** に接続されている場合、ロールとパーミッションの
+関連付けが修正されるたびに、`<PolicySet>` が自動的に更新されます。
+これを行う最も簡単な方法は単一の関連付けを削除して再作成することです。
 
-#### :one::six: Request
+まず DELETE リクエストを使って関連を削除します :
+
+#### :one::six: リクエスト
 
 ```console
 curl -X DELETE \
@@ -1385,9 +1467,9 @@ curl -X DELETE \
   -H 'X-Auth-token: aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa'
 ```
 
-Then re-create it using a POST request as shown:
+次に示すように POST リクエストを使用してそれを再作成します :
 
-#### :one::seven: Request
+#### :one::seven: リクエスト
 
 ```console
 curl -X POST \
@@ -1396,10 +1478,10 @@ curl -X POST \
   -H 'X-Auth-token: aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa'
 ```
 
-#### Response
+#### レスポンス
 
-If **Authzforce** has been updated, an additional `authzforce` attribute will be
-present within the response, the new `<PolicySet>` will now be in place.
+**Authzforce** が更新されている場合、追加の `authzforce` 属性が
+レスポンス内に存在し、新しい `<PolicySet>` が配置されます。
 
 ```json
 {
@@ -1420,21 +1502,23 @@ present within the response, the new `<PolicySet>` will now be in place.
 }
 ```
 
-### Permit Access to a Resource
+<a name="permit-access-to-a-resource"></a>
 
-Additional Fields can be added to the policy decision request to improve the
-likelihood of a `Permit` response.
+### リソースへのアクセスを許可
 
-In the example below, the `emailaddress` and `subject:subject-id` have been
-added to the body of the request within the `subject-category:access-subject`
-category.
+追加のフィールドをポリシー決定リクエストに追加して、`Permit` レスポンスの
+可能性を高めることができます。
 
-With the new rule in place, the user `charlie` will be able to access the
-`/bell/ring` endpoint at all times of day.
+以下の例では`emailaddress` と `subject:subject-id` は、
+`subject-category:access-subject`
+カテゴリ内のリクエストのボディに追加されました。
 
-#### :one::seven: Request
+新しいルールが設定されていれば、ユーザ `charlie`は、一日中いつでも
+`/bell/ring` エンドポイントにアクセスできます 。
 
-The full data for the request very verbose and has been omitted below:
+#### :one::seven: リクエスト
+
+リクエストの完全なデータは非常に詳細であり、以下で省略されています :
 
 <details>
   <summary>
@@ -1449,7 +1533,7 @@ curl -X POST \
 </Request>'
 ```
 
-**(Click to expand)**
+**(クリックすると拡大します)**
 
   </summary>
 
@@ -1489,9 +1573,9 @@ curl -X POST \
 
 </details>
 
-#### Response
+#### レスポンス
 
-The response is `Permit` when the new `<Rule>` has been applied.
+新しい `<Rule>` が適用されたときのレスポンスは `Permit` です。
 
 ```xml
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
@@ -1502,24 +1586,29 @@ The response is `Permit` when the new `<Rule>` has been applied.
 </ns2:Response>
 ```
 
-## Tutorial PEP - Extending Advanced Authorization
+<a name="tutorial-pep---extending-advanced-authorization"></a>
 
-The new policy for Charlie the security manager needs additional information to
-be passed to **Authzforce**
+## PEP のチュートリアル  - 高度な認可の拡張
 
-### Extending Advanced Authorization - Sample Code
+セキュリティ・マネージャである Charlie の新しいポリシーでは、
+**Authzforce** に渡す追加情報が必要です。
 
-Programmatically, any Policy Execution Point consists of two parts, an OAuth
-request to Keyrock retrieves information about the user (such as the assigned
-roles) as well as the policy domain to be queried.
+<a name="extending-advanced-authorization---sample-code"></a>
 
-A second request is sent to the relevant domain endpoint within Authzforce,
-providing all of the information necessary for Authzforce to provide a
-judgement. Authzforce responds with a **permit** or **deny** response, and the
-decision whether to continue can be made thereafter.
+### 高度な認可の拡張 - サンプル・コード
 
-The `user.username` and `user.email` have been added to the list of fields to be
-sent to **Authzforce**
+プログラム的には、Policy Execution Point は2つの部分から構成されます。
+**Keyrock** に対する OAuth リクエストは、ユーザに関する情報
+(割り当てられたロールなど) および、クエリされるポリシー・ドメインを
+取得します。
+
+2番目のリクエストが **Authzforce** 内の関連ドメイン・ンドポイントに
+送信され、**Authzforce** が判断を下すために必要なすべての情報が
+提供されます。**Authzforce** は **permit** または **deny**
+のレスポンスで応答し、続行するかどうかの決定はその後行うことができます。
+
+**Authzforce** に送信されるフィールドのリストに `user.username` と
+`user.email` が追加されました。
 
 ```javascript
 function authorizeAdvancedXACML(req, res, next, resource = req.url) {
@@ -1555,11 +1644,10 @@ function authorizeAdvancedXACML(req, res, next, resource = req.url) {
 }
 ```
 
-The full code to supply each request to Authzforce can be found within the
-tutorials'
-[Git Repository](https://github.com/Fiware/tutorials.Step-by-Step/blob/master/context-provider/lib/azf.js) -
-the supplied information has been expanded to include the `username` and `email`
-within the generated XACML request
+各リクエストを **Authzforce** に提供するための完全なコードは、チュートリアルの
+[Git リポジトリ](https://github.com/Fiware/tutorials.Step-by-Step/blob/master/context-provider/lib/azf.js)
+にあります。提供された情報は、生成された XACML リクエスト内に`username` と `email`
+を含むように拡張されました。
 
 ```javascript
 const xml2js = require("xml2js");
@@ -1597,50 +1685,54 @@ function policyDomainRequest(domain, roles, resource, action, username, email) {
 }
 ```
 
-### Extending Advanced Authorization - Running the Example
+<a name="extending-advanced-authorization---running-the-example"></a>
 
-After successfully update the **Authzforce** `<PolicySet>` to include a special
-rule for Charlie, his rights will differ from other users in the security role
+### 高度な認可の拡張 - 例の実行
 
-#### Detective 1
+**Authzforce** `<PolicySet>` を正常に更新して、Charlie の特別なルールを含めると、
+その権限は他のセキュリティ・ロールのユーザとは異なります。
 
-Detective1 works for Charlie and has the **security** role
+#### Detective1 (警備員 1)
+Detective1 は Charlie に対応し、**セキュリティ**・ロールを果たします。
 
--   From `http://localhost:3000`, log in as `detective1@test.com` with the
-    password `test`
+-   `http://localhost:3000` から、ユーザ `detective1@test.com`
+    とパスワード `test` でログインします
 
-##### Level 3: Advanced Authorization Access
+##### レベル3 : 高度な認可アクセス
 
--   Click on the restricted access links at `http://localhost:3000` - access is
-    **denied** - This is a management only permission
--   Open the Device Monitor on `http://localhost:3000/device/monitor`
-    -   Unlock a door - access is **permitted** - This is a security only
-        permission
-    -   Ring a bell - access is **denied** - This is not permitted to security
-        users between 9 a.m. and 5 p.m.
+-   `http://localhost:3000` で、制限されたアクセス・リンクをクリック
+    してください - アクセスが**拒否**されました - これは管理のみの権限です
+-   `http://localhost:3000/device/monitor` でデバイス・モニタを開きます 
+    -   ドアのロックを解除 - アクセスは**許可**されています - これは
+        セキュリティ上の唯一の許可です
+    -   ベルを鳴らす - アクセスは**拒否**されます - これは、午前9時から
+         午後5時の間にセキュリティ・ユーザには許可されていません
 
-#### Charlie the Security Manager
+#### Charlie セキュリティ・マネージャ
 
-Charlie has the **security** role
+Charlie は、**セキュリティ**・ロールを担っています。
 
--   From `http://localhost:3000`, log in as `charlie-security@test.com` with the
-    password `test`
+-   `http://localhost:3000` から、ユーザ `charlie-security@test.com`
+    とパスワード `test` でログインします
 
-##### Level 3: Advanced Authorization Access
+#### レベル3 : 高度な認可アクセス
 
--   Click on the restricted access links at `http://localhost:3000` - access is
-    **denied** - This is a management only permission
--   Open the Device Monitor on `http://localhost:3000/device/monitor`
-    -   Unlock a door - access is **permitted** - This is a security only
-        permission
-    -   Ring a bell - access is **permitted** - This is an exception which is
-        only permitted to the user called `charlie`
+-   `http://localhost:3000` で、制限されたアクセス・リンクをクリック
+    してください - アクセスが**拒否**されました - これは管理のみの権限です
+-   `http://localhost:3000/device/monitor` でデバイス・モニタを開きます 
+    -   ドアのロックを解除 - アクセスは**許可**されています - これは
+        セキュリティ上の唯一の許可です
+    -   ベルを鳴らす - アクセスは**許可**されます - これは、`charlie` という
+        ユーザにのみ許可される例外です
 
-# Next Steps
+<a name="next-steps"></a>
 
-Want to learn how to add more complexity to your application by adding advanced
-features? You can find out by reading the other
-[tutorials in this series](https://fiware-tutorials.rtfd.io)
+# 次のステップ
+
+高度な機能を追加することで、アプリケーションに複雑さを加える方法を知りたいですか
+？このシリーズの
+[他のチュートリアル](https://www.letsfiware.jp/fiware-tutorials)を
+読むことで見つけることができます。
 
 ---
 
