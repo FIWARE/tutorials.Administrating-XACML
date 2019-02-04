@@ -7,6 +7,8 @@
 <br/>
 [![Documentation](https://img.shields.io/readthedocs/fiware-tutorials.svg)](https://fiware-tutorials.rtfd.io)
 
+<!-- prettier-ignore -->
+
 このチュートリアルでは、直接または **Keyrock** GUI を使用した、**Authzforce**
 での、レベル3の高度な認可ルールの管理について説明します。
 単純な動詞リソース・ベースのパーミッション
