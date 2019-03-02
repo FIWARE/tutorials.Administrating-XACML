@@ -494,7 +494,7 @@ curl -X POST \
 
 #### Response
 
-The response contains the internal id of the policy held within **Authzforce** and version information about the
+The response contains the internal ID of the policy held within **Authzforce** and version information about the
 `PolicySet` versions available. The rules of the new `PolicySet` will not be applied until the `PolicySet` is activated.
 
 ```xml
@@ -951,7 +951,7 @@ policies.
 ### Read a Verb-Resource Permission
 
 As a reminder, for simple verb-resource permissions, the `/applications/{{app-id}}/permissions/{permission-id}}`
-endpoint will return the permission listed under that id. The `X-Auth-token` must be supplied in the headers.
+endpoint will return the permission listed under that ID. The `X-Auth-token` must be supplied in the headers.
 
 #### :one::two: Request
 
@@ -986,7 +986,7 @@ unlock the main entrance.
 ### Read a XACML Rule Permission
 
 XACML Rule permissions can be accessed in the same way, the `/applications/{{app-id}}/permissions/{permission-id}}`
-endpoint will return the permission listed under that id. The `X-Auth-token` must be supplied in the headers.
+endpoint will return the permission listed under that ID. The `X-Auth-token` must be supplied in the headers.
 
 #### :one::three: Request
 
