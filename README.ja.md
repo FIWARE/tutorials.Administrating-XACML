@@ -85,14 +85,14 @@
 
 ビジネス・ルールは時間とともに変化し、それに応じてアクセス制御を
 修正できるようにする必要があります。
-[以前のチュートリアル](https://github.com/Fiware/tutorials.XACML-Access-Rules)
+[以前のチュートリアル](https://github.com/FIWARE/tutorials.XACML-Access-Rules)
 には、**Authzforce** にロードされた、静的 XACML `<PolicySet>` が含まれて
 いました。このコンポーネントは、すべてのポリシー決定がその場で計算され、
 新しいルールが新しい状況下で適用されることができる高度な認可 (レベル3)
 アクセス制御を提供します。
 [Authzforce](https://authzforce-ce-fiware.readthedocs.io/) Policy Decision Point
 (PDP:ポリシー決定ポイント) の詳細は
-[以前のチュートリアル](https://github.com/Fiware/tutorials.XACML-Access-Rules)
+[以前のチュートリアル](https://github.com/FIWARE/tutorials.XACML-Access-Rules)
 で説明しましたが、**Authzforce** PDP は XACML 標準に従ってルールを解釈し、
 十分な情報を提供できる場合はアクセスを判断する手段を提供します。
 
@@ -173,10 +173,10 @@ XACML ポリシーは、`<PolicySet>`, `<Policy>` と `<Rule>` の3つのレベ�
 高度な認可 (レベル3) を使用する場合、ポリシー実行ポイント (PEP) は認可リクエストを
 **Authzforce** 内の関連ドメイン・エンドポイントに送信し、**Authzforce** が判断を
 下すために必要なすべての情報を提供します。インタラクションの詳細は
-[以前のチュートリアル](https://github.com/Fiware/tutorials.XACML-Access-Rules)にあります。
+[以前のチュートリアル](https://github.com/FIWARE/tutorials.XACML-Access-Rules)にあります。
 
 各リクエストを **Authzforce** に提供するための完全なコードは、チュートリアルの
-[Gitリポジトリ](https://github.com/Fiware/tutorials.Step-by-Step/blob/master/context-provider/lib/azf.js)
+[Gitリポジトリ](https://github.com/FIWARE/tutorials.Step-by-Step/blob/master/context-provider/lib/azf.js)
 にあります。
 
 明らかに "必要なすべての情報" の定義は時間とともに変化するかもしれません。
@@ -226,10 +226,10 @@ XACML ポリシーは、`<PolicySet>`, `<Policy>` と `<Rule>` の3つのレベ�
 # アーキテクチャ
 
 このアプリケーションは、
-[以前のチュートリアル](https://github.com/Fiware/tutorials.Securing-Access/)
+[以前のチュートリアル](https://github.com/FIWARE/tutorials.Securing-Access/)
 で作成した既存の在庫管理 およびセンサ・ベースのアプリケーションにレベル3の
 高度な認可のセキュリティを追加し、
-[PEP Proxy](https://github.com/Fiware/tutorials.PEP-Proxy/) の背後にある
+[PEP Proxy](https://github.com/FIWARE/tutorials.PEP-Proxy/) の背後にある
 Context Broker へのアクセスを保護します。
 [Orion Context Broker](https://fiware-orion.readthedocs.io/en/latest/),
 [IoT Agent for UltraLight 2.0](https://fiware-iotagent-ul.readthedocs.io/en/latest/),
@@ -243,7 +243,7 @@ Context Broker へのアクセスを保護します。
 Orion Context Brokerと IoT Agent はどちらも、オープンソースの
 [MongoDB](https://www.mongodb.com/) テクノロジを使用して、保持している情報を
 永続化します。また、
-[以前のチュートリアル](https://github.com/Fiware/tutorials.IoT-Sensors/)
+[以前のチュートリアル](https://github.com/FIWARE/tutorials.IoT-Sensors/)
 で作成したダミー IoT デバイスも使用します。**Keyrock** は、独自に
 [MySQL](https://www.mysql.com/) データベースを使用しています。
 
@@ -292,7 +292,7 @@ Orion Context Brokerと IoT Agent はどちらも、オープンソースの
 -   HTTP を介して実行されている
     [UltraLight 2.0](https://fiware-iotagent-ul.readthedocs.io/en/latest/usermanual/index.html#user-programmers-manual)
     プロトコルを使用す
-    る[ダミー IoT デバイス](https://github.com/Fiware/tutorials.IoT-Sensors)のセ
+    る[ダミー IoT デバイス](https://github.com/FIWARE/tutorials.IoT-Sensors)のセ
     ットとして機能する Web サーバ。特定のリソースへのアクセスが制限されています
 
 要素間のやり取りはすべて HTTP リクエストによって開始されるため、
@@ -318,7 +318,7 @@ cd tutorials.Administrating-XACML
 
 > **注:** Docker イメージの最初の作成には最大 3 分かかります
 
-[services](https://github.com/Fiware/tutorials.XACML-Access-Rules/blob/master/services)
+[services](https://github.com/FIWARE/tutorials.XACML-Access-Rules/blob/master/services)
 Bash スクリプトを実行することによって、コマンドラインからすべてのサービスを初期
 化することができます :
 
@@ -998,8 +998,8 @@ curl -X POST \
 通常、すべてのパーミッションは、与えられたロールの範囲内でのみユーザに
 アクセス可能です。**Keyrock** 内にある基本認可 (レベル2) のアクセス制御
 メカニズムを使用して、動詞リソース・ルール (Verb-Resource rules) を
-[設定](https://github.com/Fiware/tutorials.Roles-Permissions/) および
-[強制](https://github.com/Fiware/tutorials.Securing-Access/) する方法を
+[設定](https://github.com/FIWARE/tutorials.Roles-Permissions/) および
+[強制](https://github.com/FIWARE/tutorials.Securing-Access/) する方法を
 すでに説明しました。高度なパーミッションを定義するためのデータは、
 **Keyrock** GUI または **Keyrock** REST リクエストを使用して管理する
 こともできます。
@@ -1036,7 +1036,7 @@ curl -X POST \
 
 ほとんどのルールでは、ポリシー実行ポイント (つまり、**Authzforce** への
 リクエストと結果の分析) はチュートリアルの
-[コード](https://github.com/Fiware/tutorials.Step-by-Step/blob/master/context-provider/lib/azf.js)
+[コード](https://github.com/FIWARE/tutorials.Step-by-Step/blob/master/context-provider/lib/azf.js)
 内にあります。
 
 **ストア** および **IoT デバイス**の **context broker** のデータは、
@@ -1258,7 +1258,7 @@ curl -X GET \
 ```
 
 **ヒント** 完全な  `<PolicySet>` の注釈付きバージョンは、
-[チュートリアル自体](https://github.com/Fiware/tutorials.Administrating-XACML/blob/master/authzforce/domains/gQqnLOnIEeiBFQJCrBIBDA/policies/ZjgxOTRhZjUtOGEwNy00ODZhLTk1ODEtYzFmMDVkMDU0ODNj/2.xml)
+[チュートリアル自体](https://github.com/FIWARE/tutorials.Administrating-XACML/blob/master/authzforce/domains/gQqnLOnIEeiBFQJCrBIBDA/policies/ZjgxOTRhZjUtOGEwNy00ODZhLTk1ODEtYzFmMDVkMDU0ODNj/2.xml)
 の中にあります。
 
 <a name="deny-access-to-a-resource"></a>
@@ -1647,7 +1647,7 @@ function authorizeAdvancedXACML(req, res, next, resource = req.url) {
 ```
 
 各リクエストを **Authzforce** に提供するための完全なコードは、チュートリアルの
-[Git リポジトリ](https://github.com/Fiware/tutorials.Step-by-Step/blob/master/context-provider/lib/azf.js)
+[Git リポジトリ](https://github.com/FIWARE/tutorials.Step-by-Step/blob/master/context-provider/lib/azf.js)
 にあります。提供された情報は、生成された XACML リクエスト内に`username` と `email`
 を含むように拡張されました。
 

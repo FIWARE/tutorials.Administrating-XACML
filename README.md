@@ -72,11 +72,11 @@ commands used to access the REST APIs of **Keyrock** and **Authzforce** -
 > — Los Angeles International Airport Rules and Regulations, Section 12 - Landside Motor Vehicle Operations
 
 Business rules change over time, and it is necessary to be able to amend access controls accordingly. The
-[previous tutorial](https://github.com/Fiware/tutorials.XACML-Access-Rules) included a static XACML `<PolicySet>` loaded
+[previous tutorial](https://github.com/FIWARE/tutorials.XACML-Access-Rules) included a static XACML `<PolicySet>` loaded
 into **Authzforce**. This component offers advanced authorization (level 3) access control where every policy decision
 is calculated on the fly and new rules can be applied under new circumstances. The details of the
 [Authzforce](https://authzforce-ce-fiware.readthedocs.io/) Policy Decision Point (PDP) were discussed in the
-[previous tutorial](https://github.com/Fiware/tutorials.XACML-Access-Rules), suffice to say, the **Authzforce** PDP
+[previous tutorial](https://github.com/FIWARE/tutorials.XACML-Access-Rules), suffice to say, the **Authzforce** PDP
 interprets rules according to the [XACML standard](https://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml)
 and offers a means to adjudicate on any access request provided that sufficient information can be supplied.
 
@@ -134,10 +134,10 @@ a valid `<PolicySet>` for **Authzforce**.
 When using advanced authorization (level 3), a policy execution point sends an authorization request to the relevant
 domain endpoint within **Authzforce**, providing all of the information necessary for **Authzforce** to provide a
 judgement. Details of the interaction can be found in the
-[previous tutorial](https://github.com/Fiware/tutorials.XACML-Access-Rules).
+[previous tutorial](https://github.com/FIWARE/tutorials.XACML-Access-Rules).
 
 The full code to supply each request to **Authzforce** can be found within the tutorials'
-[Git Repository](https://github.com/Fiware/tutorials.Step-by-Step/blob/master/context-provider/lib/azf.js)
+[Git Repository](https://github.com/FIWARE/tutorials.Step-by-Step/blob/master/context-provider/lib/azf.js)
 
 Obviously the definition of _"all of the information necessary"_ may change over time, applications must therefore be
 flexible enough to be able to modify the requests sent to ensure that sufficient information is passed.
@@ -168,8 +168,8 @@ to provide a command-line functionality similar to a Linux distribution on Windo
 
 This application demonstrates the administration of level 3 Advanced Authorization security into the existing Stock
 Management and Sensors-based application created in
-[previous tutorials](https://github.com/Fiware/tutorials.XACML-Access-Rules/) and secures access to the context broker
-behind a [PEP Proxy](https://github.com/Fiware/tutorials.PEP-Proxy/). It will make use of five FIWARE components - the
+[previous tutorials](https://github.com/FIWARE/tutorials.XACML-Access-Rules/) and secures access to the context broker
+behind a [PEP Proxy](https://github.com/FIWARE/tutorials.PEP-Proxy/). It will make use of five FIWARE components - the
 [Orion Context Broker](https://fiware-orion.readthedocs.io/en/latest/), the
 [IoT Agent for UltraLight 2.0](https://fiware-iotagent-ul.readthedocs.io/en/latest/), the
 [Keyrock](https://fiware-idm.readthedocs.io/en/latest/) Identity Manager, the [Wilma]() PEP Proxy and the
@@ -178,7 +178,7 @@ to **Authzforce** which will read the ruleset from a previously uploaded policy 
 
 Both the Orion Context Broker and the IoT Agent rely on open source [MongoDB](https://www.mongodb.com/) technology to
 keep persistence of the information they hold. We will also be using the dummy IoT devices created in the
-[previous tutorial](https://github.com/Fiware/tutorials.IoT-Sensors/). **Keyrock** uses its own
+[previous tutorial](https://github.com/FIWARE/tutorials.IoT-Sensors/). **Keyrock** uses its own
 [MySQL](https://www.mysql.com/) database.
 
 Therefore the overall architecture will consist of the following elements:
@@ -210,7 +210,7 @@ Therefore the overall architecture will consist of the following elements:
     -   Allows users to "buy" products and reduce the stock count.
     -   Allows authorized users into restricted areas, it also delegates authorization decisions to the **Authzforce**
         PDP
--   A webserver acting as set of [dummy IoT devices](https://github.com/Fiware/tutorials.IoT-Sensors) using the
+-   A webserver acting as set of [dummy IoT devices](https://github.com/FIWARE/tutorials.IoT-Sensors) using the
     [UltraLight 2.0](https://fiware-iotagent-ul.readthedocs.io/en/latest/usermanual/index.html#user-programmers-manual)
     protocol running over HTTP - access to certain resources is restricted.
 
@@ -235,7 +235,7 @@ cd tutorials.Administrating-XACML
 > **Note** The initial creation of Docker images can take up to three minutes
 
 Thereafter, all services can be initialized from the command-line by running the
-[services](https://github.com/Fiware/tutorials.Administrating-XACML/blob/master/services) Bash script provided within
+[services](https://github.com/FIWARE/tutorials.Administrating-XACML/blob/master/services) Bash script provided within
 the repository:
 
 ```console
@@ -852,8 +852,8 @@ curl -X POST \
 
 **Keyrock** offers a role based access control identity management system. Typically every permission is only accessible
 to users within a given role. We have already seen how Verb-Resource rules can be
-[set-up](https://github.com/Fiware/tutorials.Roles-Permissions/) and
-[enforced](https://github.com/Fiware/tutorials.Securing-Access/) using the basic authorization (level 2) access control
+[set-up](https://github.com/FIWARE/tutorials.Roles-Permissions/) and
+[enforced](https://github.com/FIWARE/tutorials.Securing-Access/) using the basic authorization (level 2) access control
 mechanism found within Keyrock, the data for defining an advanced permission can also be administered using the
 **Keyrock** GUI or via **Keyrock** REST API requests.
 
@@ -883,7 +883,7 @@ As you can see some of the new rules now have a time element to them and are no 
 
 For most of the rules, the Policy Execution Point (i.e. the request to **Authzforce** and analysis of the result) is
 found within the tutorial
-[code](https://github.com/Fiware/tutorials.Step-by-Step/blob/master/context-provider/lib/azf.js) -
+[code](https://github.com/FIWARE/tutorials.Step-by-Step/blob/master/context-provider/lib/azf.js) -
 
 The **context broker** data for the **Store** and **IoT Devices** is held in is secured behind the **PEP Proxy**. This
 means that only security staff are able to access the system outside of core hours.
@@ -1084,7 +1084,7 @@ the current server time.
 ```
 
 **Tip** An annotated version of the full `<PolicySet>` can be found within the
-[tutorial itself](https://github.com/Fiware/tutorials.Administrating-XACML/blob/master/authzforce/domains/gQqnLOnIEeiBFQJCrBIBDA/policies/ZjgxOTRhZjUtOGEwNy00ODZhLTk1ODEtYzFmMDVkMDU0ODNj/2.xml)
+[tutorial itself](https://github.com/FIWARE/tutorials.Administrating-XACML/blob/master/authzforce/domains/gQqnLOnIEeiBFQJCrBIBDA/policies/ZjgxOTRhZjUtOGEwNy00ODZhLTk1ODEtYzFmMDVkMDU0ODNj/2.xml)
 
 ### Deny Access to a Resource
 
@@ -1439,7 +1439,7 @@ function authorizeAdvancedXACML(req, res, next, resource = req.url) {
 ```
 
 The full code to supply each request to Authzforce can be found within the tutorials'
-[Git Repository](https://github.com/Fiware/tutorials.Step-by-Step/blob/master/context-provider/lib/azf.js) - the
+[Git Repository](https://github.com/FIWARE/tutorials.Step-by-Step/blob/master/context-provider/lib/azf.js) - the
 supplied information has been expanded to include the `username` and `email` within the generated XACML request
 
 ```javascript
