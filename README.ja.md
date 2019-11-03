@@ -24,7 +24,7 @@
 [Postman documentation](https://fiware.github.io/tutorials.Administrating-XACML)
 も利用できます。
 
-[![Run in Postman](https://run.pstmn.io/button.svg)](https://www.getpostman.com/collections/23b7045a5b52a54a2666)
+[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/23b7045a5b52a54a2666)
 
 ## コンテンツ
 

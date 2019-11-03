@@ -15,7 +15,7 @@ The tutorial demonstrates examples of interactions using the **Keyrock** GUI, as
 commands used to access the REST APIs of **Keyrock** and **Authzforce** -
 [Postman documentation](https://fiware.github.io/tutorials.Administrating-XACML) is also available.
 
-[![Run in Postman](https://run.pstmn.io/button.svg)](https://www.getpostman.com/collections/23b7045a5b52a54a2666)
+[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/23b7045a5b52a54a2666)
 
 -   このチュートリアルは[日本語](README.ja.md)でもご覧いただけます。
 
