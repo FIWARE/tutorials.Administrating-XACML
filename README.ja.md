@@ -310,7 +310,7 @@ YAMLファイルに記述されている全てのコンテナの設定値は
 インストールを開始するには、次の手順に従います :
 
 ```console
-git clone git@github.com:FIWARE/tutorials.Administrating-XACML.git
+git clone https://github.com/FIWARE/tutorials.Administrating-XACML.git
 cd tutorials.Administrating-XACML
 
 ./services create
