@@ -1740,4 +1740,4 @@ Charlie は、**セキュリティ**・ロールを担っています。
 
 ## License
 
-[MIT](LICENSE) © 2019 FIWARE Foundation e.V.
+[MIT](LICENSE) © 2019-2020 FIWARE Foundation e.V.
