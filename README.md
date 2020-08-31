@@ -228,6 +228,7 @@ To start the installation, do the following:
 ```console
 git clone https://github.com/FIWARE/tutorials.Administrating-XACML.git
 cd tutorials.Administrating-XACML
+git checkout NGSI-v2
 
 ./services create
 ```
