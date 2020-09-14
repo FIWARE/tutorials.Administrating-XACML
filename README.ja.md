@@ -319,7 +319,7 @@ git checkout NGSI-v2
 
 > **注:** Docker イメージの最初の作成には最大 3 分かかります
 
-[services](https://github.com/FIWARE/tutorials.XACML-Access-Rules/blob/master/services)
+[services](https://github.com/FIWARE/tutorials.XACML-Access-Rules/blob/NGSI-v2/services)
 Bash スクリプトを実行することによって、コマンドラインからすべてのサービスを初期
 化することができます :
 
@@ -1259,7 +1259,7 @@ curl -X GET \
 ```
 
 **ヒント** 完全な  `<PolicySet>` の注釈付きバージョンは、
-[チュートリアル自体](https://github.com/FIWARE/tutorials.Administrating-XACML/blob/master/authzforce/domains/gQqnLOnIEeiBFQJCrBIBDA/policies/ZjgxOTRhZjUtOGEwNy00ODZhLTk1ODEtYzFmMDVkMDU0ODNj/2.xml)
+[チュートリアル自体](https://github.com/FIWARE/tutorials.Administrating-XACML/blob/NGSI-v2/authzforce/domains/gQqnLOnIEeiBFQJCrBIBDA/policies/ZjgxOTRhZjUtOGEwNy00ODZhLTk1ODEtYzFmMDVkMDU0ODNj/2.xml)
 の中にあります。
 
 <a name="deny-access-to-a-resource"></a>

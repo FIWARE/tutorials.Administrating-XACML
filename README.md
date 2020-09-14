@@ -236,7 +236,7 @@ git checkout NGSI-v2
 > **Note** The initial creation of Docker images can take up to three minutes
 
 Thereafter, all services can be initialized from the command-line by running the
-[services](https://github.com/FIWARE/tutorials.Administrating-XACML/blob/master/services) Bash script provided within
+[services](https://github.com/FIWARE/tutorials.Administrating-XACML/blob/NGSI-v2/services) Bash script provided within
 the repository:
 
 ```console
@@ -1085,7 +1085,7 @@ the current server time.
 ```
 
 **Tip** An annotated version of the full `<PolicySet>` can be found within the
-[tutorial itself](https://github.com/FIWARE/tutorials.Administrating-XACML/blob/master/authzforce/domains/gQqnLOnIEeiBFQJCrBIBDA/policies/ZjgxOTRhZjUtOGEwNy00ODZhLTk1ODEtYzFmMDVkMDU0ODNj/2.xml)
+[tutorial itself](https://github.com/FIWARE/tutorials.Administrating-XACML/blob/NGSI-v2/authzforce/domains/gQqnLOnIEeiBFQJCrBIBDA/policies/ZjgxOTRhZjUtOGEwNy00ODZhLTk1ODEtYzFmMDVkMDU0ODNj/2.xml)
 
 ### Deny Access to a Resource
 
