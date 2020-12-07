@@ -362,21 +362,21 @@ Bash スクリプトを実行することによって、コマンドラインか
    詳細<b>(クリックして拡大)</b>
   </summary>
 
-| 名前       | E メール                  | パスワード |
-| ---------- | ------------------------- | ---------- |
-| alice      | alice-the-admin@test.com  | `test`     |
-| bob        | bob-the-manager@test.com  | `test`     |
-| charlie    | charlie-security@test.com | `test`     |
-| manager1   | manager1@test.com         | `test`     |
-| manager2   | manager2@test.com         | `test`     |
-| detective1 | detective1@test.com       | `test`     |
-| detective2 | detective2@test.com       | `test`     |
+| 名前       | E メール                    | パスワード |
+| ---------- | --------------------------- | ---------- |
+| alice      | `alice-the-admin@test.com`  | `test`     |
+| bob        | `bob-the-manager@test.com`  | `test`     |
+| charlie    | `charlie-security@test.com` | `test`     |
+| manager1   | `manager1@test.com`         | `test`     |
+| manager2   | `manager2@test.com`         | `test`     |
+| detective1 | `detective1@test.com`       | `test`     |
+| detective2 | `detective2@test.com`       | `test`     |
 
-| 名前    | E メール            | パスワード |
-| ------- | ------------------- | ---------- |
-| eve     | eve@example.com     | `test`     |
-| mallory | mallory@example.com | `test`     |
-| rob     | rob@example.com     | `test`     |
+| 名前    | E メール              | パスワード |
+| ------- | --------------------- | ---------- |
+| eve     | `eve@example.com`     | `test`     |
+| mallory | `mallory@example.com` | `test`     |
+| rob     | `rob@example.com`     | `test`     |
 
 </details>
 
@@ -612,7 +612,7 @@ curl -X POST \
 #### レスポンス
 
 レスポンスには、**Authzforce** 内に保持されているポリシーの内部
-id と利用可能な  PolicySet バージョンに関するバージョン情報が
+ID と利用可能な  PolicySet バージョンに関するバージョン情報が
 含まれています。新しい `PolicySet` のルールは、`PolicySet`
 が有効になるまで適用されません。
 
@@ -1021,15 +1021,15 @@ curl -X POST \
 #### セキュリティ・スタッフ (Security Staff)
 
 -   いつでもドアのロックを解除可能
--   午前9時または午後5時以降にアラーム・ベルを鳴らすことが可能
+-   午前8時または午後5時 (UTC) 以降にアラーム・ベルを鳴らすことが可能
 -   いつでも **context broker** のデータにアクセス可能
 
 #### 管理 (Mangement)
 
 -   価格変更エリアへのアクセス
 -   在庫数エリアへのアクセス
--   午前9時から午後5時の間にアラーム・ベルを鳴らすことが可能
--   午前9時から午後5時まで **context broker** のデータにアクセス可能
+-   午前8時から午後5時 (UTC) の間にアラーム・ベルを鳴らすことが可能
+-   午前8時から午後5時 (UTC) まで **context broker** のデータにアクセス可能
 
 ご覧のとおり、いくつかの新しいルールには時間要素があり、
 もはや単純な動詞リソース・ルール (simple Verb-Resource rules)
@@ -1115,7 +1115,7 @@ XACML ルールを使用してアクセス・ポリシーを定義できるこ�
 
 ちなみに、単純な動詞リソースのパーミッションでは、
 `/applications/{{app-id}}/permissions/{permission-id}}` エンドポイントは
-その id の下にリストされたパーミッションを返します。`X-Auth-token` は、
+その ID の下にリストされたパーミッションを返します。`X-Auth-token` は、
 ヘッダで提供されなければなりません。
 
 #### :one::two: リクエスト
@@ -1156,7 +1156,7 @@ curl -X GET \
 
 XACML ルールのパーミッションにも同じ方法でアクセスでき、
 `/applications/{{app-id}}/permissions/{permission-id}}` エンドポイントは
-その id 下にリストされたパーミッションを返します。`X-Auth-token` は、
+その ID 下にリストされたパーミッションを返します。`X-Auth-token` は、
 ヘッダで提供されなければなりません。
 
 #### :one::three: リクエスト
@@ -1177,7 +1177,7 @@ curl -X GET \
 `xml`属性内には既に `<Rule>` が1つあります。
 次のように設定されています。
 
-> *警備員* は、午前9時**前**、または午後5時**以降**に、
+> *警備員* は、午前8時**前**、または午後5時**以降**に、
 > アラーム・ベルを鳴らすことができます
 
 <details>
@@ -1305,7 +1305,7 @@ curl -X POST \
 リクエストに対するレスポンスには、リソースへのアクセスを `Permit` または `Deny`
 するための `<Decision>` 要素が含まれています。
 
-サーバの時間が午前9時から午後5時の間の場合、アクセス・リクエストは拒否されます。
+サーバの時間が午前8時から午後5時 (UTC) の間の場合、アクセス・リクエストは拒否されます。
 
 ```xml
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
@@ -1323,7 +1323,7 @@ curl -X POST \
 ポリシーは次のように更新されます :
 
 > **警備員**はいつでもベルを鳴らすことができる **Charlie** を除いて、
-> 午前9時または午後5時以降にのみアラーム・ベルを鳴らすことができます。
+> 午前8時または午後5時以降にのみアラーム・ベルを鳴らすことができます。
 
 これは、`alrmbell-ring-24hr-xaml-000000000000` パーミッションを、
 2つのルールを適用するために修正する必要があることを意味します :
@@ -1624,7 +1624,7 @@ function authorizeAdvancedXACML(req, res, next, resource = req.url) {
 
     return oa
         .get(keyrockUserUrl)
-        .then(response => {
+        .then((response) => {
             const user = JSON.parse(response);
             return azf.policyDomainRequest(
                 user.app_azf_domain,
@@ -1635,11 +1635,11 @@ function authorizeAdvancedXACML(req, res, next, resource = req.url) {
                 req.method
             );
         })
-        .then(authzforceResponse => {
+        .then((authzforceResponse) => {
             res.locals.authorized = authzforceResponse === "Permit";
             return next();
         })
-        .catch(error => {
+        .catch((error) => {
             debug(error);
             res.locals.authorized = false;
             return next();
@@ -1671,12 +1671,12 @@ function policyDomainRequest(domain, roles, resource, action, username, email) {
     };
 
     return new Promise((resolve, reject) => {
-        request(options, function(error, response, body) {
+        request(options, function (error, response, body) {
             let decision;
             xml2js.parseString(
                 body,
                 { tagNameProcessors: [xml2js.processors.stripPrefix] },
-                function(err, jsonRes) {
+                function (err, jsonRes) {
                     // The decision is found within the /Response/Result[0]/Decision[0] XPath
                     decision = jsonRes.Response.Result[0].Decision[0];
                 }
@@ -1708,8 +1708,8 @@ Detective1 は Charlie に対応し、**セキュリティ**・ロールを果�
 -   `http://localhost:3000/device/monitor` でデバイス・モニタを開きます
     -   ドアのロックを解除 - アクセスは**許可**されています - これは
         セキュリティ上の唯一の許可です
-    -   ベルを鳴らす - アクセスは**拒否**されます - これは、午前9時から
-         午後5時の間にセキュリティ・ユーザには許可されていません
+    -   ベルを鳴らす - アクセスは**拒否**されます - これは、午前8時から
+         午後5時 (UTC) の間にセキュリティ・ユーザには許可されていません
 
 #### Charlie セキュリティ・マネージャ
 
