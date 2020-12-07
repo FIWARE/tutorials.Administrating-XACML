@@ -871,15 +871,15 @@ are applied:
 #### Security Staff
 
 -   Can unlock the door at any time
--   Can ring the alarm bell before 9 a.m. or after 5 p.m.
+-   Can ring the alarm bell before 8 a.m. or after 5 p.m. UTC.
 -   Can access the **context broker** data at any time
 
 #### Management
 
 -   Have access to the price change area
 -   Have access to the stock count area
--   Can ring the alarm bell between 9 a.m. and 5 p.m.
--   Can access the **context broker** data from 9 a.m. to 5 p.m.
+-   Can ring the alarm bell between 8 a.m. and 5 p.m. UTC.
+-   Can access the **context broker** data from 8 a.m. to 5 p.m. UTC.
 
 As you can see some of the new rules now have a time element to them and are no longer simple Verb-Resource rules.
 
@@ -1006,7 +1006,7 @@ details of the associated XACML `<Rule>` the `action` and `resource` fields are 
 
 There is already one `<Rule>` within the `xml` attribute, which states the following:
 
-> **Security Staff** Can only ring the alarm bell **before** 9 a.m. or **after** 5 p.m.
+> **Security Staff** Can only ring the alarm bell **before** 8 a.m. or **after** 5 p.m.
 
 <details>
   <summary>
@@ -1142,7 +1142,7 @@ If the time on the server is between 8 a.m. and 5 p.m. UTC, the access request w
 
 The policy will now be updated as follows:
 
-> **Security Staff** Can only ring the alarm bell before 9 a.m. or after 5 p.m., except for **Charlie** who can ring the
+> **Security Staff** Can only ring the alarm bell before 8 a.m. or after 5 p.m., except for **Charlie** who can ring the
 > bell at any time
 
 This means that the `alrmbell-ring-24hr-xaml-000000000000` permission will need to be amended to apply two rules:
@@ -1493,7 +1493,7 @@ Detective1 works for Charlie and has the **security** role
     permission
 -   Open the Device Monitor on `http://localhost:3000/device/monitor`
     -   Unlock a door - access is **permitted** - This is a security only permission
-    -   Ring a bell - access is **denied** - This is not permitted to security users between 9 a.m. and 5 p.m.
+    -   Ring a bell - access is **denied** - This is not permitted to security users between 8 a.m. and 5 p.m. UTC.
 
 #### Charlie the Security Manager
 
