@@ -1091,7 +1091,7 @@ the current server time.
 ### Deny Access to a Resource
 
 To request a decision from Authzforce, make a POST request to the `domains/{domain-id}/pdp` endpoint. In this case the
-user has the is requesting access to `POST` to the `/ring/bell` endpoint.
+user is requesting access to `POST` to the `/bell/ring` endpoint.
 
 #### :one::four: Request
 
@@ -1127,7 +1127,7 @@ curl -X POST \
 
 The response for the request includes a `<Decision>` element to `Permit` or `Deny` access to the resource.
 
-If the time on the server is between 9 a.m. and 5 p.m. the access request will be denied.
+If the time on the server is between 8 a.m. and 5 p.m. UTC, the access request will be denied.
 
 ```xml
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>

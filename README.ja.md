@@ -1267,7 +1267,7 @@ curl -X GET \
 ### リソースへのアクセスを拒否
 
 **Authzforce** に決定をリクエストするには、`domains/{domain-id}/pdp`
-エンドポイントに POST リクエストを出します。この場合、`/ring/bell`
+エンドポイントに POST リクエストを出します。この場合、`/bell/ring`
 エンドポイントへの `POST` へのアクセスをリクエストしています。
 
 #### :one::four: リクエスト
