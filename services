@@ -112,13 +112,13 @@ addDatabaseIndex () {
 startContainers () {
 	echo ""
 	export IDM_HTTPS_ENABLED="$1" 
-	docker-compose -f docker-compose.yml -p fiware up -d --remove-orphans
+	docker-compose -f docker-compose.yml  up -d --remove-orphans
 	echo ""
 }
 
 stoppingContainers () {
 	echo "Stopping running containers"
-	docker-compose -f docker-compose.yml  -p fiware down -v --remove-orphans
+	docker-compose -f docker-compose.yml   down -v --remove-orphans
 
 	echo ""
 	echo "Removing Authzforce Domains"
