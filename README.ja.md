@@ -4,8 +4,7 @@
 [![License: MIT](https://img.shields.io/github/license/fiware/tutorials.Administrating-XACML.svg)](https://opensource.org/licenses/MIT)
 [![Support badge](https://img.shields.io/badge/tag-fiware-orange.svg?logo=stackoverflow)](https://stackoverflow.com/questions/tagged/fiware)
 [![FIWARE Security](https://img.shields.io/badge/XACML-3.0-ff7059.svg)](https://docs.oasis-open.org/xacml/3.0/xacml-3.0-core-spec-os-en.html)
-<br/>
-[![Documentation](https://img.shields.io/readthedocs/fiware-tutorials.svg)](https://fiware-tutorials.rtfd.io)
+<br/> [![Documentation](https://img.shields.io/readthedocs/fiware-tutorials.svg)](https://fiware-tutorials.rtfd.io)
 
 <!-- prettier-ignore -->
 
@@ -1616,11 +1615,7 @@ curl -X POST \
 ```javascript
 function authorizeAdvancedXACML(req, res, next, resource = req.url) {
     const keyrockUserUrl =
-        "http://keyrock/user?access_token=" +
-        req.session.access_token +
-        "&app_id=" +
-        clientId +
-        "&authzforce=true";
+        "http://keyrock/user?access_token=" + req.session.access_token + "&app_id=" + clientId + "&authzforce=true";
 
     return oa
         .get(keyrockUserUrl)
@@ -1673,14 +1668,10 @@ function policyDomainRequest(domain, roles, resource, action, username, email) {
     return new Promise((resolve, reject) => {
         request(options, function (error, response, body) {
             let decision;
-            xml2js.parseString(
-                body,
-                { tagNameProcessors: [xml2js.processors.stripPrefix] },
-                function (err, jsonRes) {
-                    // The decision is found within the /Response/Result[0]/Decision[0] XPath
-                    decision = jsonRes.Response.Result[0].Decision[0];
-                }
-            );
+            xml2js.parseString(body, { tagNameProcessors: [xml2js.processors.stripPrefix] }, function (err, jsonRes) {
+                // The decision is found within the /Response/Result[0]/Decision[0] XPath
+                decision = jsonRes.Response.Result[0].Decision[0];
+            });
             decision = String(decision);
             return error ? reject(error) : resolve(decision);
         });
@@ -1741,4 +1732,4 @@ Charlie は、**セキュリティ**・ロールを担っています。
 
 ## License
 
-[MIT](LICENSE) © 2019-2020 FIWARE Foundation e.V.
+[MIT](LICENSE) © 2019-2022 FIWARE Foundation e.V.
