@@ -344,8 +344,17 @@ The response includes a `href` in the `<n2:link>` element which holds the `domai
 An empty `PolicySet` will be created for the new domain. By default all access will be permitted.
 
 ```xml
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<ns4:link xmlns="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17" xmlns:ns2="http://authzforce.github.io/pap-dao-flat-file/xmlns/properties/3.6" xmlns:ns3="http://authzforce.github.io/rest-api-model/xmlns/authz/5" xmlns:ns4="http://www.w3.org/2005/Atom" xmlns:ns5="http://authzforce.github.io/core/xmlns/pdp/6.0" rel="item" href="Sv-RRw9vEem6UQJCrBIBDA" title="Sv-RRw9vEem6UQJCrBIBDA"/>
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<ns4:link
+    xmlns="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17"
+    xmlns:ns2="http://authzforce.github.io/pap-dao-flat-file/xmlns/properties/3.6"
+    xmlns:ns3="http://authzforce.github.io/rest-api-model/xmlns/authz/5"
+    xmlns:ns4="http://www.w3.org/2005/Atom"
+    xmlns:ns5="http://authzforce.github.io/core/xmlns/pdp/6.0"
+    rel="item"
+    href="Sv-RRw9vEem6UQJCrBIBDA"
+    title="Sv-RRw9vEem6UQJCrBIBDA"
+/>
 ```
 
 The new `domain-id` (in this case `Sv-RRw9vEem6UQJCrBIBDA` ) will be used with all subsequent requests.
@@ -386,8 +395,14 @@ The response for the request includes a `<Decision>` element to `Permit` or `Den
 all requests will be `Permit`
 
 ```xml
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<Response xmlns="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17" xmlns:ns2="http://authzforce.github.io/pap-dao-flat-file/xmlns/properties/3.6" xmlns:ns3="http://authzforce.github.io/rest-api-model/xmlns/authz/5" xmlns:ns4="http://www.w3.org/2005/Atom" xmlns:ns5="http://authzforce.github.io/core/xmlns/pdp/6.0">
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<Response
+    xmlns="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17"
+    xmlns:ns2="http://authzforce.github.io/pap-dao-flat-file/xmlns/properties/3.6"
+    xmlns:ns3="http://authzforce.github.io/rest-api-model/xmlns/authz/5"
+    xmlns:ns4="http://www.w3.org/2005/Atom"
+    xmlns:ns5="http://authzforce.github.io/core/xmlns/pdp/6.0"
+>
     <Result>
         <Decision>Permit</Decision>
     </Result>
@@ -501,8 +516,17 @@ The response contains the internal ID of the policy held within **Authzforce** a
 `PolicySet` versions available. The rules of the new `PolicySet` will not be applied until the `PolicySet` is activated.
 
 ```xml
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<ns4:link xmlns="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17" xmlns:ns2="http://authzforce.github.io/pap-dao-flat-file/xmlns/properties/3.6" xmlns:ns3="http://authzforce.github.io/rest-api-model/xmlns/authz/5" xmlns:ns4="http://www.w3.org/2005/Atom" xmlns:ns5="http://authzforce.github.io/core/xmlns/pdp/6.0" rel="item" href="f8194af5-8a07-486a-9581-c1f05d05483c/1" title="Policy 'f8194af5-8a07-486a-9581-c1f05d05483c' v1"/>
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<ns4:link
+    xmlns="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17"
+    xmlns:ns2="http://authzforce.github.io/pap-dao-flat-file/xmlns/properties/3.6"
+    xmlns:ns3="http://authzforce.github.io/rest-api-model/xmlns/authz/5"
+    xmlns:ns4="http://www.w3.org/2005/Atom"
+    xmlns:ns5="http://authzforce.github.io/core/xmlns/pdp/6.0"
+    rel="item"
+    href="f8194af5-8a07-486a-9581-c1f05d05483c/1"
+    title="Policy 'f8194af5-8a07-486a-9581-c1f05d05483c' v1"
+/>
 ```
 
 ### Activating the initial PolicySet
@@ -529,10 +553,23 @@ curl -X PUT \
 The response returns information about the `PolicySet` applied.
 
 ```xml
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<ns3:pdpProperties xmlns="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17" xmlns:ns2="http://authzforce.github.io/pap-dao-flat-file/xmlns/properties/3.6" xmlns:ns3="http://authzforce.github.io/rest-api-model/xmlns/authz/5" xmlns:ns4="http://www.w3.org/2005/Atom" xmlns:ns5="http://authzforce.github.io/core/xmlns/pdp/6.0" lastModifiedTime="2019-01-03T15:54:45.341Z">
-    <ns3:feature type="urn:ow2:authzforce:feature-type:pdp:core" enabled="false">urn:ow2:authzforce:feature:pdp:core:strict-attribute-issuer-match</ns3:feature>
-    <ns3:feature type="urn:ow2:authzforce:feature-type:pdp:core" enabled="false">urn:ow2:authzforce:feature:pdp:core:xpath-eval</ns3:feature>
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<ns3:pdpProperties
+    xmlns="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17"
+    xmlns:ns2="http://authzforce.github.io/pap-dao-flat-file/xmlns/properties/3.6"
+    xmlns:ns3="http://authzforce.github.io/rest-api-model/xmlns/authz/5"
+    xmlns:ns4="http://www.w3.org/2005/Atom"
+    xmlns:ns5="http://authzforce.github.io/core/xmlns/pdp/6.0"
+    lastModifiedTime="2019-01-03T15:54:45.341Z"
+>
+    <ns3:feature
+        type="urn:ow2:authzforce:feature-type:pdp:core"
+        enabled="false"
+    >urn:ow2:authzforce:feature:pdp:core:strict-attribute-issuer-match</ns3:feature>
+    <ns3:feature
+        type="urn:ow2:authzforce:feature-type:pdp:core"
+        enabled="false"
+    >urn:ow2:authzforce:feature:pdp:core:xpath-eval</ns3:feature>
 ... ETC
     <ns3:rootPolicyRefExpression>f8194af5-8a07-486a-9581-c1f05d05483c</ns3:rootPolicyRefExpression>
     <ns3:applicablePolicies>
@@ -573,8 +610,14 @@ curl -X POST \
 #### Response
 
 ```xml
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<Response xmlns="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17" xmlns:ns2="http://authzforce.github.io/pap-dao-flat-file/xmlns/properties/3.6" xmlns:ns3="http://authzforce.github.io/rest-api-model/xmlns/authz/5" xmlns:ns4="http://www.w3.org/2005/Atom" xmlns:ns5="http://authzforce.github.io/core/xmlns/pdp/6.0">
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<Response
+    xmlns="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17"
+    xmlns:ns2="http://authzforce.github.io/pap-dao-flat-file/xmlns/properties/3.6"
+    xmlns:ns3="http://authzforce.github.io/rest-api-model/xmlns/authz/5"
+    xmlns:ns4="http://www.w3.org/2005/Atom"
+    xmlns:ns5="http://authzforce.github.io/core/xmlns/pdp/6.0"
+>
     <Result>
         <Decision>Permit</Decision>
     </Result>
@@ -613,8 +656,14 @@ curl -X POST \
 #### Response
 
 ```xml
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<Response xmlns="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17" xmlns:ns2="http://authzforce.github.io/pap-dao-flat-file/xmlns/properties/3.6" xmlns:ns3="http://authzforce.github.io/rest-api-model/xmlns/authz/5" xmlns:ns4="http://www.w3.org/2005/Atom" xmlns:ns5="http://authzforce.github.io/core/xmlns/pdp/6.0">
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<Response
+    xmlns="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17"
+    xmlns:ns2="http://authzforce.github.io/pap-dao-flat-file/xmlns/properties/3.6"
+    xmlns:ns3="http://authzforce.github.io/rest-api-model/xmlns/authz/5"
+    xmlns:ns4="http://www.w3.org/2005/Atom"
+    xmlns:ns5="http://authzforce.github.io/core/xmlns/pdp/6.0"
+>
     <Result>
         <Decision>Deny</Decision>
     </Result>
@@ -729,8 +778,17 @@ The response contains version information about the `PolicySet` versions availab
 will not be applied until the `PolicySet` is activated.
 
 ```xml
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<ns4:link xmlns="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17" xmlns:ns2="http://authzforce.github.io/pap-dao-flat-file/xmlns/properties/3.6" xmlns:ns3="http://authzforce.github.io/rest-api-model/xmlns/authz/5" xmlns:ns4="http://www.w3.org/2005/Atom" xmlns:ns5="http://authzforce.github.io/core/xmlns/pdp/6.0" rel="item" href="f8194af5-8a07-486a-9581-c1f05d05483c/2" title="Policy 'f8194af5-8a07-486a-9581-c1f05d05483c' v2"/>
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<ns4:link
+    xmlns="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17"
+    xmlns:ns2="http://authzforce.github.io/pap-dao-flat-file/xmlns/properties/3.6"
+    xmlns:ns3="http://authzforce.github.io/rest-api-model/xmlns/authz/5"
+    xmlns:ns4="http://www.w3.org/2005/Atom"
+    xmlns:ns5="http://authzforce.github.io/core/xmlns/pdp/6.0"
+    rel="item"
+    href="f8194af5-8a07-486a-9581-c1f05d05483c/2"
+    title="Policy 'f8194af5-8a07-486a-9581-c1f05d05483c' v2"
+/>
 ```
 
 ### Activating an updated PolicySet
@@ -758,10 +816,23 @@ curl -X PUT \
 The response returns information about the `PolicySet` applied.
 
 ```xml
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<ns3:pdpProperties xmlns="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17" xmlns:ns2="http://authzforce.github.io/pap-dao-flat-file/xmlns/properties/3.6" xmlns:ns3="http://authzforce.github.io/rest-api-model/xmlns/authz/5" xmlns:ns4="http://www.w3.org/2005/Atom" xmlns:ns5="http://authzforce.github.io/core/xmlns/pdp/6.0" lastModifiedTime="2019-01-03T15:58:29.351Z">
-    <ns3:feature type="urn:ow2:authzforce:feature-type:pdp:core" enabled="false">urn:ow2:authzforce:feature:pdp:core:strict-attribute-issuer-match</ns3:feature>
-    <ns3:feature type="urn:ow2:authzforce:feature-type:pdp:core" enabled="false">urn:ow2:authzforce:feature:pdp:core:xpath-eval</ns3:feature>
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<ns3:pdpProperties
+    xmlns="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17"
+    xmlns:ns2="http://authzforce.github.io/pap-dao-flat-file/xmlns/properties/3.6"
+    xmlns:ns3="http://authzforce.github.io/rest-api-model/xmlns/authz/5"
+    xmlns:ns4="http://www.w3.org/2005/Atom"
+    xmlns:ns5="http://authzforce.github.io/core/xmlns/pdp/6.0"
+    lastModifiedTime="2019-01-03T15:58:29.351Z"
+>
+    <ns3:feature
+        type="urn:ow2:authzforce:feature-type:pdp:core"
+        enabled="false"
+    >urn:ow2:authzforce:feature:pdp:core:strict-attribute-issuer-match</ns3:feature>
+    <ns3:feature
+        type="urn:ow2:authzforce:feature-type:pdp:core"
+        enabled="false"
+    >urn:ow2:authzforce:feature:pdp:core:xpath-eval</ns3:feature>
 ... ETC
     <ns3:rootPolicyRefExpression>f8194af5-8a07-486a-9581-c1f05d05483c</ns3:rootPolicyRefExpression>
     <ns3:applicablePolicies>
@@ -803,8 +874,14 @@ curl -X POST \
 #### Response
 
 ```xml
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<Response xmlns="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17" xmlns:ns2="http://authzforce.github.io/pap-dao-flat-file/xmlns/properties/3.6" xmlns:ns3="http://authzforce.github.io/rest-api-model/xmlns/authz/5" xmlns:ns4="http://www.w3.org/2005/Atom" xmlns:ns5="http://authzforce.github.io/core/xmlns/pdp/6.0">
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<Response
+    xmlns="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17"
+    xmlns:ns2="http://authzforce.github.io/pap-dao-flat-file/xmlns/properties/3.6"
+    xmlns:ns3="http://authzforce.github.io/rest-api-model/xmlns/authz/5"
+    xmlns:ns4="http://www.w3.org/2005/Atom"
+    xmlns:ns5="http://authzforce.github.io/core/xmlns/pdp/6.0"
+>
     <Result>
         <Decision>Deny</Decision>
     </Result>
@@ -843,8 +920,14 @@ curl -X POST \
 #### Response
 
 ```xml
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<Response xmlns="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17" xmlns:ns2="http://authzforce.github.io/pap-dao-flat-file/xmlns/properties/3.6" xmlns:ns3="http://authzforce.github.io/rest-api-model/xmlns/authz/5" xmlns:ns4="http://www.w3.org/2005/Atom" xmlns:ns5="http://authzforce.github.io/core/xmlns/pdp/6.0">
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<Response
+    xmlns="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17"
+    xmlns:ns2="http://authzforce.github.io/pap-dao-flat-file/xmlns/properties/3.6"
+    xmlns:ns3="http://authzforce.github.io/rest-api-model/xmlns/authz/5"
+    xmlns:ns4="http://www.w3.org/2005/Atom"
+    xmlns:ns5="http://authzforce.github.io/core/xmlns/pdp/6.0"
+>
     <Result>
         <Decision>Permit</Decision>
     </Result>
@@ -1022,7 +1105,12 @@ There is already one `<Rule>` within the `xml` attribute, which states the follo
             <AllOf>
                 <Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
                     <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">/bell/ring</AttributeValue>
-                    <AttributeDesignator Category="urn:oasis:names:tc:xacml:3.0:attribute-category:resource" AttributeId="urn:thales:xacml:2.0:resource:sub-resource-id" DataType="http://www.w3.org/2001/XMLSchema#string" MustBePresent="true" />
+                    <AttributeDesignator
+                        Category="urn:oasis:names:tc:xacml:3.0:attribute-category:resource"
+                        AttributeId="urn:thales:xacml:2.0:resource:sub-resource-id"
+                        DataType="http://www.w3.org/2001/XMLSchema#string"
+                        MustBePresent="true"
+                    />
                 </Match>
             </AllOf>
         </AnyOf>
@@ -1030,15 +1118,27 @@ There is already one `<Rule>` within the `xml` attribute, which states the follo
             <AllOf>
                 <Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
                     <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">POST</AttributeValue>
-                    <AttributeDesignator Category="urn:oasis:names:tc:xacml:3.0:attribute-category:action" AttributeId="urn:oasis:names:tc:xacml:1.0:action:action-id" DataType="http://www.w3.org/2001/XMLSchema#string" MustBePresent="true" />
+                    <AttributeDesignator
+                        Category="urn:oasis:names:tc:xacml:3.0:attribute-category:action"
+                        AttributeId="urn:oasis:names:tc:xacml:1.0:action:action-id"
+                        DataType="http://www.w3.org/2001/XMLSchema#string"
+                        MustBePresent="true"
+                    />
                 </Match>
             </AllOf>
         </AnyOf>
         <AnyOf>
             <AllOf>
                 <Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
-                    <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">security-role-0000-0000-000000000000</AttributeValue>
-                    <AttributeDesignator Category="urn:oasis:names:tc:xacml:1.0:subject-category:access-subject" AttributeId="urn:oasis:names:tc:xacml:2.0:subject:role" DataType="http://www.w3.org/2001/XMLSchema#string" MustBePresent="true" />
+                    <AttributeValue
+                        DataType="http://www.w3.org/2001/XMLSchema#string"
+                    >security-role-0000-0000-000000000000</AttributeValue>
+                    <AttributeDesignator
+                        Category="urn:oasis:names:tc:xacml:1.0:subject-category:access-subject"
+                        AttributeId="urn:oasis:names:tc:xacml:2.0:subject:role"
+                        DataType="http://www.w3.org/2001/XMLSchema#string"
+                        MustBePresent="true"
+                    />
                 </Match>
             </AllOf>
         </AnyOf>
@@ -1047,7 +1147,12 @@ There is already one `<Rule>` within the `xml` attribute, which states the follo
         <Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:not">
             <Apply FunctionId="urn:oasis:names:tc:xacml:2.0:function:time-in-range">
                 <Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:time-one-and-only">
-                    <AttributeDesignator Category="urn:oasis:names:tc:xacml:3.0:attribute-category:environment" AttributeId="urn:oasis:names:tc:xacml:1.0:environment:current-time" DataType="http://www.w3.org/2001/XMLSchema#time" MustBePresent="false" />
+                    <AttributeDesignator
+                        Category="urn:oasis:names:tc:xacml:3.0:attribute-category:environment"
+                        AttributeId="urn:oasis:names:tc:xacml:1.0:environment:current-time"
+                        DataType="http://www.w3.org/2001/XMLSchema#time"
+                        MustBePresent="false"
+                    />
                 </Apply>
                 <Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:time-one-and-only">
                     <Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:time-bag">
@@ -1131,8 +1236,14 @@ The response for the request includes a `<Decision>` element to `Permit` or `Den
 If the time on the server is between 8 a.m. and 5 p.m. UTC, the access request will be denied.
 
 ```xml
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<ns2:Response xmlns="http://www.w3.org/2005/Atom" xmlns:ns2="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17" xmlns:ns3="http://authzforce.github.io/core/xmlns/pdp/6.0" xmlns:ns4="http://authzforce.github.io/rest-api-model/xmlns/authz/5" xmlns:ns5="http://authzforce.github.io/pap-dao-flat-file/xmlns/properties/3.6">
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<ns2:Response
+    xmlns="http://www.w3.org/2005/Atom"
+    xmlns:ns2="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17"
+    xmlns:ns3="http://authzforce.github.io/core/xmlns/pdp/6.0"
+    xmlns:ns4="http://authzforce.github.io/rest-api-model/xmlns/authz/5"
+    xmlns:ns5="http://authzforce.github.io/pap-dao-flat-file/xmlns/properties/3.6"
+>
     <ns2:Result>
         <ns2:Decision>Deny</ns2:Decision>
     </ns2:Result>
@@ -1161,7 +1272,12 @@ This means that the `alrmbell-ring-24hr-xaml-000000000000` permission will need 
             <AllOf>
                 <Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
                     <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">/bell/ring</AttributeValue>
-                    <AttributeDesignator Category="urn:oasis:names:tc:xacml:3.0:attribute-category:resource" AttributeId="urn:thales:xacml:2.0:resource:sub-resource-id" DataType="http://www.w3.org/2001/XMLSchema#string" MustBePresent="true" />
+                    <AttributeDesignator
+                        Category="urn:oasis:names:tc:xacml:3.0:attribute-category:resource"
+                        AttributeId="urn:thales:xacml:2.0:resource:sub-resource-id"
+                        DataType="http://www.w3.org/2001/XMLSchema#string"
+                        MustBePresent="true"
+                    />
                 </Match>
             </AllOf>
         </AnyOf>
@@ -1169,7 +1285,12 @@ This means that the `alrmbell-ring-24hr-xaml-000000000000` permission will need 
             <AllOf>
                 <Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
                     <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">POST</AttributeValue>
-                    <AttributeDesignator Category="urn:oasis:names:tc:xacml:3.0:attribute-category:action" AttributeId="urn:oasis:names:tc:xacml:1.0:action:action-id" DataType="http://www.w3.org/2001/XMLSchema#string" MustBePresent="true" />
+                    <AttributeDesignator
+                        Category="urn:oasis:names:tc:xacml:3.0:attribute-category:action"
+                        AttributeId="urn:oasis:names:tc:xacml:1.0:action:action-id"
+                        DataType="http://www.w3.org/2001/XMLSchema#string"
+                        MustBePresent="true"
+                    />
                 </Match>
             </AllOf>
         </AnyOf>
@@ -1177,7 +1298,12 @@ This means that the `alrmbell-ring-24hr-xaml-000000000000` permission will need 
             <AllOf>
                 <Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
                     <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">charlie</AttributeValue>
-                    <AttributeDesignator Category="urn:oasis:names:tc:xacml:1.0:subject-category:access-subject" AttributeId="urn:oasis:names:tc:xacml:1.0:subject:subject-id" DataType="http://www.w3.org/2001/XMLSchema#string" MustBePresent="true" />
+                    <AttributeDesignator
+                        Category="urn:oasis:names:tc:xacml:1.0:subject-category:access-subject"
+                        AttributeId="urn:oasis:names:tc:xacml:1.0:subject:subject-id"
+                        DataType="http://www.w3.org/2001/XMLSchema#string"
+                        MustBePresent="true"
+                    />
                 </Match>
             </AllOf>
         </AnyOf>
@@ -1390,8 +1516,14 @@ curl -X POST \
 The response is `Permit` when the new `<Rule>` has been applied.
 
 ```xml
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<ns2:Response xmlns="http://www.w3.org/2005/Atom" xmlns:ns2="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17" xmlns:ns3="http://authzforce.github.io/core/xmlns/pdp/6.0" xmlns:ns4="http://authzforce.github.io/rest-api-model/xmlns/authz/5" xmlns:ns5="http://authzforce.github.io/pap-dao-flat-file/xmlns/properties/3.6">
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<ns2:Response
+    xmlns="http://www.w3.org/2005/Atom"
+    xmlns:ns2="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17"
+    xmlns:ns3="http://authzforce.github.io/core/xmlns/pdp/6.0"
+    xmlns:ns4="http://authzforce.github.io/rest-api-model/xmlns/authz/5"
+    xmlns:ns5="http://authzforce.github.io/pap-dao-flat-file/xmlns/properties/3.6"
+>
     <ns2:Result>
         <ns2:Decision>Permit</ns2:Decision>
     </ns2:Result>
