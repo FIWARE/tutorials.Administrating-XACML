@@ -235,7 +235,8 @@ git checkout NGSI-v2
 ./services create
 ```
 
-> **Note** The initial creation of Docker images can take up to three minutes
+> [!NOTE]
+>  The initial creation of Docker images can take up to three minutes
 
 Thereafter, all services can be initialized from the command-line by running the
 [services](https://github.com/FIWARE/tutorials.Administrating-XACML/blob/NGSI-v2/services) Bash script provided within
@@ -975,7 +976,8 @@ found within the tutorial
 The **context broker** data for the **Store** and **IoT Devices** is held in is secured behind the **PEP Proxy**. This
 means that only security staff are able to access the system outside of core hours.
 
-> **Note** within the **Keyrock**, only four resources have been secured using advanced authorization rules (level 3)
+> [!NOTE]
+> within the **Keyrock**, only four resources have been secured using advanced authorization rules (level 3)
 >
 > -   sending the ring bell command
 > -   access to the price-change area
