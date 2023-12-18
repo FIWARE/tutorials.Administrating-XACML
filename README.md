@@ -326,7 +326,7 @@ tutorial supermarket application.
 To create a new domain in **Authzforce**, make a POST request to the `/authzforce-ce/domains` endpoint including a
 unique `external-id` within the `<domainProperties>` element
 
-#### :one: Request
+#### 1️⃣ Request
 
 ```console
 curl -X POST \
@@ -359,7 +359,7 @@ An empty `PolicySet` will be created for the new domain. By default all access w
 
 The new `domain-id` (in this case `Sv-RRw9vEem6UQJCrBIBDA` ) will be used with all subsequent requests.
 
-#### :two: Request
+#### 2️⃣ Request
 
 To request a decision from Authzforce, make a POST request to the `domains/{domain-id}/pdp` endpoint. In this case the
 user is requesting access to `loading` in the `white` zone.
@@ -419,7 +419,7 @@ For this initial Policy, the following rules will be enforced
 -   The **white** zone is for immediate loading and unloading of passengers only
 -   There is no stopping in the **red** zone
 
-#### :three: Request
+#### 3️⃣ Request
 
 The full data for an XACML `<PolicySet>` is very verbose and has been omitted from the request below:
 
@@ -534,7 +534,7 @@ The response contains the internal ID of the policy held within **Authzforce** a
 To activate a `PolicySet`, make a PUT request to the `/authzforce-ce/domains/{domain-id}/pap/pdp.properties` endpoint
 including the `policy-id` to update within the `<rootPolicyRefExpresion>` attribute
 
-#### :four: Request
+#### 4️⃣ Request
 
 Remember to amend the request below to use your own `{domain-id}`:
 
@@ -578,7 +578,7 @@ The response returns information about the `PolicySet` applied.
 </ns3:pdpProperties>
 ```
 
-#### :five: Request
+#### 5️⃣ Request
 
 At this point, making a request to access to `loading` in the `white` zone will return `Permit`
 
@@ -624,7 +624,7 @@ curl -X POST \
 </Response>
 ```
 
-#### :six: Request
+#### 6️⃣ Request
 
 At this point, making a request to access to `loading` in the `red` zone will return `Deny`
 
@@ -681,7 +681,7 @@ For the updated Policy, the previous rules will be reversed
 -   The **red** zone is for immediate loading and unloading of passengers only
 -   There is no stopping in the **white** zone
 
-#### :seven: Request
+#### 7️⃣  Request
 
 The full data for an XACML `<PolicySet>` is very verbose and has been omitted from the request below:
 
@@ -797,7 +797,7 @@ To update an active a `PolicySet`, make another PUT request to the
 `/authzforce-ce/domains/{domain-id}/pap/pdp.properties` endpoint including the `policy-id` to update within the
 `<rootPolicyRefExpresion>` attribute. The ruleset will be updated to apply the latest uploaded version.
 
-#### :eight: Request
+#### 8️⃣  Request
 
 Remember to amend the request below to use your own `{domain-id}`:
 
@@ -841,7 +841,7 @@ The response returns information about the `PolicySet` applied.
 </ns3:pdpProperties>
 ```
 
-#### :nine: Request
+#### 9️⃣ Request
 
 Since the new policy has been activated, at this point, making a request to access to `loading` in the `white` zone will
 return `Deny`
@@ -888,7 +888,7 @@ curl -X POST \
 </Response>
 ```
 
-#### :one::zero: Request
+#### 1️⃣0️⃣ Request
 
 Making a request to access to `loading` in the `red` zone under the current policy will return `Permit`
 
@@ -987,7 +987,7 @@ means that only security staff are able to access the system outside of core hou
 
 ### Create Token with Password
 
-#### :one::one: Request
+#### 1️⃣1️⃣ Request
 
 Enter a username and password to enter the application. The default super-user has the values `alice-the-admin@test.com`
 and `test`.
@@ -1039,7 +1039,7 @@ policies.
 As a reminder, for simple verb-resource permissions, the `/applications/{{app-id}}/permissions/{permission-id}}`
 endpoint will return the permission listed under that ID. The `X-Auth-token` must be supplied in the headers.
 
-#### :one::two: Request
+#### 1️⃣2️⃣ Request
 
 ```console
 curl -X GET \
@@ -1074,7 +1074,7 @@ unlock the main entrance.
 XACML Rule permissions can be accessed in the same way, the `/applications/{{app-id}}/permissions/{permission-id}}`
 endpoint will return the permission listed under that ID. The `X-Auth-token` must be supplied in the headers.
 
-#### :one::three: Request
+#### 1️⃣3️⃣ Request
 
 ```console
 curl -X GET \
@@ -1199,7 +1199,7 @@ the current server time.
 To request a decision from Authzforce, make a POST request to the `domains/{domain-id}/pdp` endpoint. In this case the
 user is requesting access to `POST` to the `/bell/ring` endpoint.
 
-#### :one::four: Request
+#### 1️⃣4️⃣ Request
 
 ```console
 curl -X POST \
@@ -1337,7 +1337,7 @@ Alternatively to programmatically amend the XACML rules governing a permission, 
 `/applications/{{app-id}}/permissions/{permission-id}}` endpoint. The body of the request must include three
 attributes - `action` and `resource` must both be set to `""` and the `xml` attribute should hold the XACML text.
 
-#### :one::five: Request
+#### 1️⃣5️⃣ Request
 
 The full data for the request very verbose and has been omitted below:
 
@@ -1401,7 +1401,7 @@ associations are amended, the easiest way to do this is to delete and re-create 
 
 Firstly delete an association using a DELETE request:
 
-#### :one::six: Request
+#### 1️⃣6️⃣ Request
 
 ```console
 curl -X DELETE \
@@ -1412,7 +1412,7 @@ curl -X DELETE \
 
 Then re-create it using a POST request as shown:
 
-#### :one::seven: Request
+#### 1️⃣7️⃣  Request
 
 ```console
 curl -X POST \
@@ -1454,7 +1454,7 @@ In the example below, the `emailaddress` and `subject:subject-id` have been adde
 
 With the new rule in place, the user `charlie` will be able to access the `/bell/ring` endpoint at all times of day.
 
-#### :one::seven: Request
+#### 1️⃣7️⃣  Request
 
 The full data for the request very verbose and has been omitted below:
 
