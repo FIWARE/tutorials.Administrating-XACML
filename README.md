@@ -13,7 +13,7 @@ that policy execution points such as the **PEP proxy** are able to apply the lat
 
 The tutorial demonstrates examples of interactions using the **Keyrock** GUI, as well [cUrl](https://ec.haxx.se/)
 commands used to access the REST APIs of **Keyrock** and **Authzforce** -
-[Postman documentation](https://fiware.github.io/tutorials.Administrating-XACML) is also available.
+[Postman documentation](https://www.postman.com/downloads/) is also available.
 
 
 # Start-Up
@@ -28,6 +28,10 @@ git checkout NGSI-v2
 ./services create
 ./services start
 ```
+
+
+| ![NGSI v2](https://img.shields.io/badge/NGSI-v2-5dc0cf.svg) | :books: [Documentation](https://github.com/FIWARE/tutorials.Administrating-XACML/tree/NGSI-v2) | <img  src="https://cdn.jsdelivr.net/npm/simple-icons@v3/icons/postman.svg" height="15" width="15"> [Postman Collection](https://fiware.github.io/tutorials.Administrating-XACML) |
+| --- | --- | --- |
 
 ---
 
