@@ -14,8 +14,9 @@ The tutorial demonstrates examples of interactions using the **Keyrock** GUI, as
 commands used to access the REST APIs of **Keyrock** and **Authzforce** -
 [Postman documentation](https://www.postman.com/downloads/) is also available.
 
-
 # Start-Up
+
+## NGSI-v2 Smart Supermarket
 
 **NGSI-v2** offers JSON based interoperability used in individual Smart Systems. To run this tutorial with **NGSI-v2**, use the `NGSI-v2` branch.
 
