@@ -39,7 +39,7 @@
     -   [PEP - Policy Execution Point (ポリシー実行ポイント)](#pep---policy-execution-point)
 -   [前提条件](#prerequisites)
     -   [Docker](#docker)
-    -   [Cygwin](#cygwin)
+    -   [WSL](#wsl)
 -   [アーキテクチャ](#architecture)
 -   [起動](#start-up)
     -   [登場人物 (Dramatis Personae)](#dramatis-personae)
@@ -213,12 +213,10 @@ XACML ポリシーは、`<PolicySet>`, `<Policy>` と `<Rule>` の3つのレベ�
 [ここ](https://docs.docker.com/compose/install/)に記載されている手順に従う必要
 があります。
 
-<a name="cygwin"></a>
-
-## Cygwin
+## WSL
 
 シンプルな bash スクリプトを使用してサービスを開始します。Windows ユーザは
-[cygwin](http://www.cygwin.com/) をダウンロードして、Windows 上の Linux
+[を使用して Windows に Linux をインストールする方法](https://learn.microsoft.com/ja-jp/windows/wsl/install) をダウンロードして、Windows 上の Linux
 ディストリビューションと同様のコマンドライン機能を提供する必要があります。
 
 <a name="architecture"></a>
