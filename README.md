@@ -241,7 +241,8 @@ git checkout NGSI-v2
 ```
 
 > [!NOTE]
->  The initial creation of Docker images can take up to three minutes
+>
+> The initial creation of Docker images can take up to three minutes
 
 Thereafter, all services can be initialized from the command-line by running the
 [services](https://github.com/FIWARE/tutorials.Administrating-XACML/blob/NGSI-v2/services) Bash script provided within
@@ -252,6 +253,7 @@ the repository:
 ```
 
 > [!NOTE]
+>
 > If you want to clean up and start over again you can do so with the following command:
 >
 > ```console
@@ -688,7 +690,7 @@ For the updated Policy, the previous rules will be reversed
 -   The **red** zone is for immediate loading and unloading of passengers only
 -   There is no stopping in the **white** zone
 
-#### 7️⃣  Request
+#### 7️⃣ Request
 
 The full data for an XACML `<PolicySet>` is very verbose and has been omitted from the request below:
 
@@ -804,7 +806,7 @@ To update an active a `PolicySet`, make another PUT request to the
 `/authzforce-ce/domains/{domain-id}/pap/pdp.properties` endpoint including the `policy-id` to update within the
 `<rootPolicyRefExpresion>` attribute. The ruleset will be updated to apply the latest uploaded version.
 
-#### 8️⃣  Request
+#### 8️⃣ Request
 
 Remember to amend the request below to use your own `{domain-id}`:
 
@@ -982,6 +984,7 @@ The **context broker** data for the **Store** and **IoT Devices** is held in is 
 means that only security staff are able to access the system outside of core hours.
 
 > [!NOTE]
+>
 > within the **Keyrock**, only four resources have been secured using advanced authorization rules (level 3)
 >
 > -   sending the ring bell command
@@ -1420,7 +1423,7 @@ curl -X DELETE \
 
 Then re-create it using a POST request as shown:
 
-#### 1️⃣7️⃣  Request
+#### 1️⃣7️⃣ Request
 
 ```console
 curl -X POST \
@@ -1462,7 +1465,7 @@ In the example below, the `emailaddress` and `subject:subject-id` have been adde
 
 With the new rule in place, the user `charlie` will be able to access the `/bell/ring` endpoint at all times of day.
 
-#### 1️⃣7️⃣  Request
+#### 1️⃣7️⃣ Request
 
 The full data for the request very verbose and has been omitted below:
 
