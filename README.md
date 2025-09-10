@@ -23,7 +23,7 @@ commands used to access the REST APIs of **Keyrock** and **Authzforce** -
 [Postman documentation](https://fiware.github.io/tutorials.Administrating-XACML) is also available.
 
 [![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/23b7045a5b52a54a2666)
-[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/FIWARE/tutorials.Administrating-XACML/tree/NGSI-v2)
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://github.com/codespaces/new?repo=FIWARE/tutorials.Administrating-XACML&ref=NGSI-v2)
 
 -   このチュートリアルは[日本語](README.ja.md)でもご覧いただけます。
 
