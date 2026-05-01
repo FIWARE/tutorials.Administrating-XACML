@@ -69,7 +69,6 @@ commands used to access the REST APIs of **Keyrock** and **Authzforce** -
 
 # Administrating XACML Rules
 
-> **12.3 Central Terminal Area**
 >
 > -   Red or Yellow Zone
 >     -   No private vehicle shall stop, wait, or park in the red or yellow zone.
